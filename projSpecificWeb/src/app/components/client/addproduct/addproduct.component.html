@@ -1,0 +1,15 @@
+<!--
+<div class="input-group mb-3" *ngIf="userService.user !== null && !userService.user.is_staff">
+  <input type="text" class="form-control" [(ngModel)]="amount">
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary" type="button" (click)="save()">Add</button>
+  </div>
+</div>
+-->
+
+<div class="input-group mb-3" *ngIf="userService.username !== null && !userService.userIsStaff">
+  <input type="text" class="form-control" value="0">
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary" type="button" >Add</button>
+  </div>
+</div>

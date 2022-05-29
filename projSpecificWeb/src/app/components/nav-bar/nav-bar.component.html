@@ -1,0 +1,66 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" routerLink="">YourPetStore</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="navbar-collapse" id="navbarSupportedContent">
+    <!--<ul class="navbar-nav mr-auto" *ngIf="userService.user === null || userService.user.is_staff === false">-->
+    <ul class="navbar-nav mr-auto" style="margin-top: 0"
+      *ngIf="userService.username === null || userService.userIsStaff === false">
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+          routerLink="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" routerLink="/product">Products</a>
+      </li>
+      <!--<li class="nav-item" *ngIf="userService.user !== null">-->
+      <li class="nav-item" *ngIf="userService.username !== null">
+        <a class="nav-link" routerLinkActive="active" routerLink="/order">Orders</a>
+      </li>
+    </ul>
+    <!--<ul class="navbar-nav mr-auto" *ngIf="userService.user !== null && userService.user.is_staff === true">-->
+    <ul class="navbar-nav mr-auto" *ngIf="userService.username !== null && userService.userIsStaff === true">
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" routerLink="/system/dashboard">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" routerLink="/system/product">Products</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" routerLink="/system/categories">Categories</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/system/orders">Orders</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/system/users">Users</a>
+      </li>
+      <!--
+        <li class="nav-item" *ngIf="userService.user.is_superuser === true">
+          <a class="nav-link" routerLink="/system/staff">Staff</a>
+        </li>
+        -->
+    </ul>
+    <div class="form-inline my-2 my-lg-0">
+      <!--<span *ngIf="userService.user === null">-->
+      <span *ngIf="userService.username === null">
+        <div class="btn" data-toggle="modal" data-target="#loginModal">Sign In</div>
+        <div class="btn" data-toggle="modal" data-target="#signupModal">Create Account</div>
+      </span>
+
+      <!--<span *ngIf="userService.user !== null">-->
+      <span *ngIf="userService.username !== null">
+        <div class="btn" data-toggle="modal" data-target="#notificationsModal" *ngIf="userService.userIsStaff !== true">
+          <i class="fa fa-bell"></i>0</div>
+        <!--<div class="btn" routerLink="/cart" *ngIf="userService.user.is_staff !== true"><i class="fa fa-shopping-cart"></i> {{ cartService.totalElements }}</div>-->
+        <div class="btn" routerLink="/cart" *ngIf="userService.userIsStaff !== true"><i class="fa fa-shopping-cart"></i>
+          {{ cartService.totalElements }}</div>
+        <div class="btn" *ngIf="userService.userIsStaff !== true"><i class="fa fa-user"></i> carlos</div>
+        <div class="btn btn-outline-danger" (click)="authService.logout()">Log Out</div>
+      </span>
+    </div>
+  </div>
+</nav>

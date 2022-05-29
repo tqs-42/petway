@@ -1,0 +1,10 @@
+img {
+  height: 250px; 
+  object-fit: cover;
+
+  transition: ease-in-out .3s;
+}
+
+.product:hover img {
+  opacity: .5;
+}

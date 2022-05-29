@@ -1,0 +1,92 @@
+<app-nav-bar></app-nav-bar>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Login</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="login_username">Username</label>
+          <input type="text" class="form-control" id="login_username" placeholder="Enter username" [(ngModel)]="login.username">
+        </div>
+        <div class="form-group">
+          <label for="login_password">Password</label>
+          <input type="password" class="form-control" id="login_password" placeholder="Password" [(ngModel)]="login.password">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="doLogin()">Login</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Sign Up</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="signup_username">Username</label>
+          <input type="text" class="form-control" id="signup_username" placeholder="Enter username" [(ngModel)]="signup.username">
+        </div>
+        <div class="form-group">
+          <label for="signup_password">Password</label>
+          <input type="password" class="form-control" id="signup_password" placeholder="Password" [(ngModel)]="signup.password">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="doSignUp()">Sign up</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="notificationsModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Notifications</h5>
+        <p>(Isto ainda está feio, mas é suposto clicar em cada notificacao e abrir a página Order#X)</p>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5>Order#1 is Delivered</h5>
+        <p><a href="#" class="tooltip-test" title="Tooltip">Rate the rider.</a></p>
+        <hr>
+        <h5>Go get your order</h5>
+        <p>Rider Joao arrived with Order#1.</p>
+        <hr>
+        <h5>Order#1 is Delivering</h5>
+        <p>Rider Joao has already collected your order.</p>
+        <hr>
+        <h5>Order#1 is Processing</h5>
+        <p>Rider Joao accepted your order.</p>
+        <hr>
+        <h5>Order#1 is Pending</h5>
+        <p>Order placed successefuly.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

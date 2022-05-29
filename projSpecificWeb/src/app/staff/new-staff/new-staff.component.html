@@ -1,0 +1,32 @@
+<div class="p-5">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>
+        Create Staff
+      </h1>
+    </div>
+  </div>
+
+  <div class="col-md-12 mt-5">
+    <div class="col-4">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" placeholder="Enter username" [(ngModel)]="staff.username">
+      </div>
+      <div class="form-group">
+        <label for="password1">Password</label>
+        <input type="password" class="form-control" id="password1" placeholder="Password" [(ngModel)]="staff.password">
+      </div>
+      <div class="form-group">
+        <label for="password2">Repeat Password</label>
+        <input type="password" class="form-control" id="password2" placeholder="Repeat Password" [(ngModel)]="staff.repeatPassword">
+      </div>
+
+      <div *ngIf="diferentPassword">
+        <p class="text-danger">Passwords nao sao iguais!</p>
+      </div>
+
+      <button type="submit" class="btn btn-primary" (click)="createStaff()">Submit</button>
+    </div>
+  </div>
+</div>

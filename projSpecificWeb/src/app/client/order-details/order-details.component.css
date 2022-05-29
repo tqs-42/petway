@@ -1,0 +1,29 @@
+#avatar {
+ background-image: url('https://scontent.fopo3-2.fna.fbcdn.net/v/t31.18172-8/462138_107660119371120_1054669958_o.jpg?_nc_cat=103&ccb=1-7&_nc_sid=174925&_nc_eui2=AeH9h-m5Ivmr-8TT-21e0CE_vfRDhuLBaFS99EOG4sFoVJtbzWCtO9ZnslsDNyu638LMHxCz6LkAjgNMSAyRiQL-&_nc_ohc=owjZpwr5f7cAX-qFOkd&_nc_ht=scontent.fopo3-2.fna&oh=00_AT84A8KDhZ5XeUvVrvL_DHx-1n_1Y-eHx17Zd7pzkUkb5g&oe=62B11BC3');
+ width: 250px;
+ height: 250px;
+ background-size: cover;
+ background-position: top center;
+ border-radius: 50%;
+ margin-right: 50px;
+}
+
+#avatar:hover {
+  opacity: .5;
+}
+
+.product {
+  width: 90%;
+}
+
+.informations {
+  background-color: #F8F8F8;
+  border-radius: 15px;
+  display: flex;
+}
+
+.riders-rating {
+  display: flex;
+  justify-content: space-between;
+}
+

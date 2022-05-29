@@ -1,0 +1,57 @@
+<div class="p-5">
+  <div class="row">
+      <div class="col-md-12">
+          <h1>
+              User's Orders
+          </h1>
+      </div>
+  </div>
+
+  <div class="col-md-12 mt-5">
+      <div>
+          <div>
+              <table class="table table-striped">
+                  <thead>
+                      <tr>
+                          <th style="color: black;" scope="col">State</th>
+                          <th style="color: black;" scope="col">Date</th>
+                          <th style="color: black;" scope="col"></th>
+                          <th style="color: black;" scope="col"></th>
+                          <th style="color: black;" scope="col"></th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let order of orders">
+                          <td style="color: rgb(32, 29, 29);">{{ order.states[order.states.length-1].state.name }}</td>
+                          <td style="color: rgb(32, 29, 29);">{{ order.states[order.states.length-1].datetime | date: 'short' }}</td>
+                          <td><a routerLink="/system/orders/{{ order.id }}">Ver Detalhes</a></td>
+                          <td>
+                            <div *ngIf="order.states[order.states.length-1].state.name != 'Delivered' && order.states[order.states.length-1].state.name != 'Cancelled'">
+                              <form class="form-horizontal">
+                                  <div class="form-group">
+                                      <div class="col-md-offset-2 col-md-10">
+                                          <button type="button" class="btn btn-outline-success" (click)="changeState(order.id)">Change State</button>
+                                      </div>
+                                  </div>
+                              </form>
+                            </div>
+                          </td>
+                          <td>
+                            <div *ngIf="order.states[order.states.length-1].state.name != 'Cancelled' && order.states[order.states.length-1].state.name != 'Delivered'">
+                              <form class="form-horizontal">
+                                  <div class="form-group">
+                                      <div class="col-md-offset-2 col-md-10">
+                                          <button type="button" name="cancel" class="btn btn-default" (click)="cancelOrder(order.id)">Cancel</button>
+                                      </div>
+                                  </div>
+                              </form>
+                              </div>
+                          </td>
+                      </tr>
+                  </tbody>
+
+              </table>
+          </div>
+      </div>
+  </div>
+</div>

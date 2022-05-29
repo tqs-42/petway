@@ -1,0 +1,49 @@
+<div *ngIf="order" class="p-5">
+    <div>
+        <h3>Order <i class="text-secondary">#{{ order.id }}</i> </h3>
+
+        <h5 class="mt-4">Updates</h5>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>State</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let state of order.states">
+                    <td> {{ state.state.name }} </td>
+                    <td> {{ state.datetime | date :'short' }} </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h5 class="mt-4">Details</h5>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let item of order.items">
+                    <td><a routerLink="/product/{{ item.product.id }}"> {{ item.product.name }} </a></td>
+                    <td> {{ item.amount }} </td>
+                    <td> {{ item.price }} € </td>
+                    <td> {{ item.amount*item.price | number: '.2-2' }} € </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td> {{ order.price }} € </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

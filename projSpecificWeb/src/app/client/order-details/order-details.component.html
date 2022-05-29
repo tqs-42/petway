@@ -1,0 +1,126 @@
+<!--
+<div *ngIf="order" class="p-5">
+    <div>
+        <h3>Order <i class="text-secondary">#{{ order.id }}</i> </h3>
+
+        <h5 class="mt-4">Updates</h5>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>State</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let state of order.states">
+                    <td> {{ state.state.name }} </td>
+                    <td> {{ state.datetime | date :'short' }} </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h5 class="mt-4">Details</h5>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let item of order.items">
+                    <td><a routerLink="/product/{{ item.product.id }}"> {{ item.product.name }} </a></td>
+                    <td> {{ item.amount }} </td>
+                    <td> {{ item.price }} € </td>
+                    <td> {{ item.amount*item.price | number: '.2-2' }} € </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td> {{ order.price }} € </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+-->
+
+<div class="p-5">
+  <div>
+    <h3>Order <i class="text-secondary">#1</i> </h3>
+
+    <h5 class="mt-4">Updates</h5>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>State</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td> Delivered </td>
+          <td> 23/05/2022 </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h5 class="mt-4">Details</h5>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Shop</th>
+          <th>Amount</th>
+          <th>Unitary Price</th>
+          <th>Total Price</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td><a routerLink="/product/1"> ROYAL CANIN CHIHUAHUA ADULT </a></td>
+          <td> Pet City </td>
+          <td> 1 </td>
+          <td> 1,11 € </td>
+          <td> 1,11 € </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td> 1,11 € </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h5 class="mt-4">Rider Informations</h5>
+    <div class="product d-flex flex">
+      <div id="avatar"></div>
+
+      <div class="informations mt-3 flex-grow-1 d-flex flex-column mr-auto p-2">
+        <h5 class="mb-4" style="margin: auto;">Andre Freixo</h5>
+        <h6 class="mb-10" style="margin: auto;">Hi! I'm Andre. I do delivers to help my cat that is sick and be able to
+          get him a better life,
+          because I love cats and cats are my life.</h6>
+        <div style="display: flex; margin-bottom: 20px; margin: auto; ">
+          <div class="riders-rating" style="display: flex; flex-direction: column;">
+            <p class="text-secondary">Rider's Rating: </p>
+            <p class="text-secondary" style="margin-right: 15px;">Rate the Rider: </p>
+          </div>
+          <div class="riders-rating" style="display: flex; flex-direction: column;">
+            <input data-role="rating" data-value="3.5" data-message="(13)" data-static="true">
+            <input data-role="rating">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

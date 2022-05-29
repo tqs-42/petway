@@ -1,0 +1,32 @@
+<div class="p-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>
+                All Categories
+                <a routerLink="/system/categories/new"><button class="btn btn-outline-primary btn-md">Add</button></a>
+            </h1>
+        </div>
+    </div>
+
+    <div class="col-md-12 mt-5">
+        <div>
+            <div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th style="color: black;" scope="col">Id</th>
+                            <th style="color: black;" scope="col">Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let category of categories">
+                            <th style="color: rgb(32, 29, 29);" scope="row">{{ category.id }}</th>
+                            <td style="color: rgb(32, 29, 29);">{{ category.name }}</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
