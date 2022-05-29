@@ -1,0 +1,28 @@
+.center {
+    -ms-transform: translateY(50%);
+    transform: translateY(50%);
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    width: 700px;
+    padding: 40px;
+    border: solid 2px black;
+    background-color: rgb(13, 13, 61);
+}
+
+input {
+    width: 100%;
+}
+
+.row {
+    margin-bottom: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+button {
+    margin: 0 auto;
+    display: block;
+}

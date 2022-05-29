@@ -1,0 +1,85 @@
+<app-menu></app-menu>
+
+<app-navbar></app-navbar>
+
+<div class="content-wrapper">
+
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">PetStore Aveiro</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-3">
+                <app-info-box [icon]="'fas fa-tag'" [title]="'Total products'"
+                    [description]="'142'"></app-info-box>
+            </div>
+            <div class="col-md-3">
+                <app-info-box [icon]="'fas fa-heart'"
+                    [title]="'Total of deliveries'" [description]="'39'"></app-info-box>
+            </div>
+            <div class="col-md-3">
+                <app-info-box [icon]="'fas fa-cloud-download-alt'"
+                    [title]="'Products sold'" [description]="'80'"></app-info-box>
+            </div>
+            <div class="col-md-3">
+                <app-info-box [icon]="'fas fa-comment'" [title]="'Store revenue'"
+                    [description]="'2,000$'"></app-info-box>
+            </div>
+        </div>
+    </div>
+
+
+    <section class="content">
+
+        <app-pie-chart></app-pie-chart>
+
+        <table>
+            <thead>Stock</thead>
+            <tr>
+                <th>Company</th>
+                <th>Contact</th>
+                <th>Country</th>
+            </tr>
+            <tr>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+            </tr>
+            <tr>
+                <td>Centro comercial Moctezuma</td>
+                <td>Francisco Chang</td>
+                <td>Mexico</td>
+            </tr>
+            <tr>
+                <td>Ernst Handel</td>
+                <td>Roland Mendel</td>
+                <td>Austria</td>
+            </tr>
+            <tr>
+                <td>Island Trading</td>
+                <td>Helen Bennett</td>
+                <td>UK</td>
+            </tr>
+            <tr>
+                <td>Laughing Bacchus Winecellars</td>
+                <td>Yoshi Tannamuri</td>
+                <td>Canada</td>
+            </tr>
+            <tr>
+                <td>Magazzini Alimentari Riuniti</td>
+                <td>Giovanni Rovelli</td>
+                <td>Italy</td>
+            </tr>
+        </table>
+
+    </section>
+
+</div>

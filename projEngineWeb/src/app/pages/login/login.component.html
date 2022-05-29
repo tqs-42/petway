@@ -1,0 +1,27 @@
+<form>
+    <div class="container center">
+        <h1>Login   </h1>
+        <hr>
+        <div class="row">
+            <div class="col-md-3">
+                <label for="email"><b>Email</b></label>
+            </div>
+            <div class="col-md-9">
+                <input type="text" placeholder="Enter Email" name="email" id="email" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label for="password"><b>Password</b></label>
+            </div>
+            <div class="col-md-9">
+                <input type="password" placeholder="Enter Password" name="password" id="password" required>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <p>You don't have an account? <a routerLink="/register">Register as a new rider</a>.</p>
+        </div>
+        <button type="submit" class="registerbtn">Login</button>
+    </div>
+</form>

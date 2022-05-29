@@ -1,0 +1,35 @@
+<form>
+    <div class="container center">
+        <h1>Rider registration</h1>
+        <hr>
+        <div class="row">
+            <div class="col-md-3">
+                <label for="email"><b>Email</b></label>
+            </div>
+            <div class="col-md-9">
+                <input type="text" placeholder="Enter Email" name="email" id="email" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label for="password"><b>Password</b></label>
+            </div>
+            <div class="col-md-9">
+                <input type="password" placeholder="Enter Password" name="password" id="password" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label for="password-repeat"><b>Repeat Password</b></label>
+            </div>
+            <div class="col-md-9">
+                <input type="password" placeholder="Repeat Password" name="password-repeat" id="password-repeat" required>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <p>Already have an account? <a routerLink="/login">Sign in</a>.</p>
+        </div>
+        <button type="submit" class="registerbtn">Register</button>
+    </div>
+</form>
