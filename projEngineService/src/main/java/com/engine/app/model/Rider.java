@@ -22,8 +22,8 @@ public class Rider extends Person {
     private List<Review> reviews = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "ride_id")
-    private List<Review> rides = new ArrayList<>();
+    @JoinColumn(name = "delivery_id")
+    private List<Delivery> deliveries = new ArrayList<>();
 
     public Rider(String email, String address, String fullname, String password, Boolean isActive) {
         super(email, address, fullname, password);

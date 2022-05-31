@@ -22,11 +22,37 @@ public class Review {
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ride_id", referencedColumnName = "id")
-    @Column(name = "ride", nullable = false)
-    private Ride ride;
+    @JoinColumn(name = "delivery_id", referencedColumnName = "id")
+    @Column(name = "delivery", nullable = false)
+    private Delivery delivery;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Rider rider;
+
+    public Review(Delivery delivery, Rider rider) {
+        this.delivery = delivery;
+        this.rider = rider;
+    }
+
+    public Review() {
+    }
+
+    public Delivery getDelivery() {
+        return delivery;
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+    }
+
+    public Rider getRider() {
+        return rider;
+    }
+
+    public void setRider(Rider rider) {
+        this.rider = rider;
+    }
+
+    
 
 }
