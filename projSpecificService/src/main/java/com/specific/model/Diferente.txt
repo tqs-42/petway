@@ -1,6 +1,0 @@
-User é que tem o id da store que é gestor;
-Manytomany categoria-product
-OneToOne cart-user
-
-
-Se calhar separar os users
