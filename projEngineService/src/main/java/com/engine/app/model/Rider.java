@@ -1,0 +1,44 @@
+package com.engine.app.model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "riders")
+public class Rider extends Person {
+
+    @Column(name = "isActive", nullable = false)
+    private Boolean isActive;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "review_id")
+    private List<Review> reviews = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "ride_id")
+    private List<Review> rides = new ArrayList<>();
+
+    public Rider(String email, String address, String fullname, String password, Boolean isActive) {
+        super(email, address, fullname, password);
+        this.isActive = isActive;
+    }
+
+    public Rider() {
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+    
+}
