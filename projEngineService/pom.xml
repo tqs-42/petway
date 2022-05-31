@@ -14,7 +14,7 @@
 	<name>app</name>
 	<description>The deliveriesplatform(“engine”),  with  use  cases  such  asriders’ registration  and  reputation management, dynamic matchmaking of orders and riders, performance dashboard, etc.</description>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>11</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

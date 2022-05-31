@@ -1,14 +1,19 @@
 package com.engine.app.model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -36,6 +41,10 @@ public class Delivery {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Rider rider;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "event_id")
+    private List<Event> events = new ArrayList<>();
 
     public Delivery(Timestamp requestedAt, Timestamp deliveredAt, Long requestId, Review review, Rider rider) {
         this.requestedAt = requestedAt;
