@@ -3,6 +3,7 @@ package com.engine.app.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "persons")
 public class Person {
 
+    @Id
     @Email
     @Column(name = "email", nullable = false, unique = true)
     private String email;
