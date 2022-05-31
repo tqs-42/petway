@@ -23,7 +23,6 @@ public class Review {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "delivery_id", referencedColumnName = "id")
-    @Column(name = "delivery", nullable = false)
     private Delivery delivery;
 
     @ManyToOne(fetch = FetchType.LAZY)

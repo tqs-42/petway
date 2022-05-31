@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.JoinColumn;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -35,8 +36,8 @@ public class Delivery {
     @Column(name = "requestId", nullable = false)
     private Long requestId;
 
-    @OneToOne(mappedBy = "delivery")
-    @Column(name = "review", nullable = true)
+    @OneToOne
+    @JoinColumn(name = "review", nullable = true)
     private Review review;
 
     @ManyToOne(fetch = FetchType.LAZY)
