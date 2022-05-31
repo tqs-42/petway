@@ -18,6 +18,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "CATEGORY")
 public class Category {

@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Data
@@ -16,9 +18,20 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Entity
 @Table(name = "REQUEST_PRODUCTS")
-public class request_products {
+public class RequestProducts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "requestProductsId", nullable = false)
     private long id;
+
+    @Column(name = "amount", nullable = false)
+    private int amount;
+
+    @ManyToOne
+    @JoinColumn(name = "cartId", nullable = false)
+    private Cart cart;  
+
+    @ManyToOne
+    @JoinColumn(name = "productId", nullable = false)
+    private Product product;  
 }

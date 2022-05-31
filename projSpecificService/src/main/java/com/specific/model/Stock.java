@@ -6,34 +6,29 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "USER_ADDRESS")
-public class UserAddress {
+@Table(name = "STOCK")
+public class Stock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userAddressId", nullable = false)
+    @Column(name = "stockId", nullable = false)
     private long id;
 
-    @Column(name = "address", nullable = false)
-    private String address;
+    @Column(name = "amount", nullable = false)
+    private int amount;
 
-    @ManyToOne
-    @JoinColumn(name = "email", nullable = false)
-    private User user;
-
-    public UserAddress(String address, User user) {
-        this.address = address;
-        this.user = user;
-    }
-    
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "productId")
+    private Product product;
 }

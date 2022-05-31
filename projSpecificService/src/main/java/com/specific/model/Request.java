@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -22,20 +19,23 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "CART")
-public class Cart {
+@Table(name = "PRODUCT_TBL")
+public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cartId", nullable = false)
+    @Column(name = "requestId", nullable = false)
     private long id;
 
+    @Column(name = "riderId", nullable = false)
+    private int riderId;
+
+    @Column(name = "destinyAddress", nullable = false)
+    private String destinyAddress;
+
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "email")
-    private User user;
+    @JoinColumn(name = "cartId")
+    private Cart cart;
 
-    @OneToMany(mappedBy="cart")
-    Set<RequestProducts> products;
-
-    @OneToOne(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Request request;
+    @OneToOne(mappedBy = "request", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private RequestEvents requestEvents;
 }

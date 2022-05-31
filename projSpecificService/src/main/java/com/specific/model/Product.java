@@ -6,17 +6,23 @@ import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "PRODUCT")
 public class Product {
@@ -43,4 +49,10 @@ public class Product {
 
     @ManyToMany(mappedBy = "products")
     Set<Category> categories;
+
+    @OneToMany(mappedBy="product")
+    Set<RequestProducts> requests;
+
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Stock stock;
 }
