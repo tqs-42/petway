@@ -24,4 +24,21 @@ public class Client extends User {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Cart cart;
+
+    public Set<UserAddress> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(Set<UserAddress> addresses) {
+        this.addresses = addresses;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+    
 }

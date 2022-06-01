@@ -38,4 +38,42 @@ public class Request {
 
     @OneToOne(mappedBy = "request", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private RequestEvents requestEvents;
+
+    public long getId() {
+        return id;
+    }
+
+    public int getRiderId() {
+        return riderId;
+    }
+
+    public void setRiderId(int riderId) {
+        this.riderId = riderId;
+    }
+
+    public String getDestinyAddress() {
+        return destinyAddress;
+    }
+
+    public void setDestinyAddress(String destinyAddress) {
+        this.destinyAddress = destinyAddress;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+    public RequestEvents getRequestEvents() {
+        return requestEvents;
+    }
+
+    public void setRequestEvents(RequestEvents requestEvents) {
+        this.requestEvents = requestEvents;
+    }
+
+    
 }

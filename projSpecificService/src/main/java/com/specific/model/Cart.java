@@ -31,11 +31,40 @@ public class Cart {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "email")
-    private User user;
+    private Client client;
 
     @OneToMany(mappedBy="cart")
     Set<RequestProducts> products;
 
     @OneToOne(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Request request;
+
+    public long getId() {
+        return id;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Set<RequestProducts> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<RequestProducts> products) {
+        this.products = products;
+    }
+
+    public Request getRequest() {
+        return request;
+    }
+
+    public void setRequest(Request request) {
+        this.request = request;
+    }
+
 }

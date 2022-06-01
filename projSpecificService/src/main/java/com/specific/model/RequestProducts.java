@@ -33,5 +33,35 @@ public class RequestProducts {
 
     @ManyToOne
     @JoinColumn(name = "productId", nullable = false)
-    private Product product;  
+    private Product product;
+
+    public long getId() {
+        return id;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }  
+
+    
 }

@@ -29,11 +29,31 @@ public class UserAddress {
 
     @ManyToOne
     @JoinColumn(name = "email", nullable = false)
-    private User user;
+    private Client client;
 
-    public UserAddress(String address, User user) {
+    public UserAddress(String address, Client client) {
         this.address = address;
-        this.user = user;
+        this.client = client;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
     
 }

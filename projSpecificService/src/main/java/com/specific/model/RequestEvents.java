@@ -37,4 +37,34 @@ public class RequestEvents {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "requestId")
     private Request request;
+
+    public long getId() {
+        return id;
+    }
+
+    public RequestStatus getType() {
+        return type;
+    }
+
+    public void setType(RequestStatus type) {
+        this.type = type;
+    }
+
+    public Double getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Double timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public Request getRequest() {
+        return request;
+    }
+
+    public void setRequest(Request request) {
+        this.request = request;
+    }
+
+    
 }

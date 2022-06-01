@@ -35,16 +35,60 @@ public class Store {
     private Boolean active;
 
     @OneToMany(mappedBy="store")
-    Set<User> managers;
+    Set<Manager> managers;
 
     @OneToMany(mappedBy="store")
     Set<Product> products;
 
-    public Store(String name, String address, Boolean active, Set<User> managers, Set<Product> products) {
+    public Store(String name, String address, Boolean active, Set<Manager> managers, Set<Product> products) {
         this.name = name;
         this.address = address;
         this.active = active;
         this.managers = managers;
+        this.products = products;
+    }
+
+    public long getId() {
+        return id;
+    }
+    
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public Set<Manager> getManagers() {
+        return managers;
+    }
+
+    public void setManagers(Set<Manager> managers) {
+        this.managers = managers;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
         this.products = products;
     }
     

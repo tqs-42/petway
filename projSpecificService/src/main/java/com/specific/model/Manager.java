@@ -14,8 +14,17 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Entity
 @Table(name = "MANAGER")
-public class Manager {
+public class Manager extends User{
     @ManyToOne
     @JoinColumn(name = "storeId", nullable = false)
     private Store store;
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
+    
 }
