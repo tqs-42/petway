@@ -5,7 +5,7 @@ services:
         image: mysql:8.0
         platform: linux/amd64
         ports: 
-            - "3307:3307"
+            - "3307:3306"
         environment:
             MYSQL_DATABASE: generalDB
             MYSQL_USER: admin
@@ -17,7 +17,7 @@ services:
             - default
         restart: always
         healthcheck:
-            test: "mysql specificDB -uadmin -padmin -e 'SELECT 1;'"
+            test: "mysql generalDB -uadmin -padmin -e 'SELECT 1;'"
             interval: 20s
             timeout: 10s
             retries: 2
@@ -29,10 +29,10 @@ services:
       build: ./projEngineService
       restart: on-failure
       ports:
-        - 6869:8001
+        - 6868:8001
       environment:
         SPRING_APPLICATION_JSON: '{
-          "spring.datasource.url"  : "jdbc:mysql://generalDataBase:3307/specificDB?useSSL=true",
+          "spring.datasource.url"  : "jdbc:mysql://generalDataBase:3306/generalDB?useSSL=true",
           "spring.datasource.username" : "admin",
           "spring.datasource.password" : "admin",
           "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL8Dialect",
