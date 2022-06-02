@@ -1,9 +1,6 @@
-FROM maven:3.8.2-jdk-11
+FROM openjdk:11
+COPY ./target/app-0.0.1-SNAPSHOT.jar projEngineService.jar
 
-WORKDIR /projEngineService
+EXPOSE 8001
 
-COPY . /projEngineService
-
-RUN mvn clean install
-
-CMD mvn spring-boot:run
+CMD ["java", "-jar", "projEngineService.jar"]
