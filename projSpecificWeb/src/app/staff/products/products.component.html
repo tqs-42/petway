@@ -24,23 +24,21 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let product of products">
-              <td style="color: rgb(32, 29, 29);">{{ product.name }}</td>
-              <td style="color: rgb(32, 29, 29);">{{ product.category.name }}</td>
-              <td style="color: rgb(32, 29, 29);">{{ product.price }}€</td>
-              <td style="color: rgb(32, 29, 29);">{{product.isActive?'Yes':'No'}}</td>
+            <tr>
+              <td style="color: rgb(32, 29, 29);"> product.name </td>
+              <td style="color: rgb(32, 29, 29);"> product.category.name </td>
+              <td style="color: rgb(32, 29, 29);"> product.price €</td>
+              <td style="color: rgb(32, 29, 29);">product.isActive?'Yes':'No'</td>
               <td style="color: rgb(32, 29, 29);">
-                <a routerLink="/system/product/{{ product.id }}"><button class="btn btn-primary btn-sm">Ver</button></a>
+                <a routerLink=""><button class="btn btn-primary btn-sm">Ver</button></a>
               </td>
               <td>
                 <div class="form-group">
-                  <div *ngIf="product.isActive" class="col-md-offset-2 col-md-10">
-                    <button type="button" class="btn btn-outline-danger"
-                      (click)="desactiveProduct(product.id)">Desativar</button>
+                  <div class="col-md-offset-2 col-md-10">
+                    <button type="button" class="btn btn-outline-danger">Desativar</button>
                   </div>
-                  <div *ngIf="!product.isActive" class="col-md-offset-2 col-md-10">
-                    <button type="button" class="btn btn-outline-success"
-                      (click)="activeProduct(product.id)">Ativar</button>
+                  <div class="col-md-offset-2 col-md-10">
+                    <button type="button" class="btn btn-outline-success">Ativar</button>
                   </div>
                 </div>
               </td>
