@@ -31,6 +31,11 @@ public class Rider extends Person {
         this.isActive = isActive;
     }
 
+    public Rider(String email, String address, String fullname, String password) {
+        super(email, address, fullname, password);
+    }
+
+
     public Rider() {
     }
 
@@ -41,5 +46,6 @@ public class Rider extends Person {
     public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
     }
+    
     
 }
