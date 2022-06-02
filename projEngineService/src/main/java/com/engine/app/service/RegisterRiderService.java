@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Service
 public class RegisterRiderService {
 
-    @AutoWired
+    @Autowired
     private RiderRepository riderRepository;
 
     public Rider registerRider(String email, String password, String address, String fullname) {

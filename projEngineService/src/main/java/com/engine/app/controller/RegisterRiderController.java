@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequestMapping("/registerRider")
 public class RegisterRiderController {
     
-    @AutoWired
+    @Autowired
     private RegisterRiderService registerRiderService;
 
     @PostMapping("/email/{email}/address/{address}/fullname/{fullname}/password/{password}")
