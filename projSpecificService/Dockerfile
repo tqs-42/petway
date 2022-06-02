@@ -1,9 +1,6 @@
-FROM maven:3.8.2-jdk-11
+FROM openjdk:11
+COPY ./target/app-0.0.1-SNAPSHOT.jar projSpecificService.jar
 
-WORKDIR /projSpecificService
+EXPOSE 8000
 
-COPY . /projSpecificService
-
-RUN mvn clean install
-
-CMD mvn spring-boot:run
+CMD ["java", "-jar", "projSpecificService.jar"]

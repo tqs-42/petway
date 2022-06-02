@@ -14,7 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "REQUEST_PRODUCTS")
@@ -34,6 +33,12 @@ public class RequestProducts {
     @ManyToOne
     @JoinColumn(name = "productId", nullable = false)
     private Product product;
+
+    public RequestProducts(int amount, Cart cart, Product product) {
+        this.amount = amount;
+        this.cart = cart;
+        this.product = product;
+    }
 
     public long getId() {
         return id;

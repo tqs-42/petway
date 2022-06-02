@@ -21,7 +21,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "PRODUCT")
@@ -55,6 +54,18 @@ public class Product {
 
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Stock stock;
+
+    public Product(String name, String description, String image, Double price, Store store, Set<Category> categories,
+            Set<RequestProducts> requests, Stock stock) {
+        this.name = name;
+        this.description = description;
+        this.image = image;
+        this.price = price;
+        this.store = store;
+        this.categories = categories;
+        this.requests = requests;
+        this.stock = stock;
+    }
 
     public long getId() {
         return id;

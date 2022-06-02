@@ -15,7 +15,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "STOCK")
@@ -31,6 +30,11 @@ public class Stock {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "productId")
     private Product product;
+
+    public Stock(int amount, Product product) {
+        this.amount = amount;
+        this.product = product;
+    }
 
     public long getId() {
         return id;

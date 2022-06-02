@@ -39,7 +39,6 @@ public class RequestService {
         existingRequest.setRiderId(request.getRiderId());
         existingRequest.setDestinyAddress(request.getDestinyAddress());
         existingRequest.setCart(request.getCart());
-        existingRequest.setRequestEvents(request.getRequestEvents());
         return repository.save(existingRequest);
     }
 }

@@ -18,7 +18,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "CATEGORY")
@@ -37,6 +36,11 @@ public class Category {
             joinColumns = @JoinColumn(name = "categoryId"),
             inverseJoinColumns = @JoinColumn(name = "productId"))
     Set<Product> products;
+    
+    public Category(String category, Set<Product> products) {
+        this.category = category;
+        this.products = products;
+    }
 
     public long getId() {
         return id;

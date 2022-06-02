@@ -16,7 +16,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "PRODUCT_TBL")
@@ -36,8 +35,11 @@ public class Request {
     @JoinColumn(name = "cartId")
     private Cart cart;
 
-    @OneToOne(mappedBy = "request", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private RequestEvents requestEvents;
+    public Request(int riderId, String destinyAddress, Cart cart) {
+        this.riderId = riderId;
+        this.destinyAddress = destinyAddress;
+        this.cart = cart;
+    }
 
     public long getId() {
         return id;
@@ -66,14 +68,5 @@ public class Request {
     public void setCart(Cart cart) {
         this.cart = cart;
     }
-
-    public RequestEvents getRequestEvents() {
-        return requestEvents;
-    }
-
-    public void setRequestEvents(RequestEvents requestEvents) {
-        this.requestEvents = requestEvents;
-    }
-
     
 }
