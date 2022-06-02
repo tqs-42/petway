@@ -1,0 +1,9 @@
+.container {
+    height: calc(100vh - 70px);
+    width: 70%;
+    margin: 0 auto;
+}
+
+.middle {
+    margin: 0 auto;
+}

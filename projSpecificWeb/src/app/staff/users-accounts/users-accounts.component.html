@@ -1,29 +1,30 @@
-<div class="p-5">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>
-                Users
-            </h1>
-        </div>
+<div class="p-5 container bg-light">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>
+        Users
+      </h1>
     </div>
+  </div>
 
-    <div class="col-md-12 mt-5">
-        <div>
-            <div>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th style="color: black;" scope="col">Username</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let user of users">
-                            <td style="color: rgb(32, 29, 29);"><a routerLink="/system/users/{{ user.id }}">{{ user.username }}</a></td>
-                        </tr>
-                    </tbody>
+  <div class="col-md-12 mt-5">
+    <div>
+      <div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th style="color: black;" scope="col">Username</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td style="color: rgb(32, 29, 29);"><a routerLink="/system/users/{{ user.id }}">{{ user.username }}</a>
+              </td>
+            </tr>
+          </tbody>
 
-                </table>
-            </div>
-        </div>
+        </table>
+      </div>
     </div>
+  </div>
 </div>
