@@ -21,10 +21,10 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "CLIENT")
 public class Client extends User {
-    @OneToMany(mappedBy="user")
+    @OneToMany(mappedBy="client")
     Set<UserAddress> addresses;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Cart cart;
 
     public Set<UserAddress> getAddresses() {

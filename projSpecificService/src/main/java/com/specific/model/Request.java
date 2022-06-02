@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "PRODUCT_TBL")
+@Table(name = "REQUEST")
 public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
