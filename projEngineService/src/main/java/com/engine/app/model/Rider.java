@@ -6,12 +6,13 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.InheritanceType;
 
 @Entity
-@Table(name = "riders")
+@Inheritance(strategy=InheritanceType.JOINED)
 public class Rider extends Person {
 
     @Column(name = "isActive", nullable = false)

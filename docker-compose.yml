@@ -5,13 +5,82 @@ services:
     build: ./projEngineService
     ports:
       - 8080:8080
+    networks:
+      - engine_network
+    depends_on:
+      - engine_db
 
   engine_db:
-    image: mysql
+    image: mysql:8
     ports:
       - 3307:3307
+    networks:
+      - engine_network
+    volumes:
+      - database:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD : "password"
       MYSQL_DATABASE : "tqs_generic"
       MYSQL_USER : "tqs-generic"
       MYSQL_PASSWORD : "password"
+
+networks:
+  engine_network:
+
+volumes:
+  database:
+
+
+
+
+# version: "3"
+
+# services: 
+#   engine_service:
+#     container_name: engine-spring-boot
+#     build: ./projEngineService
+#     ports:
+#       - 8080:8080
+#     environment:
+#       SPRING_DATASOURCE_URL: jdbc:mysql://engine_db:3307/tqs-generic
+#       SPRING_DATASOURCE_USERNAME: tqs-generic
+#       SPRING_DATASOURCE_PASSWORD: password
+#     depends_on:
+#       engine_db:
+#         condition: service_healthy
+#     networks:
+#       - engine-network
+
+#   engine_db:
+#     container_name: engine-database
+#     image: mysql:8
+#     ports:
+#       - 3307:3307
+#     environment:
+#       MYSQL_ROOT_PASSWORD : "password"
+#       MYSQL_DATABASE : "tqs_generic"
+#       MYSQL_USER : "tqs-generic"
+#       MYSQL_PASSWORD : "password"
+#     restart: always
+#     healthcheck:
+#       test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+#       timeout: 5s
+#       retries: 15
+#     networks:
+#       - engine-network
+
+  # engine_web:
+  #   container_name: engine-angular
+  #   build: ./projEngineWeb
+  #   command: sh -c "npm start"
+  #   ports:
+  #     - 4200:4200
+  #   depends_on:
+  #     engine_db:
+  #       condition: service_healthy
+  #   networks:
+  #     - engine-network
+    
+# networks:
+#   engine-network:
+#     driver: bridge
