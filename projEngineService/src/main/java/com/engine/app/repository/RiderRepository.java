@@ -6,4 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RiderRepository extends JpaRepository<Rider, String> {
 
+    Rider findByEmail(String email);
+
+
 }

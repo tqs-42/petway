@@ -15,7 +15,7 @@ import javax.persistence.InheritanceType;
 @Inheritance(strategy=InheritanceType.JOINED)
 public class Rider extends Person {
 
-    @Column(name = "isActive", nullable = false)
+    @Column(name = "isActive", nullable = true)
     private Boolean isActive;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -46,6 +46,12 @@ public class Rider extends Person {
     public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
     }
+
+    @Override
+    public String toString() {
+        return "Rider " + super.toString() + " [deliveries=" + deliveries + ", isActive=" + isActive + ", reviews=" + reviews + "]";
+    }
+    
     
     
 }
