@@ -11,9 +11,6 @@ import com.engine.app.repository.RiderRepository;
 public class RiderService {
 
     @Autowired
-    private JwtUserDetailsService jwtUserDetailsService;
-
-    @Autowired
     RiderRepository riderRepository;
 
     @Autowired

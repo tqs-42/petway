@@ -44,6 +44,7 @@
             <p *ngIf="showConfirmPasswordError" class="text-danger">Passwords are not equal</p>
         </div>
         <hr>
+        <p *ngIf="showError" class="text-danger">Error. Please fill all fields!</p>
         <div class="row">
             <p>Already have an account? <a routerLink="/login">Sign in</a>.</p>
         </div>

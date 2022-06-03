@@ -1,24 +1,35 @@
 package com.engine.app.service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import com.engine.app.model.Person;
+import com.engine.app.repository.PersonRepository;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
 
+	@Autowired
+    private PersonRepository personRepository;
+
 	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		if ("petway".equals(email)) {
-			return new User("petway", "$2a$10$slYQmyNdGzTn7ZLBXBChFOC9f6kFjAqPhccnP6DxlWXx2lPk1C3G6",
-					new ArrayList<>());
-		} else {
-			throw new UsernameNotFoundException("User not found with email: " + email);
-		}
+	public UserDetails loadUserByUsername(String email)  {
+
+		Optional<Person> person = personRepository.findByEmail(email);
+
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(person.getClass().getSimpleName()));
+
+        return new User(person.get().getEmail(), person.get().getPassword(), authorities);
 	}
 
 }

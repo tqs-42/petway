@@ -11,7 +11,6 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class RegisterComponent implements OnInit {
 
   registerForm !: FormGroup;
-  showPasswordError : Boolean = false;
   showConfirmPasswordError : Boolean = false;
   showError : Boolean = false;
 
@@ -28,25 +27,27 @@ export class RegisterComponent implements OnInit {
   }
 
   public submit(): void {
-
-    this.showPasswordError = false;
-    this.showConfirmPasswordError = false;
     
     let error = false;
 
-    if (this.registerForm.value["password"].trim().length < 8) {
+    if (this.registerForm.value.password != this.registerForm.value.password_repeat) {
+      this.showConfirmPasswordError = true;
       error = true;
-      this.showPasswordError = true;
     }
 
-    if (this.registerForm.value["password_repeat"] != this.registerForm.value["password"]) {
+    if (this.registerForm.invalid) {
+      this.showError = true;
       error = true;
-      this.showConfirmPasswordError = true;
     }
 
     if (!error) {
-      this.authenticationService.register(this.registerForm).subscribe((data) => {
-        this.router.navigate(['/'])
+      this.authenticationService.register(this.registerForm).subscribe({
+        next: () => {
+          this.router.navigate(['/'])
+        },
+        error: () => {
+          this.showError = true;
+        }
       })
 
     }
