@@ -15,22 +15,36 @@ import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
+@CrossOrigin("http://localhost:4200")
 @RequestMapping("/riders")
 public class RiderController {
 
     @Autowired
     private RiderService riderService;
 
-    @PostMapping("/email/{email}/address/{address}/fullname/{fullname}/password/{password}")
-    public ResponseEntity<String> getCovidDataByCountry(@Valid @PathVariable String email,
-            @Valid @PathVariable String address, @Valid @PathVariable String fullname,
-            @Valid @PathVariable String password) {
+    @PostMapping("/addRider")
+    public ResponseEntity<String> getCovidDataByCountry(@RequestBody Map<String, String> register) {
+
+        String email = "email";
+        String fullname = "fullname";
+        String address = "address";
+        String password = "password";
+
+        System.out.println("EMAIL --- " + email);
+        System.out.println("REGISTER  --- " + register);
+        System.out.println("EMAIL 2--- " + fullname);
+        System.out.println("EMAIL - 3-- " + address);
+        System.out.println("EMAIL --- 4  - " + password);
+
         try {
             riderService.registerRider(email, password, address, fullname);
         } catch (ConflictException e) {
@@ -98,4 +112,3 @@ public class RiderController {
     }
 
 }
- 

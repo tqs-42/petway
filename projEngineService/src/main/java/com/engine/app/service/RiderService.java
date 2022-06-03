@@ -4,29 +4,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.engine.app.model.Rider;
-import com.engine.app.model.Person;
-import com.engine.app.repository.PersonRepository;
 import com.engine.app.repository.RiderRepository;
 import com.engine.app.exception.ConflictException;
 
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import java.util.List;
-
-
 
 @Service
 public class RiderService {
 
-
     @Autowired
     private RiderRepository riderRepository;
 
-    public Rider registerRider(String email, String password, String address, String fullname)  throws ConflictException {
+    public Rider registerRider(String email, String password, String address, String fullname)
+            throws ConflictException {
         if (riderRepository.findByEmail(email) != null) {
             throw new ConflictException("Rider " + email + " already registered");
         } else {
@@ -36,7 +26,7 @@ public class RiderService {
         }
         return null;
     }
-    
+
     public Rider getRiderByEmail(String email) {
         return riderRepository.findByEmail(email);
     }
@@ -48,7 +38,7 @@ public class RiderService {
     public List<Rider> getAllActiveRiders() {
         return riderRepository.findAllActiveRiders();
     }
-    
+
     public void changeStatus(String email) {
         Rider rider = riderRepository.findByEmail(email);
         rider.setIsActive(!rider.getIsActive());
