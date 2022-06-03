@@ -12,7 +12,6 @@ import com.engine.app.exception.ConflictException;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -26,33 +25,35 @@ public class RiderService {
     @Autowired
     private PersonRepository personRepository;
 
+    @Autowired
+    private RiderRepository riderRepository;
+
     public Rider registerRider(String email, String password, String address, String fullname)  throws ConflictException {
-        if (personRepository.findByEmail(email) != null) {
+        if (riderRepository.findByEmail(email) != null) {
             throw new ConflictException("Rider " + email + " already registered");
         } else {
             Rider rider = new Rider(email, address, fullname, password);
             rider.setIsActive(true);
-            personRepository.save(rider);
+            riderRepository.save(rider);
         }
         return null;
     }
     
-    public Person getRiderByEmail(String email) {
-        return personRepository.findByEmail(email);
+    public Rider getRiderByEmail(String email) {
+        return riderRepository.findByEmail(email);
     }
 
-    public List<Person> getAllRiders() {
-        return personRepository.findAll();
+    public List<Rider> getAllRiders() {
+        return riderRepository.findAll();
     }
 
-    // public List<Person> getAllActiveRiders() {
-    //     return personRepository.findAllActiveRiders();
-    // }
+    public List<Rider> getAllActiveRiders() {
+        return riderRepository.findAllActiveRiders();
+    }
     
-    // public void changeStatus(String email) {
-    //     Rider rider = personRepository.findByEmail(email);
-    //     rider.setIsActive(!rider.getIsActive());
-    //     personRepository.save(rider);
-    // }
-
+    public void changeStatus(String email) {
+        Rider rider = riderRepository.findByEmail(email);
+        rider.setIsActive(!rider.getIsActive());
+        riderRepository.save(rider);
+    }
 }

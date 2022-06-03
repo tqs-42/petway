@@ -40,7 +40,7 @@ public class RiderController {
     }
 
     @GetMapping("/rider/{email}")
-    public ResponseEntity<Person> getRiderByEmail(@Valid @PathVariable String email) {
+    public ResponseEntity<Rider> getRiderByEmail(@Valid @PathVariable String email) {
         try {
             if (riderService.getRiderByEmail(email) == null) {
                 return ResponseEntity.badRequest().body(null);
@@ -52,7 +52,7 @@ public class RiderController {
     }
 
     @GetMapping("/all-riders")
-    public ResponseEntity<List<Person>> getAllRiders() {
+    public ResponseEntity<List<Rider>> getAllRiders() {
         try {
             return ResponseEntity.ok(riderService.getAllRiders());
         } catch (Exception e) {
@@ -60,14 +60,14 @@ public class RiderController {
         }
     }
 
-    // @GetMapping("/all-active-riders")
-    // public ResponseEntity<List<Person>> getAllActiveRiders() {
-    //     try {
-    //         return ResponseEntity.ok(riderService.getAllActiveRiders());
-    //     } catch (Exception e) {
-    //         return ResponseEntity.badRequest().body(null);
-    //     }
-    // }
+    @GetMapping("/all-active-riders")
+    public ResponseEntity<List<Rider>> getAllActiveRiders() {
+        try {
+            return ResponseEntity.ok(riderService.getAllActiveRiders());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
 
     @GetMapping("/total-riders")
     public ResponseEntity<Integer> getTotalRiders() {
@@ -78,24 +78,24 @@ public class RiderController {
         }
     }
 
-    // @GetMapping("/total-active-riders")
-    // public ResponseEntity<Integer> getTotalActiveRiders() {
-    //     try {
-    //         return ResponseEntity.ok(riderService.getAllActiveRiders().size());
-    //     } catch (Exception e) {
-    //         return ResponseEntity.badRequest().body(null);
-    //     }
-    // }
+    @GetMapping("/total-active-riders")
+    public ResponseEntity<Integer> getTotalActiveRiders() {
+        try {
+            return ResponseEntity.ok(riderService.getAllActiveRiders().size());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
 
-    // @PutMapping("/change-status/{email}")
-    // public ResponseEntity<String> changeStatus(@Valid @PathVariable String email) {
-    //     try {
-    //         riderService.changeStatus(email);
-    //     } catch (Exception e) {
-    //         return ResponseEntity.badRequest().body(e.getMessage());
-    //     }
-    //     return ResponseEntity.ok("Status changed successfully");
-    // }
+    @PutMapping("/change-status/{email}")
+    public ResponseEntity<String> changeStatus(@Valid @PathVariable String email) {
+        try {
+            riderService.changeStatus(email);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.ok("Status changed successfully");
+    }
 
 }
  

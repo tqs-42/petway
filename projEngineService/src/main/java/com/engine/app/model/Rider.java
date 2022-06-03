@@ -10,8 +10,10 @@ import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "admin")
 @Inheritance(strategy=InheritanceType.JOINED)
 public class Rider extends Person {
 
@@ -47,7 +49,7 @@ public class Rider extends Person {
         this.isActive = isActive;
     }
 
-    
+
 
     @Override
     public String toString() {
