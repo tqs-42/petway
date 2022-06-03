@@ -1,13 +1,29 @@
-<form>
+<form [formGroup]="registerForm" (ngSubmit)="submit()">
     <div class="container center">
         <h1>Rider registration</h1>
         <hr>
         <div class="row">
             <div class="col-md-3">
+                <label for="fullname"><b>Full Name</b></label>
+            </div>
+            <div class="col-md-9">
+                <input type="text" placeholder="Enter Full Name" name="fullname" id="fullname" formControlName="fullname" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
                 <label for="email"><b>Email</b></label>
             </div>
             <div class="col-md-9">
-                <input type="text" placeholder="Enter Email" name="email" id="email" required>
+                <input type="text" placeholder="Enter Email" name="email" id="email" formControlName="email" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label for="address"><b>Address</b></label>
+            </div>
+            <div class="col-md-9">
+                <input type="text" placeholder="Enter Address" name="address" id="address" formControlName="address" required>
             </div>
         </div>
         <div class="row">
@@ -15,7 +31,7 @@
                 <label for="password"><b>Password</b></label>
             </div>
             <div class="col-md-9">
-                <input type="password" placeholder="Enter Password" name="password" id="password" required>
+                <input type="password" placeholder="Enter Password" name="password" id="password" formControlName="password" required>
             </div>
         </div>
         <div class="row">
@@ -23,8 +39,9 @@
                 <label for="password-repeat"><b>Repeat Password</b></label>
             </div>
             <div class="col-md-9">
-                <input type="password" placeholder="Repeat Password" name="password-repeat" id="password-repeat" required>
+                <input type="password" placeholder="Repeat Password" name="password-repeat" id="password-repeat" formControlName="password_repeat" required>
             </div>
+            <p *ngIf="showConfirmPasswordError" class="text-danger">Passwords are not equal</p>
         </div>
         <hr>
         <div class="row">

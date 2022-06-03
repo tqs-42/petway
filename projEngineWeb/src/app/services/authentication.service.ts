@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 })
 export class AuthenticationService {
   
-  private baseUrl = 'http://127.0.0.1:8080/';
+  private baseUrl = 'http://localhost:6869/';
   private token = localStorage.getItem('token');
 
   constructor(private http: HttpClient) { }
@@ -18,12 +18,22 @@ export class AuthenticationService {
     let email = form.value.email;
     let password = form.value.password;
 
-    return this.http.post(this.baseUrl + 'login', { email, password },  { 
-      headers: new HttpHeaders({
-        'Authorization': 'Token ' + this.token,
-        'Content-Type': 'application/json',
-      }),
-    });
+    return this.http.post(this.baseUrl + 'login', { email, password });
+
+  }
+
+  register(form: FormGroup) {
+
+    let fullname = form.value.fullname;
+    let address = form.value.address;
+    let email = form.value.email;
+    let password = form.value.password;
+
+    let data = { fullname, address, email, password }
+
+    console.log(data);
+
+    return this.http.post(this.baseUrl + 'register', data);
 
   }
 
