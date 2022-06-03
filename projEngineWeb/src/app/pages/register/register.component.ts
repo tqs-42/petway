@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs';
-import { RegisterService } from "src/app/services/Register/register.service";
+import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-register',
@@ -11,29 +11,49 @@ import { RegisterService } from "src/app/services/Register/register.service";
 export class RegisterComponent implements OnInit {
   form!: FormGroup;
 
-  constructor(private registerService: RegisterService, private formBuilder: FormBuilder,) { }
+  registerForm !: FormGroup;
+  showConfirmPasswordError : Boolean = false;
+  showError : Boolean = false;
+
+  constructor(private fb : FormBuilder, private authenticationService : AuthenticationService, private router : Router) { }
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      fullname: ['', [Validators.required]],
-      address: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(1)]]
-  }); 
+    this.registerForm = this.fb.group({
+      email: [null, [Validators.required, Validators.email]],
+      address: [null, [Validators.required]],
+      fullname: [null, [Validators.required]],
+      password:[null, [Validators.required, Validators.minLength(8)]],
+      password_repeat:[null, [Validators.required, Validators.minLength(8)]]
+    });
   }
 
-  get f() {
-    return this.form.controls;
-  }
+  public submit(): void {
+    
+    let error = false;
 
-  saveNewRider(): void {
+    if (this.registerForm.value.password != this.registerForm.value.password_repeat) {
+      this.showConfirmPasswordError = true;
+      error = true;
+    }
 
-    this.registerService.register_rider(this.f.email.value, this.f.password.value, this.f.fullname.value, this.f.address.value).pipe(first()).subscribe(
-      {
-        next: (response) => console.log(response),
-        error: (error) => console.log(error),
-      }
-    )
+    if (this.registerForm.invalid) {
+      this.showError = true;
+      error = true;
+    }
+
+    if (!error) {
+      this.authenticationService.register(this.registerForm).subscribe({
+        next: () => {
+          this.router.navigate(['/'])
+        },
+        error: () => {
+          this.showError = true;
+        }
+      })
+
+    }
   }
 
 }
+
+

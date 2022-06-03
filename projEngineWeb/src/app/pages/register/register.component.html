@@ -1,42 +1,29 @@
-<div class="header bg-gradient-danger py-7 py-lg-8">
-  <div class="container">
-    <div class="header-body text-center mb-7">
-      <div class="row justify-content-center">
-      </div>
-    </div>
-  </div>
-  <div class="separator separator-bottom separator-skew zindex-100">
-    <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
-      <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
-    </svg>
-  </div>
-</div>
-<!-- Page content -->
-<div class="container mt--8 pb-5">
-  <!-- Table -->
-  <div class="row justify-content-center">
-    <div class="col-lg-6 col-md-8">
-      <div class="card bg-secondary shadow border-0">
-        <div class="card-body px-lg-5 py-lg-5">
-          <div class="text-center text-muted mb-4">
-            <small>Sign up to be a rider!</small>
-          </div>
-          <form [formGroup]="form" (ngSubmit)="saveNewRider()">
-            <div class="form-group">
-              <div class="input-group input-group-alternative mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
-                </div>
-                <input class="form-control" formControlName="fullname" placeholder="Full Name" type="text">
-              </div>
+<form [formGroup]="registerForm" (ngSubmit)="submit()">
+    <div class="container center">
+        <h1>Rider registration</h1>
+        <hr>
+        <div class="row">
+            <div class="col-md-3">
+                <label for="fullname"><b>Full Name</b></label>
             </div>
-            <div class="form-group">
-              <div class="input-group input-group-alternative mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="ni ni-email-83"></i></span>
-                </div>
-                <input class="form-control" formControlName="email" placeholder="Email" type="email">
-              </div>
+            <div class="col-md-9">
+                <input type="text" placeholder="Enter Full Name" name="fullname" id="fullname" formControlName="fullname" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label for="email"><b>Email</b></label>
+            </div>
+            <div class="col-md-9">
+                <input type="text" placeholder="Enter Email" name="email" id="email" formControlName="email" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label for="address"><b>Address</b></label>
+            </div>
+            <div class="col-md-9">
+                <input type="text" placeholder="Enter Address" name="address" id="address" formControlName="address" required>
             </div>
             <div class="form-group">
               <div class="input-group input-group-alternative mb-3">
@@ -46,18 +33,21 @@
                 <input class="form-control" formControlName="address" placeholder="Address" type="email">
               </div>
             </div>
-            <div class="form-group">
-              <div class=" input-group input-group-alternative">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                </div>
-                <input class="form-control" type="password" formControlName="password" placeholder="Password">
-              </div>
+            <div class="col-md-9">
+                <input type="password" placeholder="Enter Password" name="password" id="password" formControlName="password" required>
             </div>
             <div class="text-center form-group">
               <button type="submit" class="btn btn-primary my-4">Sign Up</button>
             </div>
-          </form>
+            <div class="col-md-9">
+                <input type="password" placeholder="Repeat Password" name="password-repeat" id="password-repeat" formControlName="password_repeat" required>
+            </div>
+            <p *ngIf="showConfirmPasswordError" class="text-danger">Passwords are not equal</p>
+        </div>
+        <hr>
+        <p *ngIf="showError" class="text-danger">Error. Please fill all fields!</p>
+        <div class="row">
+            <p>Already have an account? <a routerLink="/login">Sign in</a>.</p>
         </div>
       </div>
     </div>

@@ -1,13 +1,13 @@
-package com.engine.app;
+package com.specific;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AppApplication {
+public class ProjSpecificServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AppApplication.class, args);
+		SpringApplication.run(ProjSpecificServiceApplication.class, args);
 	}
 
 }

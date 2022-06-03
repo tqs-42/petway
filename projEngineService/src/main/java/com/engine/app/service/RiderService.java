@@ -1,47 +1,35 @@
 package com.engine.app.service;
 
-import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import com.engine.app.model.Rider;
 import com.engine.app.repository.RiderRepository;
-import com.engine.app.exception.ConflictException;
-
-import java.util.List;
 
 @Service
 public class RiderService {
 
     @Autowired
-    private RiderRepository riderRepository;
+    RiderRepository riderRepository;
 
-    public Rider registerRider(String email, String password, String address, String fullname)
-            throws ConflictException {
-        if (riderRepository.findByEmail(email) != null) {
-            throw new ConflictException("Rider " + email + " already registered");
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public Rider save(Rider rider) throws Exception {
+        
+        if (riderRepository.findByEmail(rider.getEmail()).isEmpty()) {
+
+            rider.setPassword(passwordEncoder.encode(rider.getPassword()));
+            riderRepository.saveAndFlush(rider);
+            return rider;
+
         } else {
-            Rider rider = new Rider(email, address, fullname, password);
-            rider.setIsActive(true);
-            riderRepository.save(rider);
+
+            throw new Exception();
+
         }
-        return null;
-    }
 
-    public Rider getRiderByEmail(String email) {
-        return riderRepository.findByEmail(email);
     }
-
-    public List<Rider> getAllRiders() {
-        return riderRepository.findAll();
-    }
-
-    public List<Rider> getAllActiveRiders() {
-        return riderRepository.findAllActiveRiders();
-    }
-
-    public void changeStatus(String email) {
-        Rider rider = riderRepository.findByEmail(email);
-        rider.setIsActive(!rider.getIsActive());
-        riderRepository.save(rider);
-    }
+    
 }
