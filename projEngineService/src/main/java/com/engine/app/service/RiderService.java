@@ -22,8 +22,6 @@ import java.util.List;
 @Service
 public class RiderService {
 
-    @Autowired
-    private PersonRepository personRepository;
 
     @Autowired
     private RiderRepository riderRepository;
