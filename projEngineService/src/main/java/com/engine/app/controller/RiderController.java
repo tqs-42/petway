@@ -16,6 +16,7 @@ import javax.validation.Valid;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
 
@@ -85,5 +86,16 @@ public class RiderController {
     //         return ResponseEntity.badRequest().body(null);
     //     }
     // }
+
+    // @PutMapping("/change-status/{email}")
+    // public ResponseEntity<String> changeStatus(@Valid @PathVariable String email) {
+    //     try {
+    //         riderService.changeStatus(email);
+    //     } catch (Exception e) {
+    //         return ResponseEntity.badRequest().body(e.getMessage());
+    //     }
+    //     return ResponseEntity.ok("Status changed successfully");
+    // }
+
 }
  

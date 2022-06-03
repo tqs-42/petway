@@ -45,10 +45,14 @@ public class RiderService {
         return personRepository.findAll();
     }
 
-
     // public List<Person> getAllActiveRiders() {
     //     return personRepository.findAllActiveRiders();
     // }
     
+    // public void changeStatus(String email) {
+    //     Rider rider = personRepository.findByEmail(email);
+    //     rider.setIsActive(!rider.getIsActive());
+    //     personRepository.save(rider);
+    // }
 
 }

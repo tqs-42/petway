@@ -47,6 +47,8 @@ public class Rider extends Person {
         this.isActive = isActive;
     }
 
+    
+
     @Override
     public String toString() {
         return "Rider " + super.toString() + " [deliveries=" + deliveries + ", isActive=" + isActive + ", reviews=" + reviews + "]";
