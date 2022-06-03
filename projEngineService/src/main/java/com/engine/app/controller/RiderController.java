@@ -31,28 +31,6 @@ public class RiderController {
     @Autowired
     private RiderService riderService;
 
-    @PostMapping("/addRider")
-    public ResponseEntity<String> getCovidDataByCountry(@RequestBody Map<String, String> register) {
-
-        String email = register.get("email");
-        String fullname = register.get("fullname");
-        String address = register.get("address");
-        String password = register.get("password");
-
-        System.out.println("REGISTER  --- " + register);
-        System.out.println("EMAIL --- " + email);
-        System.out.println("EMAIL 2--- " + fullname);
-        System.out.println("EMAIL - 3-- " + address);
-        System.out.println("EMAIL --- 4  - " + password);
-
-        try {
-            riderService.registerRider(email, password, address, fullname);
-        } catch (ConflictException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-        return ResponseEntity.ok("Rider registered successfully");
-    }
-
     @GetMapping("/rider/{email}")
     public ResponseEntity<Rider> getRiderByEmail(@Valid @PathVariable String email) {
         try {

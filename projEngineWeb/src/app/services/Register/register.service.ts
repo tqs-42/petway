@@ -26,6 +26,6 @@ export class RegisterService {
     data.fullname = fullname;
     data.address = address;
 
-    return this.http.post(`${environment.baseURL}/riders/addRider`, data);
+    return this.http.post(`${environment.baseURL}/riders/register`, data);
   }
 }

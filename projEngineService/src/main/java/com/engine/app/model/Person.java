@@ -35,6 +35,12 @@ public class Person implements Serializable{
         this.password = password;
     }
 
+    public Person(String email, String address, String fullname) {
+        this.email = email;
+        this.address = address;
+        this.fullname = fullname;
+    }
+
     public Person() {
     }
 

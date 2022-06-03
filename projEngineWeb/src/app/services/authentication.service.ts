@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { environment } from 'src/environments/environment';
+
 
 
 @Injectable({
@@ -8,7 +10,7 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 })
 export class AuthenticationService {
   
-  private baseUrl = 'http://localhost:6869/';
+  private baseUrl = 'http://localhost:8080/';
   private token = localStorage.getItem('token');
 
   constructor(private http: HttpClient) { }
@@ -18,7 +20,7 @@ export class AuthenticationService {
     let email = form.value.email;
     let password = form.value.password;
 
-    return this.http.post(this.baseUrl + 'login', { email, password });
+    return this.http.post(this.baseUrl + 'riders/login', { email, password });
 
   }
 
@@ -31,11 +33,6 @@ export class AuthenticationService {
 
     let data = { fullname, address, email, password }
 
-    console.log(data);
-
-    return this.http.post(this.baseUrl + 'register', data);
-
+    return this.http.post(`${environment.baseURL}/riders/register`, data);
   }
-
-
 }

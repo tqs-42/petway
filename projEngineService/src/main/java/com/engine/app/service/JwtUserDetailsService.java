@@ -12,24 +12,24 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-import com.engine.app.model.Person;
-import com.engine.app.repository.PersonRepository;
+import com.engine.app.model.Rider;
+import com.engine.app.repository.RiderRepository;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
 
 	@Autowired
-    private PersonRepository personRepository;
+    private RiderRepository riderRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String email)  {
 
-		Optional<Person> person = personRepository.findByEmail(email);
+		Rider rider = riderRepository.findByEmail(email);
 
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(person.getClass().getSimpleName()));
+        authorities.add(new SimpleGrantedAuthority(rider.getClass().getSimpleName()));
 
-        return new User(person.get().getEmail(), person.get().getPassword(), authorities);
+        return new User(rider.getEmail(), rider.getPassword(), authorities);
 	}
 
 }

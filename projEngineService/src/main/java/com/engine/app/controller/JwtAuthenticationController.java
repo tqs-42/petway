@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.engine.app.exception.ConflictException;
+
 import com.engine.app.config.JwtTokenUtil;
 import com.engine.app.model.JwtRequest;
 import com.engine.app.model.JwtResponse;
@@ -26,7 +28,8 @@ import com.engine.app.service.RiderService;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/riders")
+@CrossOrigin("http://localhost:4200")
 public class JwtAuthenticationController {
 
     @Autowired
@@ -45,29 +48,24 @@ public class JwtAuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> createAuthenticationToken(@RequestBody Map<String,String> data) throws Exception {
-
         String email = data.get("email");
         String password = data.get("password");
 
-        authenticate(email, password);
+        authenticate(data.get("email"), data.get("password"));
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(email);
         final String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token));
-
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Rider> registerRider(@RequestBody Map<String,String> data) throws Exception {
-
-        String email = data.get("email");
-        String address = data.get("address");
-        String fullname = data.get("fullname");
-        String password = data.get("password");
-
-        Rider rider = riderService.save(new Rider(email, address, fullname, password, true));
-        return new ResponseEntity<>(rider, HttpStatus.CREATED);
-        
+    public ResponseEntity<String> registerRider(@RequestBody Map<String,String> data) throws Exception {
+        try {
+            riderService.registerRider(data.get("email"), data.get("password"), data.get("address"), data.get("fullname"));
+        } catch (ConflictException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.ok().build();
     }
 
     private void authenticate(String username, String password) throws Exception {
