@@ -46,30 +46,13 @@ public class JwtAuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> createAuthenticationToken(@RequestBody Map<String,String> data) throws Exception {
 
-        System.out.println("LOGIN");
-
         String email = data.get("email");
         String password = data.get("password");
 
-        System.out.println(email);
-        System.out.println(password);
-
-
         authenticate(email, password);
 
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-
         final UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-
-        System.out.println(userDetails);
-
         final String token = jwtTokenUtil.generateToken(userDetails);
-
-        System.out.println(token);
-
-
-        System.out.println("LOGIN OK!!!!!!!!!!!!!!");
-
         return ResponseEntity.ok(new JwtResponse(token));
 
     }
@@ -89,14 +72,10 @@ public class JwtAuthenticationController {
 
     private void authenticate(String username, String password) throws Exception {
         try {
-            System.out.println("tryyyyyy");
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-            System.out.println("0000000");
         } catch (DisabledException e) {
-            System.out.println("1");
             throw new Exception("USER_DISABLED", e);
         } catch (BadCredentialsException e) {
-            System.out.println("1");
             throw new Exception("INVALID_CREDENTIALS", e);
         }
     }
