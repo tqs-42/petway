@@ -13,13 +13,19 @@ export class RegisterService {
   constructor(private http: HttpClient) { }
 
   register_rider(email: String, password: String, fullname: String, address: String) {
+    type Rider = {
+      email? : String;
+      password? : String;
+      fullname? : String;
+      address? : String;
+    }
 
-    let map = new Map<String, String>();
-    map.set("email", email);
-    map.set("password", password);
-    map.set("fullname", fullname);
-    map.set("address", address);
+    const data: Rider = {};
+    data.email = email;
+    data.password = password;
+    data.fullname = fullname;
+    data.address = address;
 
-    return this.http.post(`${environment.baseURL}/addRider`, map);
+    return this.http.post(`${environment.baseURL}/riders/addRider`, data);
   }
 }

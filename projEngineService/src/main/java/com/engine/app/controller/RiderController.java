@@ -34,13 +34,13 @@ public class RiderController {
     @PostMapping("/addRider")
     public ResponseEntity<String> getCovidDataByCountry(@RequestBody Map<String, String> register) {
 
-        String email = "email";
-        String fullname = "fullname";
-        String address = "address";
-        String password = "password";
+        String email = register.get("email");
+        String fullname = register.get("fullname");
+        String address = register.get("address");
+        String password = register.get("password");
 
-        System.out.println("EMAIL --- " + email);
         System.out.println("REGISTER  --- " + register);
+        System.out.println("EMAIL --- " + email);
         System.out.println("EMAIL 2--- " + fullname);
         System.out.println("EMAIL - 3-- " + address);
         System.out.println("EMAIL --- 4  - " + password);
