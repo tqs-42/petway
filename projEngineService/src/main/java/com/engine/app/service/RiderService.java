@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
+
 
 
 @Service
-public class RegisterRiderService {
+public class RiderService {
 
     @Autowired
     private PersonRepository personRepository;
@@ -29,6 +31,7 @@ public class RegisterRiderService {
             throw new ConflictException("Rider " + email + " already registered");
         } else {
             Rider rider = new Rider(email, address, fullname, password);
+            rider.setIsActive(true);
             personRepository.save(rider);
         }
         return null;
@@ -38,6 +41,14 @@ public class RegisterRiderService {
         return personRepository.findByEmail(email);
     }
 
+    public List<Person> getAllRiders() {
+        return personRepository.findAll();
+    }
+
+
+    // public List<Person> getAllActiveRiders() {
+    //     return personRepository.findAllActiveRiders();
+    // }
     
 
 }
