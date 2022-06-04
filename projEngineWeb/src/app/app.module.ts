@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
 
@@ -23,6 +23,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { RequestInterceptor } from './services/request.interceptor';
 
 
 @NgModule({
@@ -54,7 +55,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
       echarts: () => import('echarts')
     })
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

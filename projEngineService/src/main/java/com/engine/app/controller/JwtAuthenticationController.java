@@ -1,5 +1,6 @@
 package com.engine.app.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -53,7 +54,9 @@ public class JwtAuthenticationController {
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(email);
         final String token = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(token));
+
+        System.out.println(token);
+        return ResponseEntity.ok(new JwtResponse(token, userDetails.getAuthorities().iterator().next(), userDetails.getUsername()));
 
     }
 
