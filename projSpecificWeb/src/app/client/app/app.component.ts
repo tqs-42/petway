@@ -56,10 +56,11 @@ export class AppComponent implements OnInit {
 
       this.authService.register(this.registerForm).subscribe({
         next: () => {
+          console.log("1")
           this.router.navigate(['/system/dashboard'])
         },
         error: () => {
-          console.log("Siga mudar de pagina")
+          console.log("2")
           this.showError = true;
         }
       })

@@ -26,11 +26,6 @@ public class ClientController {
         String fullname = data.get("fullname");
         String password = data.get("password");
 
-        System.out.println("Email - " + email + "Email - " + address + "Email - " + fullname + "Email - " + password);
-        System.out.println("Email - " + email + "Email - " + address + "Email - " + fullname + "Email - " + password);
-        System.out.println("Email - " + email + "Email - " + address + "Email - " + fullname + "Email - " + password);
-        System.out.println("Email - " + email + "Email - " + address + "Email - " + fullname + "Email - " + password);
-
         Client client = service.saveClient(new Client(email, password, fullname, address));
         return new ResponseEntity<>(client, HttpStatus.CREATED);
 

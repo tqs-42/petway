@@ -21,7 +21,7 @@ import javax.persistence.Table;
 public class Store {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "storeId", nullable = false)
+    @Column(name = "storeId", nullable = true)
     private long id;
 
     @Column(name = "name", nullable = false)
@@ -33,10 +33,10 @@ public class Store {
     @Column(name = "active", nullable = false)
     private Boolean active;
 
-    @OneToMany(mappedBy="store")
+    @OneToMany(mappedBy = "store")
     Set<Manager> managers;
 
-    @OneToMany(mappedBy="store")
+    @OneToMany(mappedBy = "store")
     Set<Product> products;
 
     public Store(String name, String address, Boolean active, Set<Manager> managers, Set<Product> products) {
@@ -50,7 +50,7 @@ public class Store {
     public long getId() {
         return id;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -90,5 +90,5 @@ public class Store {
     public void setProducts(Set<Product> products) {
         this.products = products;
     }
-    
+
 }
