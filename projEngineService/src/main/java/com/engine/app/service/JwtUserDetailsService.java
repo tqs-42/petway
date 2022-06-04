@@ -29,9 +29,8 @@ public class JwtUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
 		Person person = personRepository.findByEmail(email).orElseThrow(() -> {
-            return new UsernameNotFoundException("Person not found");
+            return new UsernameNotFoundException("Person does not exist");
         });
-
 
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(person.getClass().getSimpleName()));

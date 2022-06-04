@@ -20,7 +20,7 @@ public class RiderService {
 
     public Rider save(Rider rider) throws Exception {
         
-        if (riderRepository.findByEmail(rider.getEmail()) != null) {
+        if (riderRepository.findByEmail(rider.getEmail()).isEmpty()) {
 
             rider.setPassword(passwordEncoder.encode(rider.getPassword()));
             riderRepository.saveAndFlush(rider);
@@ -35,7 +35,7 @@ public class RiderService {
     }
 
     public Rider getRiderByEmail(String email) {
-        return riderRepository.findByEmail(email);
+        return riderRepository.findByEmail(email).get();
     }
 
     public List<Rider> getAllRiders() {
@@ -47,7 +47,7 @@ public class RiderService {
     }
     
     public void changeStatus(String email) {
-        Rider rider = riderRepository.findByEmail(email);
+        Rider rider = riderRepository.findByEmail(email).get();
         rider.setIsActive(!rider.getIsActive());
         riderRepository.save(rider);
     }

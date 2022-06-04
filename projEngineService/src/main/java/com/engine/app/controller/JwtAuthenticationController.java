@@ -1,6 +1,5 @@
 package com.engine.app.controller;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.engine.app.config.JwtTokenUtil;
-import com.engine.app.model.JwtRequest;
 import com.engine.app.model.JwtResponse;
 import com.engine.app.model.Rider;
 import com.engine.app.service.JwtUserDetailsService;
