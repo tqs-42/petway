@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,19 +22,34 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "CLIENT")
 public class Client extends User {
-    @OneToMany(mappedBy="client")
-    Set<UserAddress> addresses;
+
+    @Column(name = "address", nullable = false)
+    private String address;
+
+    // @OneToMany(mappedBy = "client")
+    // Set<UserAddress> addresses;
 
     @OneToOne(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Cart cart;
 
-    public Set<UserAddress> getAddresses() {
-        return addresses;
+    public Client(String email, String password, String fullname, String address) {
+        super(email, password, fullname);
+        this.address = address;
     }
 
-    public void setAddresses(Set<UserAddress> addresses) {
-        this.addresses = addresses;
-    }
+    // public Client(String email, String password, String fullname,
+    // Set<UserAddress> addresses) {
+    // super(email, password, fullname);
+    // this.addresses = addresses;
+    // }
+
+    // public Set<UserAddress> getAddresses() {
+    // return addresses;
+    // }
+
+    // public void setAddresses(Set<UserAddress> addresses) {
+    // this.addresses = addresses;
+    // }
 
     public Cart getCart() {
         return cart;
@@ -42,5 +58,5 @@ public class Client extends User {
     public void setCart(Cart cart) {
         this.cart = cart;
     }
-    
+
 }

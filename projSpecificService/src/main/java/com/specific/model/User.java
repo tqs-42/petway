@@ -20,12 +20,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "USER")
 public class User {
-
     @Id
     @Email
     @Column(name = "email", unique = true, nullable = false)
     private String email;
-    
+
     @Size(min = 8)
     @JsonIgnore
     @Column(name = "password", nullable = false)
