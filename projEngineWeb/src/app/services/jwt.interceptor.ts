@@ -15,13 +15,16 @@ export class JwtInterceptor implements HttpInterceptor {
     const isLoggedIn = user && user.token;
     const isApiUrl = request.url.startsWith(environment.baseURL);
 
-    if (isLoggedIn && isApiUrl) {
+    //if (isLoggedIn && isApiUrl) {
+      const ls = localStorage.getItem('token');
+      const token = ls?.split(':')[1];
+      console.log("aqqqiiiii: " + token);
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${user.token}`
+          Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmRyZUB1YS5wdCIsImV4cCI6MTY1NDM2MjUzMywiaWF0IjoxNjU0MzU1MzMzfQ.bPAR8D4UYEj30z2UZbeLOE4eIdbzBA5tUEs5kdnS0yVg0Glo-7DrhEGKlPKefi2v8nyAwMNgAF1VvDpmX5nJ5w`
         }
       });
-    }
+    //}
 
     return next.handle(request);
   }
