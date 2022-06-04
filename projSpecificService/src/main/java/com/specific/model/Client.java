@@ -29,8 +29,9 @@ public class Client extends User {
     // @OneToMany(mappedBy = "client")
     // Set<UserAddress> addresses;
 
-    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Cart cart;
+    // @OneToOne(mappedBy = "client", cascade = CascadeType.ALL, fetch =
+    // FetchType.LAZY)
+    // private Cart cart;
 
     public Client(String email, String password, String fullname, String address) {
         super(email, password, fullname);
@@ -51,12 +52,12 @@ public class Client extends User {
     // this.addresses = addresses;
     // }
 
-    public Cart getCart() {
-        return cart;
-    }
+    // public Cart getCart() {
+    // return cart;
+    // }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
+    // public void setCart(Cart cart) {
+    // this.cart = cart;
+    // }
 
 }

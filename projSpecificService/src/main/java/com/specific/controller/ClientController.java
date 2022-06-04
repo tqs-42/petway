@@ -11,6 +11,7 @@ import com.specific.model.Client;
 import com.specific.service.ClientService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/specific")
 public class ClientController {
 
@@ -24,6 +25,11 @@ public class ClientController {
         String address = data.get("address");
         String fullname = data.get("fullname");
         String password = data.get("password");
+
+        System.out.println("Email - " + email + "Email - " + address + "Email - " + fullname + "Email - " + password);
+        System.out.println("Email - " + email + "Email - " + address + "Email - " + fullname + "Email - " + password);
+        System.out.println("Email - " + email + "Email - " + address + "Email - " + fullname + "Email - " + password);
+        System.out.println("Email - " + email + "Email - " + address + "Email - " + fullname + "Email - " + password);
 
         Client client = service.saveClient(new Client(email, password, fullname, address));
         return new ResponseEntity<>(client, HttpStatus.CREATED);

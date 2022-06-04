@@ -18,7 +18,7 @@ import { UsersAccountsComponent } from './staff/users-accounts/users-accounts.co
 import { StaffAccountsComponent } from './staff/staff-accounts/staff-accounts.component';
 import { SingleComponent } from './client/single/single.component';
 import { ViewCartComponent } from './client/view-cart/view-cart.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OrdersCliComponent } from './client/orders-cli/orders-cli.component';
 import { OrderDetailsComponent } from './client/order-details/order-details.component';
 import { NewCategoryComponent } from './staff/new-category/new-category.component';
@@ -61,6 +61,7 @@ import { OrdersByUsersComponent } from './staff/orders-by-users/orders-by-users.
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
     FormsModule
   ],
   providers: [ { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true } ],
