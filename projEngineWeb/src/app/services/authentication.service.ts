@@ -12,6 +12,7 @@ export class AuthenticationService {
   
   private baseUrl = 'http://localhost:8080/';
   private token = localStorage.getItem('token');
+  userValue: any;
 
   constructor(private http: HttpClient) { }
 
