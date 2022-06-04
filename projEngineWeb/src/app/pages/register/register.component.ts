@@ -9,6 +9,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  form!: FormGroup;
 
   registerForm !: FormGroup;
   showConfirmPasswordError : Boolean = false;

@@ -25,18 +25,19 @@
             <div class="col-md-9">
                 <input type="text" placeholder="Enter Address" name="address" id="address" formControlName="address" required>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <label for="password"><b>Password</b></label>
+            <div class="form-group">
+              <div class="input-group input-group-alternative mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                </div>
+                <input class="form-control" formControlName="address" placeholder="Address" type="email">
+              </div>
             </div>
             <div class="col-md-9">
                 <input type="password" placeholder="Enter Password" name="password" id="password" formControlName="password" required>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <label for="password-repeat"><b>Repeat Password</b></label>
+            <div class="text-center form-group">
+              <button type="submit" class="btn btn-primary my-4">Sign Up</button>
             </div>
             <div class="col-md-9">
                 <input type="password" placeholder="Repeat Password" name="password-repeat" id="password-repeat" formControlName="password_repeat" required>
@@ -48,6 +49,7 @@
         <div class="row">
             <p>Already have an account? <a routerLink="/login">Sign in</a>.</p>
         </div>
-        <button type="submit" class="registerbtn">Register</button>
+      </div>
     </div>
-</form>
+  </div>
+</div>
