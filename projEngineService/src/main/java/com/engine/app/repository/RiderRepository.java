@@ -2,14 +2,21 @@ package com.engine.app.repository;
 
 import com.engine.app.model.Rider;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RiderRepository extends JpaRepository<Rider, String> {
 
-    Optional<Rider> findByEmail(String email);
+    Rider findByEmail(String email);
+
+    List<Rider> findAll();
+    
+    @Query("SELECT r FROM Rider r WHERE r.isActive = true")
+    List<Rider> findAllActiveRiders();
 
 }
