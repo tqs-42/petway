@@ -25,6 +25,8 @@ import com.engine.app.model.JwtResponse;
 import com.engine.app.model.Rider;
 import com.engine.app.service.JwtUserDetailsService;
 import com.engine.app.service.RiderService;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 
 
 @RestController
