@@ -12,10 +12,14 @@ export class RequestInterceptor implements HttpInterceptor {
 
     const user = this.authenticationService.currentUserValue;
     const isLoggedIn = user && user.token;
-    const isApiUrl = request.url.startsWith("http://localhost:8000");
+    const isApiUrl = request.url.startsWith("http://localhost:6869");
 
     if (isLoggedIn && isApiUrl) {
-      request.headers.set('Authorization', `Bearer ${user.token}`)
+      request = request.clone({
+        setHeaders: {
+          Authorization: `Bearer ${user.token}`
+        }
+      });
     }
 
     return next.handle(request);
