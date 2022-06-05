@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Person } from '../classes/Person';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -22,7 +22,7 @@ export class AuthenticationService {
   }
 
   test() {
-    return this.http.get(this.baseUrl + 'oi');
+    return this.http.get(this.baseUrl + 'riders/all-active-riders');
   }
 
   login(form: FormGroup) {
