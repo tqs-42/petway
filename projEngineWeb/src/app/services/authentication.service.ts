@@ -34,6 +34,6 @@ export class AuthenticationService {
 
     let data = { fullname, address, email, password }
 
-    return this.http.post(`${environment.baseURL}/riders/register`, data);
+    return this.http.post(this.baseUrl + "riders/register", data);
   }
 }

@@ -20,27 +20,27 @@ services:
             timeout: 10s
             retries: 2
 
-    projgeneralservice:
-      depends_on:
-        generalDataBase:
-          condition: service_healthy
-      build: ./projEngineService
-      restart: on-failure
-      ports:
-        - 6869:8001
-      environment:
-        SPRING_APPLICATION_JSON: '{
-          "spring.datasource.url"  : "jdbc:mysql://generalDataBase:3307/generalDB?useSSL=true",
-          "spring.datasource.username" : "admin",
-          "spring.datasource.password" : "admin",
-          "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL8Dialect",
-          "spring.jpa.hibernate.ddl-auto" : "update",
-          "server.port": 8001 }'
-      healthcheck:
-        test: "curl http://localhost:8001"
-        interval: 20s
-        timeout: 10s
-        retries: 2
+    # projgeneralservice:
+    #   depends_on:
+    #     generalDataBase:
+    #       condition: service_healthy
+    #   build: ./projEngineService
+    #   restart: on-failure
+    #   ports:
+    #     - 6869:8001
+    #   environment:
+    #     SPRING_APPLICATION_JSON: '{
+    #       "spring.datasource.url"  : "jdbc:mysql://generalDataBase:3307/generalDB?useSSL=true",
+    #       "spring.datasource.username" : "admin",
+    #       "spring.datasource.password" : "admin",
+    #       "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL8Dialect",
+    #       "spring.jpa.hibernate.ddl-auto" : "update",
+    #       "server.port": 8001 }'
+    #   healthcheck:
+    #     test: "curl http://localhost:8001"
+    #     interval: 20s
+    #     timeout: 10s
+    #     retries: 2
     
 volumes:
   datafiles:

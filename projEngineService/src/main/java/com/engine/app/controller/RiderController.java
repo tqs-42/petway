@@ -24,12 +24,22 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin("http://localhost:4200")
 @RequestMapping("/riders")
+@CrossOrigin("http://localhost:4200")
 public class RiderController {
 
     @Autowired
     private RiderService riderService;
+
+    @PostMapping("/register")
+    public ResponseEntity<String> registerRider(@RequestBody Map<String,String> data) throws Exception {
+        try {
+            riderService.registerRider(data.get("email"), data.get("password"), data.get("address"), data.get("fullname"));
+        } catch (ConflictException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.ok().build();
+    }
 
     @GetMapping("/rider/{email}")
     public ResponseEntity<Rider> getRiderByEmail(@Valid @PathVariable String email) {

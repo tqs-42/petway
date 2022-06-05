@@ -23,8 +23,6 @@ import { LoginComponent } from './pages/login/login.component';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { JwtInterceptor } from './services/jwt.interceptor';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +52,7 @@ import { JwtInterceptor } from './services/jwt.interceptor';
       echarts: () => import('echarts')
     })
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
