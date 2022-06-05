@@ -78,4 +78,8 @@ public class Person implements Serializable{
                 + "]";
     }
 
+    public Person orElseThrow(Object object) {
+        return null;
+    }
+
 }
