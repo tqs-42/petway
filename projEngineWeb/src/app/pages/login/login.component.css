@@ -12,6 +12,8 @@
 
 input {
     width: 100%;
+    font-style: normal;
+    color: #000000;
 }
 
 .row {

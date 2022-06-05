@@ -1,5 +1,7 @@
 package com.engine.app.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -7,9 +9,11 @@ import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "persons")
-public class Person {
+public class Person implements Serializable{
 
     @Id
     @Email
@@ -23,6 +27,7 @@ public class Person {
     private String fullname;
 
     @Size(min = 8)
+    @JsonIgnore
     @Column(name = "password", nullable = false)
     private String password;
 
@@ -43,6 +48,8 @@ public class Person {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
 
     public String getAddress() {
         return address;
@@ -66,6 +73,16 @@ public class Person {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    
+    @Override
+    public String toString() {
+        return "Person [address=" + address + ", email=" + email + ", fullname=" + fullname + ", password=" + password
+                + "]";
+    }
+
+    public Person orElseThrow(Object object) {
+        return null;
     }
 
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Rider } from 'src/app/classes/Rider';
+import { RidersService } from 'src/app/services/Riders/riders.service';
 
 @Component({
   selector: 'app-riders',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RidersComponent implements OnInit {
 
-  constructor() { }
+  riders: Rider[] = [];
+
+  constructor(private riderService: RidersService) { }
 
   ngOnInit(): void {
+    this.getActiveRiders();
+  }
+
+  getActiveRiders() {
+    this.riderService.getActiveRiders().subscribe(
+      data => {
+        console.log(data)
+        this.riders = data;
+      }
+    )
+
   }
 
 }
