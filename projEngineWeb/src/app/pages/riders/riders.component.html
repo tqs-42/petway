@@ -4,109 +4,94 @@
 
 <div class="content-wrapper">
 
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Riders</h1>
-                </div>
-            </div>
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Riders</h1>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="content">
+
+    <div class="container-fluid">
+
+      <div class="row">
+        <div class="col-md-3">
+          <app-info-box [icon]="'fas fa-tag'" [title]="'Total riders'" [description]="'72'"></app-info-box>
+        </div>
+        <div class="col-md-3">
+          <app-info-box [icon]="'fas fa-heart'" [title]="'Active riders'" [description]="'45'"></app-info-box>
+        </div>
+        <div class="col-md-3">
+          <app-info-box [icon]="'fas fa-cloud-download-alt'" [title]="'Completed rides'" [description]="'1600'">
+          </app-info-box>
+        </div>
+        <div class="col-md-3">
+          <app-info-box [icon]="'fas fa-comment'" [title]="'Active rides'" [description]="'34'"></app-info-box>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <app-info-box [icon]="'fas fa-tag'" [title]="'Cancelled rides'" [description]="'120'"></app-info-box>
+        </div>
+        <div class="col-md-3">
+          <app-info-box [icon]="'fas fa-heart'" [title]="'Riders revenue'" [description]="'24,000$'"></app-info-box>
+        </div>
+        <div class="col-md-3">
+          <app-info-box [icon]="'fas fa-cloud-download-alt'" [title]="'Products sold'" [description]="'2000'">
+          </app-info-box>
+        </div>
+        <div class="col-md-3">
+          <app-info-box [icon]="'fas fa-comment'" [title]="'No. of vehicle types'" [description]="'4'"></app-info-box>
+        </div>
+      </div>
     </div>
 
-    <section class="content">
+    <p>ideias para pie chart: tipo de veiculos usados</p>
 
-        <div class="container-fluid">
+    <p>charts: distancia percorrida, orders feitas e isso</p>
 
-            <div class="row">
-                <div class="col-md-3">
-                    <app-info-box [icon]="'fas fa-tag'" [title]="'Total riders'"
-                        [description]="'72'"></app-info-box>
-                </div>
-                <div class="col-md-3">
-                    <app-info-box [icon]="'fas fa-heart'"
-                        [title]="'Active riders'" [description]="'45'"></app-info-box>
-                </div>
-                <div class="col-md-3">
-                    <app-info-box [icon]="'fas fa-cloud-download-alt'"
-                        [title]="'Completed rides'" [description]="'1600'"></app-info-box>
-                </div>
-                <div class="col-md-3">
-                    <app-info-box [icon]="'fas fa-comment'" [title]="'Active rides'"
-                        [description]="'34'"></app-info-box>
-                </div>
+    <p>aqui pode ter uma table com todos os riders, clicamos e vamos para a pagina com as suas orders, reviews, etc...
+    </p>
+
+    <h1>Active Riders</h1>
+    <table class="table align-items-center table-flush">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Address</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rider of riders">
+          <th scope="row">
+            <div class="media-body">
+              <span class="mb-0 text-sm">{{rider.fullname}}</span>
             </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <app-info-box [icon]="'fas fa-tag'" [title]="'Cancelled rides'"
-                        [description]="'120'"></app-info-box>
-                </div>
-                <div class="col-md-3">
-                    <app-info-box [icon]="'fas fa-heart'"
-                        [title]="'Riders revenue'" [description]="'24,000$'"></app-info-box>
-                </div>
-                <div class="col-md-3">
-                    <app-info-box [icon]="'fas fa-cloud-download-alt'"
-                        [title]="'Products sold'" [description]="'2000'"></app-info-box>
-                </div>
-                <div class="col-md-3">
-                    <app-info-box [icon]="'fas fa-comment'" [title]="'No. of vehicle types'"
-                        [description]="'4'"></app-info-box>
-                </div>
-            </div>
-        </div>
+          </th>
+          <td>
+            {{rider.email}}
+          </td>         
+          <td>
+            {{rider.address}}
+          </td>
+          <td>
+            {{rider.isActive}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="row" id="cache">
 
-        <p>ideias para pie chart: tipo de veiculos usados</p>
+      <!-- <table [dataSource]="table"></table> -->
 
-        <p>charts: distancia percorrida, orders feitas e isso</p>
+    </div>
 
-        <p>aqui pode ter uma table com todos os riders, clicamos e vamos para a pagina com as suas orders, reviews, etc...</p>
-
-        <h1>Riders</h1>
-        <table>
-            <tr>
-                <th>Company</th>
-                <th>Contact</th>
-                <th>Country</th>
-            </tr>
-            <tr>
-                <td routerLink="/riders/1">John Doe</td>
-                <td>Maria Anders</td>
-                <td>Germany</td>
-            </tr>
-            <tr>
-                <td>Centro comercial Moctezuma</td>
-                <td>Francisco Chang</td>
-                <td>Mexico</td>
-            </tr>
-            <tr>
-                <td>Ernst Handel</td>
-                <td>Roland Mendel</td>
-                <td>Austria</td>
-            </tr>
-            <tr>
-                <td>Island Trading</td>
-                <td>Helen Bennett</td>
-                <td>UK</td>
-            </tr>
-            <tr>
-                <td>Laughing Bacchus Winecellars</td>
-                <td>Yoshi Tannamuri</td>
-                <td>Canada</td>
-            </tr>
-            <tr>
-                <td>Magazzini Alimentari Riuniti</td>
-                <td>Giovanni Rovelli</td>
-                <td>Italy</td>
-            </tr>
-        </table>
-
-        <div class="row" id="cache">
-
-            <!-- <table [dataSource]="table"></table> -->
-
-        </div>
-
-    </section>
+  </section>
 
 </div>

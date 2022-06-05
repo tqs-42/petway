@@ -31,6 +31,26 @@ public class RiderController {
     @Autowired
     private RiderService riderService;
 
+    @PostMapping("/login")
+    public ResponseEntity<String> loginRider(@RequestBody Map<String, String> data) throws Exception {
+        try {
+            riderService.loginRider(data.get("email"), data.get("password"));
+        } catch (ConflictException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<String> registerRider(@RequestBody Map<String,String> data) throws Exception {
+        try {
+            riderService.registerRider(data.get("email"), data.get("password"), data.get("address"), data.get("fullname"));
+        } catch (ConflictException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/rider/{email}")
     public ResponseEntity<Rider> getRiderByEmail(@Valid @PathVariable String email) {
         try {

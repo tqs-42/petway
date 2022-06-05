@@ -1,7 +1,6 @@
 package com.engine.app.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -18,16 +17,23 @@ public class RiderService {
     @Autowired
     RiderRepository riderRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public void loginRider(String email, String password) throws ConflictException {
+        Rider rider = riderRepository.findByEmail(email);
+        if (rider == null) {
+            throw new ConflictException("Rider not found");
+        }
+        
+        if (!password.equals(rider.getPassword())) {
+            throw new ConflictException("Wrong password");
+        }
+    }
 
-    public Rider registerRider(String email,String password,String address, String fullname) throws ConflictException {
+    public Rider registerRider(String email, String password, String address, String fullname) throws ConflictException {
         if (riderRepository.findByEmail(email) != null) {
             throw new ConflictException("Rider " + email + " already registered");
         } else {
             Rider rider = new Rider(email, address, fullname);
-            String passwordEndoded = passwordEncoder.encode(password);
-            rider.setPassword(passwordEndoded);
+            rider.setPassword(password);
             rider.setIsActive(true);
             riderRepository.save(rider);
         }
