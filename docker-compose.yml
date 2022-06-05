@@ -43,27 +43,27 @@ services:
 #            timeout: 10s
 #            retries: 2
 
-    projspecificservice:
-      depends_on:
-        specificDataBase:
-          condition: service_healthy
-      build: ./projSpecificService
-      restart: on-failure
-      ports:
-        - 6868:8000
-      environment:
-        SPRING_APPLICATION_JSON: '{
-          "spring.datasource.url"  : "jdbc:mysql://specificDataBase:3306/specificDB?useSSL=true",
-          "spring.datasource.username" : "admin",
-          "spring.datasource.password" : "admin",
-          "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL8Dialect",
-          "spring.jpa.hibernate.ddl-auto" : "update",
-          "server.port": 8000 }'
-      healthcheck:
-        test: "curl http://localhost:8000"
-        interval: 20s
-        timeout: 10s
-        retries: 2
+#    projspecificservice:
+#      depends_on:
+#        specificDataBase:
+#          condition: service_healthy
+#      build: ./projSpecificService
+#      restart: on-failure
+#      ports:
+#        - 6868:8000
+#      environment:
+#        SPRING_APPLICATION_JSON: '{
+#          "spring.datasource.url"  : "jdbc:mysql://specificDataBase:3306/specificDB?useSSL=true",
+#          "spring.datasource.username" : "admin",
+#          "spring.datasource.password" : "admin",
+#          "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL8Dialect",
+#          "spring.jpa.hibernate.ddl-auto" : "update",
+#          "server.port": 8000 }'
+#      healthcheck:
+#        test: "curl http://localhost:8000"
+#        interval: 20s
+#        timeout: 10s
+#        retries: 2
 
 #    projgeneralservice:
 #      depends_on:
