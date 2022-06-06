@@ -15,7 +15,7 @@ import com.engine.app.repository.RiderRepository;
 public class RiderService {
 
     @Autowired
-    RiderRepository riderRepository;
+    private RiderRepository riderRepository;
 
     public void loginRider(String email, String password) throws ConflictException {
         Rider rider = riderRepository.findByEmail(email);
