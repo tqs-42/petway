@@ -6,18 +6,17 @@ const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
-
 @Injectable({
   providedIn: 'root'
 })
-export class RidersService {
+export class StoresService {
 
   private baseUrl = "http://localhost:8080/";
 
   constructor(private http: HttpClient) { }
 
-  getActiveRiders(): Observable<any> {
+  getAllStores(): Observable<any> {
     const url = this.baseUrl;
-    return this.http.get<any>(url + "riders/all-active-riders", httpOptions);
+    return this.http.get<any>(url + "stores/get-all-stores", httpOptions);
   }
 }

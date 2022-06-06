@@ -12,11 +12,11 @@ export class AppComponent {
 
   constructor(private authenticationService: AuthenticationService, private router: Router) {
 
-    if (this.authenticationService.currentUserValue) {
-      this.router.navigate(['/']);
-    } else {
-      this.router.navigate(['/login']);
-    }
+    // if (this.authenticationService.currentUserValue) {
+    //   this.router.navigate(['/']);
+    // } else {
+    //   this.router.navigate(['/login']);
+    // }
   }
 
 }

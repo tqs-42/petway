@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Person } from '../classes/Person';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { environment } from 'src/environments/environment';
+
 
 
 @Injectable({
@@ -11,14 +10,15 @@ import { map } from 'rxjs/operators';
 })
 export class AuthenticationService {
   
-  private baseUrl = 'http://localhost:6869/';
+  private baseUrl = 'http://localhost:8080/';
+  private token = localStorage.getItem('token');
 
-  private currentUserSubject: BehaviorSubject<Person>;
-  public currentUser: Observable<Person>;
+  //private currentUserSubject: BehaviorSubject<Person>;
+  //public currentUser: Observable<Person>;
 
   constructor(private http: HttpClient) { 
-    this.currentUserSubject = new BehaviorSubject<Person>(JSON.parse(localStorage.getItem('currentUser')!));
-    this.currentUser = this.currentUserSubject.asObservable();
+    //this.currentUserSubject = new BehaviorSubject<Person>(JSON.parse(localStorage.getItem('currentUser')!));
+    //this.currentUser = this.currentUserSubject.asObservable();
   }
 
   test() {
@@ -30,11 +30,8 @@ export class AuthenticationService {
     let email = form.value.email;
     let password = form.value.password;
 
-    return this.http.post(this.baseUrl + 'login', { email, password }).pipe(map((user) => {
-      // store user details and jwt token in local storage to keep user logged in between page refreshes
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      return user;
-    }));
+    return this.http.post(this.baseUrl + 'riders/login', { email, password });
+
   }
 
   register(form: FormGroup) {
@@ -46,20 +43,6 @@ export class AuthenticationService {
 
     let data = { fullname, address, email, password }
 
-    console.log(data);
-
-    return this.http.post(this.baseUrl + 'register', data);
-
+    return this.http.post(`${environment.baseURL}/riders/register`, data);
   }
-
-  logout() {
-    localStorage.removeItem('currentUser');
-    this.currentUserSubject.next(null!);
-  }
-
-  public get currentUserValue(): Person {
-    return this.currentUserSubject.value;
-  }
-
-
 }

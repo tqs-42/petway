@@ -23,7 +23,6 @@ import { LoginComponent } from './pages/login/login.component';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { RequestInterceptor } from './services/request.interceptor';
 
 
 @NgModule({
@@ -56,7 +55,7 @@ import { RequestInterceptor } from './services/request.interceptor';
     })
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }
+    
   ],
   bootstrap: [AppComponent]
 })

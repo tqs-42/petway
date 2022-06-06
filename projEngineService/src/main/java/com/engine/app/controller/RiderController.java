@@ -12,9 +12,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
+import com.engine.app.exception.ConflictException;
+
 
 import com.engine.app.model.Rider;
 import com.engine.app.service.RiderService;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
@@ -24,27 +31,25 @@ public class RiderController {
     @Autowired
     private RiderService riderService;
 
-    // @PostMapping("/addRider")
-    // public ResponseEntity<String> getCovidDataByCountry(@RequestBody Map<String, String> register) {
+    @PostMapping("/login")
+    public ResponseEntity<String> loginRider(@RequestBody Map<String, String> data) throws Exception {
+        try {
+            riderService.loginRider(data.get("email"), data.get("password"));
+        } catch (ConflictException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.ok().build();
+    }
 
-    //     String email = register.get("email");
-    //     String fullname = register.get("fullname");
-    //     String address = register.get("address");
-    //     String password = register.get("password");
-
-    //     System.out.println("REGISTER  --- " + register);
-    //     System.out.println("EMAIL --- " + email);
-    //     System.out.println("EMAIL 2--- " + fullname);
-    //     System.out.println("EMAIL - 3-- " + address);
-    //     System.out.println("EMAIL --- 4  - " + password);
-
-    //     try {
-    //         riderService.registerRider(email, password, address, fullname);
-    //     } catch (ConflictException e) {
-    //         return ResponseEntity.badRequest().body(e.getMessage());
-    //     }
-    //     return ResponseEntity.ok("Rider registered successfully");
-    // }
+    @PostMapping("/register")
+    public ResponseEntity<String> registerRider(@RequestBody Map<String,String> data) throws Exception {
+        try {
+            riderService.registerRider(data.get("email"), data.get("password"), data.get("address"), data.get("fullname"));
+        } catch (ConflictException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.ok().build();
+    }
 
     @GetMapping("/rider/{email}")
     public ResponseEntity<Rider> getRiderByEmail(@Valid @PathVariable String email) {

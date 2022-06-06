@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Rider } from 'src/app/classes/Rider';
 import { RidersService } from 'src/app/services/Riders/riders.service';
+import { Rider } from 'src/models/Rider';
 
 @Component({
   selector: 'app-riders',
@@ -20,7 +20,6 @@ export class RidersComponent implements OnInit {
   getActiveRiders() {
     this.riderService.getActiveRiders().subscribe(
       data => {
-        console.log(data)
         this.riders = data;
       }
     )

@@ -3,8 +3,12 @@ package com.engine.app.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+
+import com.engine.app.exception.ConflictException;
+
+import java.util.List;
 
 import com.engine.app.model.Rider;
 import com.engine.app.repository.RiderRepository;
@@ -13,29 +17,33 @@ import com.engine.app.repository.RiderRepository;
 public class RiderService {
 
     @Autowired
-    RiderRepository riderRepository;
+    private RiderRepository riderRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    public Rider save(Rider rider) throws Exception {
-        
-        if (riderRepository.findByEmail(rider.getEmail()).isEmpty()) {
-
-            rider.setPassword(passwordEncoder.encode(rider.getPassword()));
-            riderRepository.saveAndFlush(rider);
-            return rider;
-
-        } else {
-            
-            throw new Exception();
-
+    public void loginRider(String email, String password) throws ConflictException {
+        Rider rider = riderRepository.findByEmail(email);
+        if (rider == null) {
+            throw new ConflictException("Rider not found");
         }
-
+        
+        if (!password.equals(rider.getPassword())) {
+            throw new ConflictException("Wrong password");
+        }
     }
 
+    public Rider registerRider(String email, String password, String address, String fullname) throws ConflictException {
+        if (riderRepository.findByEmail(email) != null) {
+            throw new ConflictException("Rider " + email + " already registered");
+        } else {
+            Rider rider = new Rider(email, address, fullname);
+            rider.setPassword(password);
+            rider.setIsActive(true);
+            riderRepository.save(rider);
+        }
+        return null;
+    }
+    
     public Rider getRiderByEmail(String email) {
-        return riderRepository.findByEmail(email).get();
+        return riderRepository.findByEmail(email);
     }
 
     public List<Rider> getAllRiders() {
@@ -47,9 +55,8 @@ public class RiderService {
     }
     
     public void changeStatus(String email) {
-        Rider rider = riderRepository.findByEmail(email).get();
+        Rider rider = riderRepository.findByEmail(email);
         rider.setIsActive(!rider.getIsActive());
         riderRepository.save(rider);
     }
-    
 }
