@@ -1,51 +1,52 @@
-<div class="p-5">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>
-                All Products
-                <a routerLink="/system/product/new"><button class="btn btn-outline-primary btn-md">Add</button></a>
-            </h1>
-        </div>
+<div class="p-5 container bg-light bg-light">
+  <div class="row">
+    <div class="col-md-12" style="display: flex; justify-content: space-between;">
+      <h1>
+        All Products
+      </h1>
+      <a style="margin-top: 1%;" routerLink="/system/product/new"><button
+          class="btn btn-outline-primary btn-md">Add</button></a>
     </div>
+  </div>
 
-    <div class="col-md-12 mt-5">
-        <div>
-            <div>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th style="color: black;" scope="col">Name</th>
-                            <th style="color: black;" scope="col">Category</th>
-                            <th style="color: black;" scope="col">Price</th>
-                            <th style="color: black;" scope="col">Active</th>
-                            <th style="color: black;" scope="col"></th>
-                            <th style="color: black;" scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let product of products">
-                            <td style="color: rgb(32, 29, 29);">{{ product.name }}</td>
-                            <td style="color: rgb(32, 29, 29);">{{ product.category.name }}</td>
-                            <td style="color: rgb(32, 29, 29);">{{ product.price }}€</td>
-                            <td style="color: rgb(32, 29, 29);">{{product.isActive?'Yes':'No'}}</td>
-                            <td style="color: rgb(32, 29, 29);">
-                                <a routerLink="/system/product/{{ product.id }}"><button class="btn btn-primary btn-sm">Ver</button></a>
-                            </td>
-                            <td>
-                                <div class="form-group">
-                                    <div *ngIf="product.isActive" class="col-md-offset-2 col-md-10">
-                                        <button type="button" class="btn btn-outline-danger" (click)="desactiveProduct(product.id)">Desativar</button>
-                                    </div>
-                                    <div *ngIf="!product.isActive" class="col-md-offset-2 col-md-10">
-                                        <button type="button" class="btn btn-outline-success" (click)="activeProduct(product.id)">Ativar</button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
+  <div class="col-md-12 mt-5">
+    <div>
+      <div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th style="color: black;" scope="col">Name</th>
+              <th style="color: black;" scope="col">Category</th>
+              <th style="color: black;" scope="col">Price</th>
+              <th style="color: black;" scope="col">Active</th>
+              <th style="color: black;" scope="col"></th>
+              <th style="color: black;" scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color: rgb(32, 29, 29);"> product.name </td>
+              <td style="color: rgb(32, 29, 29);"> product.category.name </td>
+              <td style="color: rgb(32, 29, 29);"> product.price €</td>
+              <td style="color: rgb(32, 29, 29);">product.isActive?'Yes':'No'</td>
+              <td style="color: rgb(32, 29, 29);">
+                <a routerLink=""><button class="btn btn-primary btn-sm">Ver</button></a>
+              </td>
+              <td>
+                <div class="form-group">
+                  <div class="col-md-offset-2 col-md-10">
+                    <button type="button" class="btn btn-outline-danger">Desativar</button>
+                  </div>
+                  <div class="col-md-offset-2 col-md-10">
+                    <button type="button" class="btn btn-outline-success">Ativar</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
 
-                </table>
-            </div>
-        </div>
+        </table>
+      </div>
     </div>
+  </div>
 </div>
