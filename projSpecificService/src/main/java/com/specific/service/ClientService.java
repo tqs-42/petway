@@ -24,17 +24,6 @@ public class ClientService {
         }
     }
 
-    public void loginClient(String email, String password) throws ConflictException {
-        Client client = repository.findByEmail(email);
-        if (client == null) {
-            throw new ConflictException("Client not found");
-        }
-
-        if (!password.equals(client.getPassword())) {
-            throw new ConflictException("Wrong password");
-        }
-    }
-
     public List<Client> saveClients(List<Client> clients) {
         return repository.saveAll(clients);
     }

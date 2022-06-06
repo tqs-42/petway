@@ -57,7 +57,7 @@
         <!--<div class="btn" routerLink="/cart" *ngIf="userService.user.is_staff !== true"><i class="fa fa-shopping-cart"></i> {{ cartService.totalElements }}</div>-->
         <div class="btn" routerLink="/cart"><i class="fa fa-shopping-cart"></i>
           {{ cartService.totalElements }}</div>
-        <div class="btn"><i class="fa fa-user"></i> carlos</div>
+        <div class="btn"><i class="fa fa-user"></i>{{ userService.username }}</div>
         <div class="btn btn-outline-danger" (click)="authService.logout()">Log Out</div>
       </span>
     </div>

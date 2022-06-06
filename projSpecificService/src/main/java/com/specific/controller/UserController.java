@@ -2,46 +2,62 @@ package com.specific.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
+import java.util.Map;
 
+import com.engine.app.exception.ConflictException;
 import com.specific.model.User;
+import com.specific.service.ClientService;
 import com.specific.service.UserService;
 
 @RestController
-@RequestMapping("/api/specific")
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
-    private UserService service;
+    private UserService userService;
+
+    @PostMapping("/login")
+    public ResponseEntity<String> loginUser(@RequestBody Map<String, String> data) throws Exception {
+        try {
+            userService.loginUser(data.get("email"), data.get("password"));
+        } catch (ConflictException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.ok().build();
+    }
 
     @PostMapping("/addUser")
     public User addUser(@RequestBody User user) {
-        return service.saveUser(user);
+        return userService.saveUser(user);
     }
 
     @PostMapping("/addUsers")
     public List<User> addUsers(@RequestBody List<User> users) {
-        return service.saveUsers(users);
+        return userService.saveUsers(users);
     }
 
     @GetMapping("/users")
     public List<User> findAllUsers() {
-        return service.getUsers();
+        return userService.getUsers();
     }
 
     @GetMapping("/userByEmail/{email}")
     public User findUserByEmail(@PathVariable String email) {
-        return service.getUserByEmail(email);
+        return userService.getUserByEmail(email);
     }
 
     @PutMapping("/updateUser")
     public User updateUser(@RequestBody User user) {
-        return service.updateUser(user);
+        return userService.updateUser(user);
     }
 
     @DeleteMapping("/deleteUser/{email}")
     public String deleteUser(@PathVariable String email) {
-        return service.deleteUser(email);
-    }   
+        return userService.deleteUser(email);
+    }
 }

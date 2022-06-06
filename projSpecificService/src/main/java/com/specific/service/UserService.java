@@ -5,13 +5,30 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import com.engine.app.exception.ConflictException;
+import com.specific.model.Client;
 import com.specific.model.User;
 import com.specific.repository.UserRepository;
+import com.specific.repository.ClientRepository;
 
 @Service
 public class UserService {
     @Autowired
     private UserRepository repository;
+
+    @Autowired
+    private ClientRepository clientRepository;
+
+    public void loginUser(String email, String password) throws ConflictException {
+        User user = repository.findByEmail(email);
+        if (user == null) {
+            throw new ConflictException("User not found");
+        }
+
+        if (!password.equals(user.getPassword())) {
+            throw new ConflictException("Wrong password");
+        }
+    }
 
     public User saveUser(User user) {
         return repository.save(user);

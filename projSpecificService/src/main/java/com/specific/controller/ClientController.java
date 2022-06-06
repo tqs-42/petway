@@ -21,16 +21,6 @@ public class ClientController {
     @Autowired
     private ClientService service;
 
-    @PostMapping("/login")
-    public ResponseEntity<String> loginClient(@RequestBody Map<String, String> data) throws Exception {
-        try {
-            service.loginClient(data.get("email"), data.get("password"));
-        } catch (ConflictException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-        return ResponseEntity.ok().build();
-    }
-
     @PostMapping("/addClient")
     public ResponseEntity<Client> registerClient(@RequestBody Map<String, String> data) throws Exception {
 

@@ -18,7 +18,7 @@ export class AuthenticationService {
 
     console.log("Email -- " + email + "   " + password)
 
-    return this.http.post(this.baseUrl + 'client/login', { email, password });
+    return this.http.post(this.baseUrl + 'user/login', { email, password });
 
   }
 
