@@ -3,6 +3,7 @@ import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-app',
@@ -24,7 +25,7 @@ export class AppComponent implements OnInit {
   //   this.authService.login(this.login.username, this.login.password)
   // }
 
-  constructor(private fb : FormBuilder, private authService: AuthenticationService, private router : Router) { }
+  constructor(private fb : FormBuilder, private authService: AuthenticationService, private userService: UserService, private router : Router) { }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -82,6 +83,7 @@ export class AppComponent implements OnInit {
 
       this.authService.login(this.loginForm).subscribe({
         next: () => {
+          this.userService.username = this.loginForm.value.email;
           this.router.navigate(['/system/dashboard'])
         },
         error: () => {
