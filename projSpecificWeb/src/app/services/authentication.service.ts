@@ -11,6 +11,17 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) { }
 
+  login(form: FormGroup) {
+
+    let email = form.value.email;
+    let password = form.value.password;
+
+    console.log("Email -- " + email + "   " + password)
+
+    return this.http.post(this.baseUrl + 'client/login', { email, password });
+
+  }
+
   register(form: FormGroup) {
 
     let fullname = form.value.fullname;
@@ -22,7 +33,7 @@ export class AuthenticationService {
 
     console.log(data);
 
-    return this.http.post(this.baseUrl + 'api/specific/addClient', data);
+    return this.http.post(this.baseUrl + 'client/addClient', data);
 
   }
 

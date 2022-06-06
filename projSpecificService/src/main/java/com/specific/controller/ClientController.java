@@ -4,19 +4,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
+
+import java.io.Console;
 import java.util.List;
 import java.util.Map;
 
+import com.engine.app.exception.ConflictException;
 import com.specific.model.Client;
 import com.specific.service.ClientService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/api/specific")
+@RequestMapping("/client")
 public class ClientController {
 
     @Autowired
     private ClientService service;
+
+    @PostMapping("/login")
+    public ResponseEntity<String> loginClient(@RequestBody Map<String, String> data) throws Exception {
+        try {
+            service.loginClient(data.get("email"), data.get("password"));
+        } catch (ConflictException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.ok().build();
+    }
 
     @PostMapping("/addClient")
     public ResponseEntity<Client> registerClient(@RequestBody Map<String, String> data) throws Exception {

@@ -12,6 +12,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class AppComponent implements OnInit {
 
   registerForm !: FormGroup;
+  loginForm !: FormGroup;
   showError : Boolean = false;
   message: String = 'Error.';
 
@@ -33,11 +34,14 @@ export class AppComponent implements OnInit {
       password:[null, [Validators.required, Validators.minLength(8)]],
       password_repeat:[null, [Validators.required, Validators.minLength(8)]]
     });
+
+    this.loginForm = this.fb.group({
+      email: [null, [Validators.required, Validators.email]],
+      password:[null, [Validators.required, Validators.minLength(8)]],
+    });
   }
 
-  submit(): void {
-
-
+  register(): void {
     let error = false;
 
     if (this.registerForm.value.password != this.registerForm.value.password_repeat) {
@@ -57,6 +61,26 @@ export class AppComponent implements OnInit {
     if (!error) {
 
       this.authService.register(this.registerForm).subscribe({
+        next: () => {
+          this.router.navigate(['/system/dashboard'])
+        },
+        error: () => {
+          this.showError = true;
+          this.message = 'Error.'
+        }
+      })
+
+    }
+  }
+
+  login(): void {
+    let error = false;
+
+    console.log(this.loginForm.value.password.length);
+
+    if (!error) {
+
+      this.authService.login(this.loginForm).subscribe({
         next: () => {
           this.router.navigate(['/system/dashboard'])
         },

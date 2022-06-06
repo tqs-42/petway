@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import com.engine.app.exception.ConflictException;
 import com.specific.model.Client;
 import com.specific.repository.ClientRepository;
 
@@ -20,6 +21,17 @@ public class ClientService {
 
         } else {
             throw new Exception();
+        }
+    }
+
+    public void loginClient(String email, String password) throws ConflictException {
+        Client client = repository.findByEmail(email);
+        if (client == null) {
+            throw new ConflictException("Client not found");
+        }
+
+        if (!password.equals(client.getPassword())) {
+            throw new ConflictException("Wrong password");
         }
     }
 
