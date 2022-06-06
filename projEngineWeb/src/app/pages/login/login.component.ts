@@ -21,31 +21,15 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  public submit(): void {
-    
-    let error = false;
+  clearForm() {
+    this.loginForm.reset();
+  }
 
-    if (this.registerForm.value.password != this.registerForm.value.password_repeat) {
-      this.showConfirmPasswordError = true;
-      error = true;
-    }
-
-    if (this.registerForm.invalid) {
-      this.showError = true;
-      error = true;
-    }
-
-    if (!error) {
-      this.authenticationService.register(this.registerForm).subscribe({
-        next: () => {
-          this.router.navigate(['/'])
-        },
-        error: () => {
-          this.showError = true;
-        }
-      })
-
-    }
+  login() {
+    console.log("login", this.loginForm)
+    this.authenticationService.login(this.loginForm).subscribe((data) => {
+      this.router.navigate(['/']);
+    });
   }
 
 }
