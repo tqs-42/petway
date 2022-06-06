@@ -33,8 +33,7 @@ export class AuthService {
   }
 
   logout() {
-    this.userService.setToken(null)
-    localStorage.removeItem('token')
+    this.userService.username = null;
     this.router.navigateByUrl('/')
   }
 

@@ -22,17 +22,13 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/login")
-    public String loginUser(@RequestBody Map<String, String> data) throws Exception {
-        User user;
+    public ResponseEntity<String> loginUser(@RequestBody Map<String, String> data) throws Exception {
         try {
-            user = userService.loginUser(data.get("email"), data.get("password"));
+            userService.loginUser(data.get("email"), data.get("password"));
         } catch (ConflictException e) {
-            return "ResponseEntity.badRequest().body(e.getMessage())";
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-        System.out.println(user.getClass().getName());
-
-        return "{ 'fullname' : '" + user.getFullname() + "' , 'typed' : '" + user.getClass().getName() + "' }";
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/addUser")
