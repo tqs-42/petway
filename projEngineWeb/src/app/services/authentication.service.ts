@@ -13,12 +13,12 @@ export class AuthenticationService {
   private baseUrl = 'http://localhost:8080/';
   private token = localStorage.getItem('token');
 
-  private currentUserSubject: BehaviorSubject<Person>;
-  public currentUser: Observable<Person>;
+  //private currentUserSubject: BehaviorSubject<Person>;
+  //public currentUser: Observable<Person>;
 
   constructor(private http: HttpClient) { 
-    this.currentUserSubject = new BehaviorSubject<Person>(JSON.parse(localStorage.getItem('currentUser')!));
-    this.currentUser = this.currentUserSubject.asObservable();
+    //this.currentUserSubject = new BehaviorSubject<Person>(JSON.parse(localStorage.getItem('currentUser')!));
+    //this.currentUser = this.currentUserSubject.asObservable();
   }
 
   test() {

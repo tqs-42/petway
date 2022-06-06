@@ -55,7 +55,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     })
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }
+    
   ],
   bootstrap: [AppComponent]
 })
