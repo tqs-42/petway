@@ -1,6 +1,6 @@
 export interface Rider {
-    fullname: string
+  fullname: string
   email: string
   address: string
-    isActive: boolean;
-  }
+  isActive: boolean;
+}

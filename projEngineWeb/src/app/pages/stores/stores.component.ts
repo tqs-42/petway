@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { StoresService } from 'src/app/services/Stores/stores.service';
+import { Store } from 'src/models/Store';
+
 
 @Component({
   selector: 'app-stores',
@@ -7,9 +10,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StoresComponent implements OnInit {
 
-  constructor() { }
+  stores: Store[] = [];
+
+  constructor(private storesService: StoresService) { }
 
   ngOnInit(): void {
+    this.getAllStores();
   }
+
+  getAllStores() {
+    this.storesService.getAllStores().subscribe(
+      data => {
+        this.stores = data;
+      }
+    )
+
+  }  
 
 }
