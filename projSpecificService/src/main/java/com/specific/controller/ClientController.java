@@ -9,7 +9,7 @@ import java.io.Console;
 import java.util.List;
 import java.util.Map;
 
-import com.engine.app.exception.ConflictException;
+import com.specific.exception.ConflictException;
 import com.specific.model.Client;
 import com.specific.service.ClientService;
 

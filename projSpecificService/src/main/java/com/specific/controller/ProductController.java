@@ -4,19 +4,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 import com.specific.model.Product;
 import com.specific.service.ProductService;
 
 @RestController
-@RequestMapping("/api/specific")
+@RequestMapping("/product")
 public class ProductController {
     @Autowired
     private ProductService service;
 
-    @PostMapping("/addProduct")
-    public Product addProduct(@RequestBody Product product) {
-        return service.saveProduct(product);
+    @PostMapping("/add-product")
+    public Product addProduct(@RequestBody Map<String, String> data) {
+
+        return service.saveProduct(data);
     }
 
     @PostMapping("/addProducts")

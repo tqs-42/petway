@@ -26,7 +26,7 @@ public class StoreService {
     }
 
     public Store getStoreById(long id) {
-        return repository.findById(id).orElse(null);
+        return repository.findById(id);
     }
 
     public String deleteStore(long id) {
@@ -35,7 +35,7 @@ public class StoreService {
     }
 
     public Store updateStore(Store store) {
-        Store existingStore = repository.findById(store.getId()).orElse(null);
+        Store existingStore = repository.findById(store.getId());
         existingStore.setAddress(store.getAddress());
         existingStore.setName(store.getName());
         existingStore.setActive(store.getActive());

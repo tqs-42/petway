@@ -2,6 +2,7 @@ package com.specific.model;
 
 import lombok.Data;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -34,9 +35,9 @@ public class Category {
             inverseJoinColumns = @JoinColumn(name = "productId"))
     Set<Product> products;
     
-    public Category(String category, Set<Product> products) {
+    public Category(String category) {
         this.category = category;
-        this.products = products;
+        this.products = new HashSet<Product>();
     }
 
     public Category(){
@@ -61,6 +62,11 @@ public class Category {
 
     public void setProducts(Set<Product> products) {
         this.products = products;
+    }
+
+    @Override
+    public String toString() {
+        return "Category [category=" + category + ", id=" + id + ", products="  + "]";
     }
 
 }

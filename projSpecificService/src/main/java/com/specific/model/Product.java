@@ -1,6 +1,8 @@
 package com.specific.model;
 
 import lombok.Data;
+
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -16,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Data
 @Entity
@@ -48,11 +52,12 @@ public class Product {
     @OneToMany(mappedBy="product")
     Set<RequestProducts> requests;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Stock stock;
+    
+    @Column(name = "stock", nullable = true)
+    private int stock;
 
     public Product(String name, String description, String image, Double price, Store store, Set<Category> categories,
-            Set<RequestProducts> requests, Stock stock) {
+            Set<RequestProducts> requests, int stock) {
         this.name = name;
         this.description = description;
         this.image = image;
@@ -61,6 +66,17 @@ public class Product {
         this.categories = categories;
         this.requests = requests;
         this.stock = stock;
+    }
+
+    public Product(String name, String description, String image, Double price, int stock, Category category, Store store) {
+        this.name = name;
+        this.description = description;
+        this.image = image;
+        this.price = price;
+        this.stock = stock;
+        this.categories = new HashSet<>();
+        this.categories.add(category);
+        this.store = store;
     }
 
     public Product(){
@@ -127,12 +143,13 @@ public class Product {
         this.requests = requests;
     }
 
-    public Stock getStock() {
-        return stock;
+    @Override
+    public String toString() {
+        return "Product [categories="  + ", description=" + description + ", id=" + id + ", image=" + image
+                + ", name=" + name + ", price=" + price + ", requests="  + ", stock=" + stock + ", store="
+                + store + "]";
     }
 
-    public void setStock(Stock stock) {
-        this.stock = stock;
-    }
+
 
 }
