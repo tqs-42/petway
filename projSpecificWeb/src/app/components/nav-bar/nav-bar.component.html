@@ -7,7 +7,8 @@
 
   <div class="navbar-collapse" id="navbarSupportedContent">
     <!--<ul class="navbar-nav mr-auto" *ngIf="userService.user === null || userService.user.is_staff === false">-->
-    <ul class="navbar-nav mr-auto" style="margin-top: 0" *ngIf="userService.username === null">
+    <ul class="navbar-nav mr-auto" style="margin-top: 0"
+      *ngIf="userService.username === null || (userService.username !== null && (userService.dtype)?.includes('Client') )">
       <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
           routerLink="/">Home</a>
@@ -21,7 +22,7 @@
       </li>
     </ul>
     <!--<ul class="navbar-nav mr-auto" *ngIf="userService.user !== null && userService.user.is_staff === true">-->
-    <ul class="navbar-nav mr-auto" *ngIf="userService.username !== null">
+    <ul class="navbar-nav mr-auto" *ngIf="userService.username !== null && (userService.dtype)?.includes('Manager')">
       <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" routerLink="/system/dashboard">Dashboard</a>
       </li>

@@ -82,18 +82,13 @@ export class AppComponent implements OnInit {
 
           let fullname = res.toString().split(":")[1].replace("{" , "").split(",")[0].replace("'","").replace("'","");
           let dtype = res.toString().split(":")[2].replace("{" , "").split(",")[0].replace("'","").replace("'","").replace("}","").split(".")[3];
-          console.log(dtype)
 
-          //let myObj = JSON.parse(res.toString());
-          //console.log(myObj); 
           this.userService.email = this.loginForm.value.email;
           this.userService.username = fullname;
           this.userService.dtype = dtype;
-          this.router.navigate(['/system/dashboard'])
-          console.log("Entrou no next");
+          this.router.navigate(['/'])
         },
         () => {
-          console.log( "Entrou no error");
           this.showError = true;
           this.message = 'Error.'
         }

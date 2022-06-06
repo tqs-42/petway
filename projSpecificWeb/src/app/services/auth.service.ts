@@ -15,6 +15,7 @@ export class AuthService {
   user: User | undefined;
 
   logout() {
+    this.userService.username = null;
   }
 
   loadProfile() {
