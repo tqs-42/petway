@@ -1,8 +1,6 @@
 package com.specific.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
@@ -15,7 +13,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Data
-@NoArgsConstructor
 @Entity
 @Table(name = "STORE")
 public class Store {
@@ -45,6 +42,10 @@ public class Store {
         this.active = active;
         this.managers = managers;
         this.products = products;
+    }
+
+    public Store(){
+        
     }
 
     public long getId() {

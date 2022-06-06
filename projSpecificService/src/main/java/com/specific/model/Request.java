@@ -1,8 +1,6 @@
 package com.specific.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,7 +14,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Data
-@NoArgsConstructor
 @Entity
 @Table(name = "REQUEST")
 public class Request {
@@ -41,6 +38,10 @@ public class Request {
         this.cart = cart;
     }
 
+    public Request(){
+
+    }
+    
     public long getId() {
         return id;
     }

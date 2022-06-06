@@ -14,7 +14,6 @@ public class ClientService {
     private ClientRepository repository;
 
     public Client saveClient(Client client) throws Exception {
-        System.out.println("SOU O TEU CLIENTE ---  " + client);
         if (repository.findByEmail(client.getEmail()) == null) {
             repository.saveAndFlush(client);
             return client;

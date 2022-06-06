@@ -1,8 +1,6 @@
 package com.specific.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +13,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Data
-@NoArgsConstructor
 @Entity
 @Table(name = "STOCK")
 public class Stock {
@@ -34,6 +31,10 @@ public class Stock {
     public Stock(int amount, Product product) {
         this.amount = amount;
         this.product = product;
+    }
+
+    public Stock(){
+        
     }
 
     public long getId() {

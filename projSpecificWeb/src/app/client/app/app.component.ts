@@ -12,8 +12,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class AppComponent implements OnInit {
 
   registerForm !: FormGroup;
-  showConfirmPasswordError : Boolean = false;
   showError : Boolean = false;
+  message: String = 'Error.';
 
 
   //login: { username: string, password: string } = { username: "", password: "" }
@@ -37,31 +37,32 @@ export class AppComponent implements OnInit {
 
   submit(): void {
 
-    
-    let error = false;
-    
-    if (this.registerForm.value.password != this.registerForm.value.password_repeat) {
-      console.log("ESTOU A ENTRAR AQUI ???? " + this.registerForm.value.password + "   " + this.registerForm.value.password_repeat)
-      this.showConfirmPasswordError = true;
-      error = true;
-    }
 
-    if (this.registerForm.invalid) {
+    let error = false;
+
+    if (this.registerForm.value.password != this.registerForm.value.password_repeat) {
+      this.showError = true;
+      this.message = 'Passwords are not equal';
+      error = true;
+    } else if (this.registerForm.value.password.length < 8) {
+      this.message = 'Password must be longer than 8!';
       this.showError = true;
       error = true;
+    }else if (this.registerForm.invalid) {
+      this.showError = true;
+      error = true;
+      this.message = 'Error. All fields must be filled.'
     }
 
     if (!error) {
-      console.log("nao TEM EROO -- " + error)
 
       this.authService.register(this.registerForm).subscribe({
         next: () => {
-          console.log("1")
           this.router.navigate(['/system/dashboard'])
         },
         error: () => {
-          console.log("2")
           this.showError = true;
+          this.message = 'Error.'
         }
       })
 
