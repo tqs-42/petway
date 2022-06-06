@@ -13,7 +13,17 @@ export class AuthenticationService {
   private baseUrl = 'http://localhost:8080/';
   private token = localStorage.getItem('token');
 
-  constructor(private http: HttpClient) { }
+  private currentUserSubject: BehaviorSubject<Person>;
+  public currentUser: Observable<Person>;
+
+  constructor(private http: HttpClient) { 
+    this.currentUserSubject = new BehaviorSubject<Person>(JSON.parse(localStorage.getItem('currentUser')!));
+    this.currentUser = this.currentUserSubject.asObservable();
+  }
+
+  test() {
+    return this.http.get(this.baseUrl + 'riders/all-active-riders');
+  }
 
   login(form: FormGroup) {
 

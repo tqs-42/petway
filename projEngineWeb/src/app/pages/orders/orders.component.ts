@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-orders',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrdersComponent implements OnInit {
 
-  constructor() { }
+  constructor(private autService : AuthenticationService) { }
 
   ngOnInit(): void {
+    this.test();
+  }
+
+  test() {
+    this.autService.test().subscribe((data) => {
+      console.log("uiiiiiiiiiiiiiiiiiiiiiiii")
+      console.log(data)
+    })
   }
 
 }
