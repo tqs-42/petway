@@ -19,7 +19,7 @@ public class UserService {
     @Autowired
     private ClientRepository clientRepository;
 
-    public void loginUser(String email, String password) throws ConflictException {
+    public User loginUser(String email, String password) throws ConflictException {
         User user = repository.findByEmail(email);
         if (user == null) {
             throw new ConflictException("User not found");
@@ -28,6 +28,8 @@ public class UserService {
         if (!password.equals(user.getPassword())) {
             throw new ConflictException("Wrong password");
         }
+
+        return user;
     }
 
     public User saveUser(User user) {
