@@ -1,9 +1,6 @@
 package com.specific.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -21,7 +18,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Data
-@NoArgsConstructor
 @Entity
 @Table(name = "PRODUCT")
 public class Product {
@@ -65,6 +61,10 @@ public class Product {
         this.categories = categories;
         this.requests = requests;
         this.stock = stock;
+    }
+
+    public Product(){
+
     }
 
     public long getId() {

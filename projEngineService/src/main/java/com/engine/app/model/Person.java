@@ -1,5 +1,7 @@
 package com.engine.app.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -9,7 +11,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "persons")
-public class Person {
+public class Person implements Serializable{
 
     @Id
     @Email
@@ -44,6 +46,8 @@ public class Person {
         this.email = email;
     }
 
+
+
     public String getAddress() {
         return address;
     }
@@ -66,6 +70,12 @@ public class Person {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    
+    @Override
+    public String toString() {
+        return "Person [address=" + address + ", email=" + email + ", fullname=" + fullname + ", password=" + password
+                + "]";
     }
 
 }

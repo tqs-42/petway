@@ -1,8 +1,6 @@
 package com.specific.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
@@ -19,7 +17,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Data
-@NoArgsConstructor
 @Entity
 @Table(name = "CART")
 public class Cart {
@@ -42,6 +39,10 @@ public class Cart {
         this.client = client;
         this.products = products;
         this.request = request;
+    }
+
+    public Cart(){
+        
     }
 
     public long getId() {

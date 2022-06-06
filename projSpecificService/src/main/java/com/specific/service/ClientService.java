@@ -13,8 +13,14 @@ public class ClientService {
     @Autowired
     private ClientRepository repository;
 
-    public Client saveClient(Client client) {
-        return repository.save(client);
+    public Client saveClient(Client client) throws Exception {
+        if (repository.findByEmail(client.getEmail()) == null) {
+            repository.saveAndFlush(client);
+            return client;
+
+        } else {
+            throw new Exception();
+        }
     }
 
     public List<Client> saveClients(List<Client> clients) {
@@ -34,12 +40,12 @@ public class ClientService {
         return "client removed !! " + email;
     }
 
-    public Client updateClient(Client client) {
-        Client existingClient = repository.findByEmail(client.getEmail());
-        existingClient.setPassword(client.getPassword());
-        existingClient.setFullname(client.getFullname());
-        existingClient.setAddresses(client.getAddresses());
-        existingClient.setCart(client.getCart());
-        return repository.save(existingClient);
-    }
+    // public Client updateClient(Client client) {
+    // Client existingClient = repository.findByEmail(client.getEmail());
+    // existingClient.setPassword(client.getPassword());
+    // existingClient.setFullname(client.getFullname());
+    // existingClient.setAddresses(client.getAddresses());
+    // existingClient.setCart(client.getCart());
+    // return repository.save(existingClient);
+    // }
 }

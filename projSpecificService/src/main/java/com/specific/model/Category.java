@@ -1,8 +1,6 @@
 package com.specific.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
@@ -18,7 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 @Data
-@NoArgsConstructor
 @Entity
 @Table(name = "CATEGORY")
 public class Category {
@@ -40,6 +37,10 @@ public class Category {
     public Category(String category, Set<Product> products) {
         this.category = category;
         this.products = products;
+    }
+
+    public Category(){
+
     }
 
     public long getId() {

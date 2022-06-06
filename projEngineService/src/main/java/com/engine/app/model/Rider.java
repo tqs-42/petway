@@ -10,12 +10,14 @@ import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "admin")
 @Inheritance(strategy=InheritanceType.JOINED)
 public class Rider extends Person {
 
-    @Column(name = "isActive", nullable = false)
+    @Column(name = "isActive", nullable = true)
     private Boolean isActive;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -31,6 +33,11 @@ public class Rider extends Person {
         this.isActive = isActive;
     }
 
+    public Rider(String email, String address, String fullname, String password) {
+        super(email, address, fullname, password);
+    }
+
+
     public Rider() {
     }
 
@@ -41,5 +48,14 @@ public class Rider extends Person {
     public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
     }
+
+
+
+    @Override
+    public String toString() {
+        return "Rider " + super.toString() + " [deliveries=" + deliveries + ", isActive=" + isActive + ", reviews=" + reviews + "]";
+    }
+    
+    
     
 }
