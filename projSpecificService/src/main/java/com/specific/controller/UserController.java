@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,13 +27,19 @@ public class UserController {
     private static final Gson gson = new Gson();
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody Map<String, String> data) throws Exception {
+    public ResponseEntity<Map<String, String>> loginUser(@RequestBody Map<String, String> data) throws Exception {
+        User user;
         try {
-            userService.loginUser(data.get("email"), data.get("password"));
+            user = userService.loginUser(data.get("email"), data.get("password"));
         } catch (ConflictException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return ResponseEntity.ok(gson.toJson("This is a String"));
+
+        Map<String, Object> res = new HashMap<>();
+        res.put("fullname", user.getFullname());
+        res.put("dtype", user.getClass().getName());
+
+        return ResponseEntity.ok(res);
     }
 
     @PostMapping("/addUser")

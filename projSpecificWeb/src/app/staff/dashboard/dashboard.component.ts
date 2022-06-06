@@ -25,14 +25,14 @@ export class DashboardComponent implements OnInit {
   constructor(private UserService:UserService, private productService: ProductService, private orderService: OrderService) { }
 
   ngOnInit(): void {
-    this.UserService.getAllStaff().subscribe(users => {
-      this.users = users
-      this.staff_count = this.users.length
-    })
-    this.UserService.getAllUsers().subscribe(users => {
-      this.users = users
-      this.user_count = this.users.length
-    })
+    // this.UserService.getAllStaff().subscribe(users => {
+    //   this.users = users
+    //   this.staff_count = this.users.length
+    // })
+    // this.UserService.getAllUsers().subscribe(users => {
+    //   this.users = users
+    //   this.user_count = this.users.length
+    // })
     this.productService.getProducts().subscribe(products => {
       this.products = products
       this.product_count = this.products.length

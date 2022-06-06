@@ -18,13 +18,6 @@ export class AppComponent implements OnInit {
   message: String = 'Error.';
 
 
-  //login: { username: string, password: string } = { username: "", password: "" }
-  // signup: { username: string, password: string } = { username: "", password: "" }
-
-  // doLogin() {
-  //   this.authService.login(this.login.username, this.login.password)
-  // }
-
   constructor(private fb : FormBuilder, private authService: AuthenticationService, private userService: UserService, private router : Router) { }
 
   ngOnInit(): void {
@@ -84,18 +77,27 @@ export class AppComponent implements OnInit {
       console.log(this.authService.login(this.loginForm));
 
       this.authService.login(this.loginForm).subscribe(
-        {
-        next: () => {
-          console.log("Entrou no next");
-          this.userService.username = this.loginForm.value.email;
+        res => {
+          console.log(res)
+
+          let fullname = res.toString().split(":")[1].replace("{" , "").split(",")[0].replace("'","").replace("'","");
+          let dtype = res.toString().split(":")[2].replace("{" , "").split(",")[0].replace("'","").replace("'","").replace("}","").split(".")[3];
+          console.log(dtype)
+
+          //let myObj = JSON.parse(res.toString());
+          //console.log(myObj); 
+          this.userService.email = this.loginForm.value.email;
+          this.userService.username = fullname;
+          this.userService.dtype = dtype;
           this.router.navigate(['/system/dashboard'])
+          console.log("Entrou no next");
         },
-        error: () => {
+        () => {
           console.log( "Entrou no error");
           this.showError = true;
           this.message = 'Error.'
         }
-      })
+      )
 
     }
   }

@@ -18,7 +18,7 @@ export class UsersAccountsComponent implements OnInit {
   }
 
   getUsers():void {
-    this.UserService.getAllUsers().subscribe(users => this.users = users)
+    //this.UserService.getAllUsers().subscribe(users => this.users = users)
   }
 
 
