@@ -11,6 +11,7 @@ import { Store } from 'src/models/Store';
 export class StoresComponent implements OnInit {
 
   stores: Store[] = [];
+  stores_length: number | undefined;
 
   constructor(private storesService: StoresService) { }
 
@@ -22,6 +23,7 @@ export class StoresComponent implements OnInit {
     this.storesService.getAllStores().subscribe(
       data => {
         this.stores = data;
+        this.stores_length = this.stores.length;
       }
     )
 
