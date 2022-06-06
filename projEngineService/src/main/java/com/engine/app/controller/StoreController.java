@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
-@RequestMapping("/store")
+@RequestMapping("/stores")
 public class StoreController {
 
     @Autowired
