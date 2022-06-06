@@ -81,12 +81,17 @@ export class AppComponent implements OnInit {
 
     if (!error) {
 
-      this.authService.login(this.loginForm).subscribe({
+      console.log(this.authService.login(this.loginForm));
+
+      this.authService.login(this.loginForm).subscribe(
+        {
         next: () => {
+          console.log("Entrou no next");
           this.userService.username = this.loginForm.value.email;
           this.router.navigate(['/system/dashboard'])
         },
         error: () => {
+          console.log( "Entrou no error");
           this.showError = true;
           this.message = 'Error.'
         }

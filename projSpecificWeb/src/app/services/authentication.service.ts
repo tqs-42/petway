@@ -18,7 +18,11 @@ export class AuthenticationService {
 
     console.log("Email -- " + email + "   " + password)
 
-    return this.http.post(this.baseUrl + 'user/login', { email, password });
+    let callback = this.http.post(this.baseUrl + 'user/login', { email, password });
+
+    console.log(callback);
+
+    return callback;
 
   }
 

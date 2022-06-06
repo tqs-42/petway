@@ -13,6 +13,8 @@ import com.specific.model.User;
 import com.specific.service.ClientService;
 import com.specific.service.UserService;
 
+import com.google.gson.Gson;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/user")
@@ -21,6 +23,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    private static final Gson gson = new Gson();
+
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@RequestBody Map<String, String> data) throws Exception {
         try {
@@ -28,7 +32,7 @@ public class UserController {
         } catch (ConflictException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(gson.toJson("This is a String"));
     }
 
     @PostMapping("/addUser")
