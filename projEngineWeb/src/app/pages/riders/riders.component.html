@@ -57,13 +57,14 @@
     <p>aqui pode ter uma table com todos os riders, clicamos e vamos para a pagina com as suas orders, reviews, etc...
     </p>
 
-    <h1>Riders</h1>
+    <h1>Active Riders</h1>
     <table class="table align-items-center table-flush">
       <thead class="thead-light">
         <tr>
           <th scope="col">Name</th>
           <th scope="col">Email</th>
-          <th scope="col">Active</th>
+          <th scope="col">Address</th>
+          <th scope="col">Status</th>
         </tr>
       </thead>
       <tbody>
@@ -75,6 +76,9 @@
           </th>
           <td>
             {{rider.email}}
+          </td>         
+          <td>
+            {{rider.address}}
           </td>
           <td>
             {{rider.isActive}}
@@ -82,7 +86,6 @@
         </tr>
       </tbody>
     </table>
-
     <div class="row" id="cache">
 
       <!-- <table [dataSource]="table"></table> -->

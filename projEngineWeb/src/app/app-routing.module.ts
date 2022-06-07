@@ -8,7 +8,7 @@ import { RiderComponent } from './pages/rider/rider.component';
 import { RidersComponent } from './pages/riders/riders.component';
 import { StoreComponent } from './pages/store/store.component';
 import { StoresComponent } from './pages/stores/stores.component';
-import { AuthGuard } from './services/auth.guard';
+//import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
 
@@ -23,10 +23,10 @@ const routes: Routes = [
       { path: '', component: OrdersComponent },
       { path: ':id', component: OrderComponent }
     ],
-    canActivate: [AuthGuard],
-    data: {
-      role: 'ROLE_ADMIN'
-    }
+    // canActivate: [AuthGuard],
+    // data: {
+    //   role: 'ROLE_ADMIN'
+    // }
   },
 
   {

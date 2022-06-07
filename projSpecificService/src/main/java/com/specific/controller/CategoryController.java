@@ -9,12 +9,13 @@ import com.specific.model.Category;
 import com.specific.service.CategoryService;
 
 @RestController
-@RequestMapping("/api/specific")
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/category")
 public class CategoryController {
     @Autowired
     private CategoryService service;
 
-    @PostMapping("/addCategory")
+    @PostMapping("/add-category")
     public Category addCategory(@RequestBody Category category) {
         return service.saveCategory(category);
     }

@@ -23,13 +23,29 @@
       </div>
       <div class="form-group">
         <label for="description">Description</label>
-        <textarea class="form-control" type="text" id="description" cols="40" rows="10" maxlength="200"
+        <textarea class="form-control" type="text" id="description" cols="40" rows="3" maxlength="200"
           [(ngModel)]="product.description" placeholder="Description"></textarea>
       </div>
       <div class="form-group">
         <label for="price">Price</label>
         <input class="form-control" type="number" step="0.01" id="price" [(ngModel)]="product.price"
           placeholder="Price">
+      </div>
+
+      <div class="form-group">
+        <label for="stock">Stock</label>
+        <input class="form-control" type="number" step="1" id="stock" [(ngModel)]="product.stock" placeholder="stock">
+      </div>
+
+      <div class="form-group">
+        <label for="store">Store</label>
+        <input class="form-control" type="number" id="store" [(ngModel)]="product.store" placeholder="store">
+      </div>
+
+      <div class="form-group">
+        <label for="imagem">Choose an image:</label>
+        <input type="file" id="imagem" name="avatar" accept="image/png, image/jpg, image/jpeg"
+          [(ngModel)]="product.image">
       </div>
 
       <button type="submit" class="btn btn-primary" (click)="createProduct()">Submit</button>

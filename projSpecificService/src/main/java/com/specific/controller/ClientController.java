@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import java.util.List;
 import java.util.Map;
 
+import com.specific.exception.ConflictException;
 import com.specific.model.Client;
 import com.specific.service.ClientService;
 

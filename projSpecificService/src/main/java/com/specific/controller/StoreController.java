@@ -9,12 +9,12 @@ import com.specific.model.Store;
 import com.specific.service.StoreService;
 
 @RestController
-@RequestMapping("/api/specific")
+@RequestMapping("/store")
 public class StoreController {
     @Autowired
     private StoreService service;
 
-    @PostMapping("/addStore")
+    @PostMapping("/add-store")
     public Store addStore(@RequestBody Store store) {
         return service.saveStore(store);
     }

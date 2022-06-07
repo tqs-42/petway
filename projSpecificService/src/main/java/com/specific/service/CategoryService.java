@@ -26,7 +26,7 @@ public class CategoryService {
     }
 
     public Category getCategoryById(long id) {
-        return repository.findById(id).orElse(null);
+        return repository.findById(id);
     }
 
     public String deleteCategory(long id) {
@@ -35,9 +35,13 @@ public class CategoryService {
     }
 
     public Category updateCategory(Category category) {
-        Category existingCategory = repository.findById(category.getId()).orElse(null);
+        Category existingCategory = repository.findById(category.getId());
         existingCategory.setCategory(category.getCategory());
         existingCategory.setProducts(category.getProducts());
         return repository.save(existingCategory);
+    }
+
+    public Category findCategoryByName(String category) {
+        return null;
     }
 }
