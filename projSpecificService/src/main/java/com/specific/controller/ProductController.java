@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+import com.specific.exception.ConflictException;
 import com.specific.model.Product;
 import com.specific.service.ProductService;
 
@@ -16,9 +17,12 @@ public class ProductController {
     private ProductService service;
 
     @PostMapping("/add-product")
-    public Product addProduct(@RequestBody Map<String, String> data) {
-
-        return service.saveProduct(data);
+    public Product addProduct(@RequestBody Map<String, String> data) throws ConflictException {
+        try {
+            return service.saveProduct(data);
+        } catch (Exception e) {
+            throw new ConflictException("Product already exists");
+        }
     }
 
     @PostMapping("/addProducts")
