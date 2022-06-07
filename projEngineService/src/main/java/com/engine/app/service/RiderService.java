@@ -1,5 +1,7 @@
 package com.engine.app.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,11 +27,29 @@ public class RiderService {
             return rider;
 
         } else {
-
+            
             throw new Exception();
 
         }
 
+    }
+
+    public Rider getRiderByEmail(String email) {
+        return riderRepository.findByEmail(email).get();
+    }
+
+    public List<Rider> getAllRiders() {
+        return riderRepository.findAll();
+    }
+
+    public List<Rider> getAllActiveRiders() {
+        return riderRepository.findAllActiveRiders();
+    }
+    
+    public void changeStatus(String email) {
+        Rider rider = riderRepository.findByEmail(email).get();
+        rider.setIsActive(!rider.getIsActive());
+        riderRepository.save(rider);
     }
     
 }

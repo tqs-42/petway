@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "persons")
 public class Person implements Serializable{
@@ -25,6 +27,7 @@ public class Person implements Serializable{
     private String fullname;
 
     @Size(min = 8)
+    @JsonIgnore
     @Column(name = "password", nullable = false)
     private String password;
 
@@ -76,6 +79,10 @@ public class Person implements Serializable{
     public String toString() {
         return "Person [address=" + address + ", email=" + email + ", fullname=" + fullname + ", password=" + password
                 + "]";
+    }
+
+    public Person orElseThrow(Object object) {
+        return null;
     }
 
 }
