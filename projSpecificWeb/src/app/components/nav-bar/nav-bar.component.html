@@ -7,8 +7,7 @@
 
   <div class="navbar-collapse" id="navbarSupportedContent">
     <!--<ul class="navbar-nav mr-auto" *ngIf="userService.user === null || userService.user.is_staff === false">-->
-    <ul class="navbar-nav mr-auto" style="margin-top: 0"
-      *ngIf="userService.username === null || userService.userIsStaff === false">
+    <ul class="navbar-nav mr-auto" style="margin-top: 0" *ngIf="userService.username === null">
       <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
           routerLink="/">Home</a>
@@ -22,7 +21,7 @@
       </li>
     </ul>
     <!--<ul class="navbar-nav mr-auto" *ngIf="userService.user !== null && userService.user.is_staff === true">-->
-    <ul class="navbar-nav mr-auto" *ngIf="userService.username !== null && userService.userIsStaff === true">
+    <ul class="navbar-nav mr-auto" *ngIf="userService.username === null">
       <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" routerLink="/system/dashboard">Dashboard</a>
       </li>
@@ -53,12 +52,12 @@
 
       <!--<span *ngIf="userService.user !== null">-->
       <span *ngIf="userService.username !== null">
-        <div class="btn" data-toggle="modal" data-target="#notificationsModal" *ngIf="userService.userIsStaff !== true">
+        <div class="btn" data-toggle="modal" data-target="#notificationsModal">
           <i class="fa fa-bell"></i>0</div>
         <!--<div class="btn" routerLink="/cart" *ngIf="userService.user.is_staff !== true"><i class="fa fa-shopping-cart"></i> {{ cartService.totalElements }}</div>-->
-        <div class="btn" routerLink="/cart" *ngIf="userService.userIsStaff !== true"><i class="fa fa-shopping-cart"></i>
+        <div class="btn" routerLink="/cart"><i class="fa fa-shopping-cart"></i>
           {{ cartService.totalElements }}</div>
-        <div class="btn" *ngIf="userService.userIsStaff !== true"><i class="fa fa-user"></i> carlos</div>
+        <div class="btn"><i class="fa fa-user"></i> carlos</div>
         <div class="btn btn-outline-danger" (click)="authService.logout()">Log Out</div>
       </span>
     </div>

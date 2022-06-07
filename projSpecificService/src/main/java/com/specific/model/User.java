@@ -1,8 +1,6 @@
 package com.specific.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,17 +13,14 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "USER")
 public class User {
-
     @Id
     @Email
     @Column(name = "email", unique = true, nullable = false)
     private String email;
-    
+
     @Size(min = 8)
     @JsonIgnore
     @Column(name = "password", nullable = false)
@@ -33,6 +28,15 @@ public class User {
 
     @Column(name = "fullname", nullable = false)
     private String fullname;
+
+    public User(@Email String email, @Size(min = 8) String password, String fullname) {
+        this.email = email;
+        this.password = password;
+        this.fullname = fullname;
+    }
+
+    public User() {
+    }
 
     public String getEmail() {
         return email;
