@@ -33,9 +33,13 @@
       </div>
 
       <div class="form-group">
-        <label for="quantity">Quantity</label>
-        <input class="form-control" type="number" step="1" id="quantity" [(ngModel)]="product.quantity"
-          placeholder="Quantity">
+        <label for="stock">Stock</label>
+        <input class="form-control" type="number" step="1" id="stock" [(ngModel)]="product.stock" placeholder="stock">
+      </div>
+
+      <div class="form-group">
+        <label for="store">Store</label>
+        <input class="form-control" type="number" id="store" [(ngModel)]="product.store" placeholder="store">
       </div>
 
       <div class="form-group">
