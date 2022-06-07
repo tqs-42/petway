@@ -37,13 +37,13 @@ public class ProductService {
         String store_id = data.get("store");
         System.out.println("adasdasd ----    " + store_id);
 
-        Category category = categoryRepository.findByCategory(category_name);
+        Category category = categoryRepository.findByName(category_name);
         System.out.println("category: " + category);
         System.out.println("Idstorev: " + store_id);
         System.out.println("Ids: " + Long.parseLong(store_id));
         Store store = storeRepository.findById(Long.parseLong(store_id));
-        System.out.println( store);
-        
+        System.out.println(store);
+
         Product product = new Product(name, description, image, price, stock, category, store);
         System.out.println("product: " + product);
 

@@ -20,12 +20,17 @@ export class NewProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCategories();
-    //no placeholder da store vai ter de ficar a loja deste manager
+    //no placeholder da store vai ter de ficar a loja deste manager e dar disable, ou se calhar so nao se mete la e fica internamente
     this.product = {category: 0, name: "", description:"", price: 0, stock: 0, image: "", store: 0}
   }
 
   getCategories():void{
-    this.categoryService.getAll().subscribe(categories => this.categories = categories);
+    this.categoryService.getAll().subscribe(
+        categories => {
+          console.log(categories)
+          this.categories = categories
+        }
+      );
   }
 
   createProduct(): void{

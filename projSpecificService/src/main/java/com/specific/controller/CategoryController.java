@@ -9,7 +9,8 @@ import com.specific.model.Category;
 import com.specific.service.CategoryService;
 
 @RestController
-@RequestMapping("/category")    
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/category")
 public class CategoryController {
     @Autowired
     private CategoryService service;
