@@ -14,13 +14,13 @@ import { Observable } from 'rxjs/internal/Observable';
 })
 export class NewProductComponent implements OnInit {
   categories: Category[] = [];
-  product!: { category: number, name: string, description: string, price: number};
+  product!: { category: number, name: string, description: string, price: number, quantity: number, image: string};
 
   constructor(private productService: ProductService, private categoryService: CategoryService, private router: Router) { }
 
   ngOnInit(): void {
     this.getCategories();
-    this.product = {category: 0, name: "", description:"", price: 0}
+    this.product = {category: 0, name: "", description:"", price: 0, quantity: 0, image: ""}
   }
 
   getCategories():void{
