@@ -1,7 +1,6 @@
 import { Order } from './../../interfaces/Order';
 import { Product } from './../../interfaces/Product';
 import { UserService } from './../../services/user.service';
-import { User } from './../../interfaces/User';
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import { OrderService } from 'src/app/services/order.service';
@@ -12,7 +11,6 @@ import { OrderService } from 'src/app/services/order.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  users: User[] = [];
   products: Product[] = [];
   orders:Order[] = [];
   productsMostSolds:Product[] = []
@@ -25,14 +23,14 @@ export class DashboardComponent implements OnInit {
   constructor(private UserService:UserService, private productService: ProductService, private orderService: OrderService) { }
 
   ngOnInit(): void {
-    this.UserService.getAllStaff().subscribe(users => {
-      this.users = users
-      this.staff_count = this.users.length
-    })
-    this.UserService.getAllUsers().subscribe(users => {
-      this.users = users
-      this.user_count = this.users.length
-    })
+    // this.UserService.getAllStaff().subscribe(users => {
+    //   this.users = users
+    //   this.staff_count = this.users.length
+    // })
+    // this.UserService.getAllUsers().subscribe(users => {
+    //   this.users = users
+    //   this.user_count = this.users.length
+    // })
     this.productService.getProducts().subscribe(products => {
       this.products = products
       this.product_count = this.products.length
