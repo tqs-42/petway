@@ -5,19 +5,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import com.engine.app.exception.ConflictException;
-import com.specific.model.Client;
+import com.specific.exception.ConflictException;
 import com.specific.model.User;
 import com.specific.repository.UserRepository;
-import com.specific.repository.ClientRepository;
 
 @Service
 public class UserService {
     @Autowired
     private UserRepository repository;
-
-    @Autowired
-    private ClientRepository clientRepository;
 
     public User loginUser(String email, String password) throws ConflictException {
         User user = repository.findByEmail(email);

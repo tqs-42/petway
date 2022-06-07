@@ -1,14 +1,13 @@
 <nav class="navbar navbar-expand-lg navbar-light backgroundji">
-  <a class="navbar-brand" routerLink="">YourPetStore</a>
+  <a class="navbar-brand" *ngIf="userService.manager === null" routerLink="">YourPetStore</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="navbar-collapse" id="navbarSupportedContent">
-    <!--<ul class="navbar-nav mr-auto" *ngIf="userService.user === null || userService.user.is_staff === false">-->
     <ul class="navbar-nav mr-auto" style="margin-top: 0"
-      *ngIf="userService.username === null || (userService.username !== null && (userService.dtype)?.includes('Client') )">
+      *ngIf="(userService.client === null && userService.manager === null) || userService.client !== null">
       <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
           routerLink="/">Home</a>
@@ -16,13 +15,11 @@
       <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" routerLink="/product">Products</a>
       </li>
-      <!--<li class="nav-item" *ngIf="userService.user !== null">-->
-      <li class="nav-item" *ngIf="userService.username !== null">
+      <li class="nav-item" *ngIf="userService.client !== null">
         <a class="nav-link" routerLinkActive="active" routerLink="/order">Orders</a>
       </li>
     </ul>
-    <!--<ul class="navbar-nav mr-auto" *ngIf="userService.user !== null && userService.user.is_staff === true">-->
-    <ul class="navbar-nav mr-auto" *ngIf="userService.username !== null && (userService.dtype)?.includes('Manager')">
+    <ul class="navbar-nav mr-auto" *ngIf="userService.manager !== null">
       <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" routerLink="/system/dashboard">Dashboard</a>
       </li>
@@ -38,28 +35,21 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/system/users">Users</a>
       </li>
-      <!--
-        <li class="nav-item" *ngIf="userService.user.is_superuser === true">
-          <a class="nav-link" routerLink="/system/staff">Staff</a>
-        </li>
-        -->
     </ul>
     <div class="form-inline my-2 my-lg-0">
-      <!--<span *ngIf="userService.user === null">-->
-      <span *ngIf="userService.username == null">
+      <span *ngIf="userService.client === null && userService.manager === null">
         <div class="btn" data-toggle="modal" data-target="#loginModal">Sign In</div>
         <div class="btn" data-toggle="modal" data-target="#signupModal">Create Account</div>
       </span>
 
-      <!--<span *ngIf="userService.user !== null">-->
-      <span *ngIf="userService.username !== null">
-        <div class="btn" data-toggle="modal" data-target="#notificationsModal">
+      <span *ngIf="userService.client !== null || userService.manager !== null">
+        <div class="btn" *ngIf="userService.client !== null" data-toggle="modal" data-target="#notificationsModal">
           <i class="fa fa-bell"></i>0</div>
-        <!--<div class="btn" routerLink="/cart" *ngIf="userService.user.is_staff !== true"><i class="fa fa-shopping-cart"></i> {{ cartService.totalElements }}</div>-->
-        <div class="btn" routerLink="/cart"><i class="fa fa-shopping-cart"></i>
+        <div class="btn" routerLink="/cart" *ngIf="userService.client !== null"><i class="fa fa-shopping-cart"></i>
           {{ cartService.totalElements }}</div>
-        <div class="btn"><i class="fa fa-user"></i>{{ userService.username }}</div>
-        <div class="btn btn-outline-danger" (click)="authService.logout()">Log Out</div>
+        <div class="btn" *ngIf="userService.client !== null"><i class="fa fa-user"></i>{{ userService.client?.fullname }}</div>
+        <div class="btn" *ngIf="userService.manager !== null"><i class="fa fa-user"></i>{{ userService.manager?.fullname }}</div>
+        <div class="btn btn-outline-danger" (click)="userService.logout()">Log Out</div>
       </span>
     </div>
   </div>

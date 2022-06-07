@@ -1,20 +1,15 @@
 package com.specific.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.engine.app.exception.ConflictException;
+import com.specific.exception.ConflictException;
 import com.specific.model.User;
-import com.specific.service.ClientService;
 import com.specific.service.UserService;
-
-import com.google.gson.Gson;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -24,22 +19,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    private static final Gson gson = new Gson();
-
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> loginUser(@RequestBody Map<String, String> data) throws Exception {
-        User user;
+    public ResponseEntity<User> loginUser(@RequestBody Map<String, String> data) throws Exception {
         try {
-            user = userService.loginUser(data.get("email"), data.get("password"));
+            return ResponseEntity.ok(userService.loginUser(data.get("email"), data.get("password")));
         } catch (ConflictException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(null);
         }
-
-        Map<String, Object> res = new HashMap<>();
-        res.put("fullname", user.getFullname());
-        res.put("dtype", user.getClass().getName());
-
-        return ResponseEntity.ok(res);
     }
 
     @PostMapping("/addUser")

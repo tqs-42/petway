@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import com.engine.app.exception.ConflictException;
 import com.specific.model.Client;
 import com.specific.repository.ClientRepository;
 

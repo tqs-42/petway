@@ -9,7 +9,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Login</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button #loginModalClose type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -25,11 +25,12 @@
             <input type="password" class="form-control" id="login_password" placeholder="Password"
               formControlName="password" required>
           </div>
+          <p *ngIf="showErrorLogin" class="text-danger">{{ messageLogin }}</p>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="login()">Login</button>
+        <button type="button" class="btn btn-primary" (click)="login()">Login</button>
       </div>
     </div>
   </div>
@@ -40,7 +41,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Sign Up</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button #registerModalClose type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -72,12 +73,13 @@
             <input type="password" class="form-control" id="signup_repeat" placeholder="Password"
               formControlName="password_repeat" required>
           </div>
-          <p *ngIf="showError" class="text-danger">{{ message }}</p>
+          <p *ngIf="showMsgRegister && errorLogin" class="text-danger">{{ messageRegister }}</p>
+          <p *ngIf="showMsgRegister && !errorLogin" class="text-success">{{ messageRegister }}</p>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="register()">Sign up</button>
+        <button type="button" class="btn btn-primary" (click)="register()">Sign up</button>
       </div>
     </div>
   </div>
