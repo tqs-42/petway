@@ -35,4 +35,10 @@ export class UserService {
     this.manager = manager;
   }
 
+  logout() {
+    this.client = null;
+    this.manager = null;
+    this.router.navigate(['/']);
+  }
+
 }

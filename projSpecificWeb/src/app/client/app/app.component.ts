@@ -87,12 +87,21 @@ export class AppComponent implements OnInit {
             this.userService.setClient(res);
             this.loginModalClose.nativeElement.click();
             this.router.navigate(['/']);
+            this.showMsgRegister = false;
+            this.showErrorLogin = false;
+            this.loginForm.reset();
+            this.registerForm.reset();
           } else if (res.hasOwnProperty('store')) {
             this.userService.setManager(res);
             this.loginModalClose.nativeElement.click();
             this.router.navigate(['/system/dashboard']);
+            this.showMsgRegister = false;
+            this.showErrorLogin = false;
+            this.registerForm.reset();
+            this.loginForm.reset();
+          }else{
+            this.showErrorLogin = true;
           }
-          this.showErrorLogin = true;
         },
         () => {
           this.showErrorLogin = true;

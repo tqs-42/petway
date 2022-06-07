@@ -49,7 +49,7 @@
           {{ cartService.totalElements }}</div>
         <div class="btn" *ngIf="userService.client !== null"><i class="fa fa-user"></i>{{ userService.client?.fullname }}</div>
         <div class="btn" *ngIf="userService.manager !== null"><i class="fa fa-user"></i>{{ userService.manager?.fullname }}</div>
-        <div class="btn btn-outline-danger" (click)="authService.logout()">Log Out</div>
+        <div class="btn btn-outline-danger" (click)="userService.logout()">Log Out</div>
       </span>
     </div>
   </div>
