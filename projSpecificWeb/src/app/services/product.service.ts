@@ -15,7 +15,7 @@ const httpOptions = {
 })
 export class ProductService {
 
-  private baseUrl = environment.baseAPIPath + '/product';
+  private baseUrl = "http://localhost:8080/product";
 
   constructor(private http: HttpClient) { }
 
@@ -36,8 +36,8 @@ export class ProductService {
     return this.http.get<Product>(environment.baseAPIPath + '/product/' + id)
   }
 
-  createProduct(category:number, name: string, description: string, price: number) {
-    this.http.post<Product>(this.baseUrl + "/", {  "category": category, "name": name, "description": description, "price": price,"isActive": true}, httpOptions).subscribe(response => console.log(response))
+  createProduct(category:number, name: string, description: string, price: number, store: number, stock: number) {
+    this.http.post<Product>(this.baseUrl + "/add-product", {  "category": "category", "name": name, "description": description, "store": store, "stock": stock , "price": price,"isActive": true}, httpOptions).subscribe(response => console.log(response))
   }
 
   updateProduct(product:Product) {

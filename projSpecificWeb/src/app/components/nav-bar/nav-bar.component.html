@@ -21,7 +21,7 @@
       </li>
     </ul>
     <!--<ul class="navbar-nav mr-auto" *ngIf="userService.user !== null && userService.user.is_staff === true">-->
-    <ul class="navbar-nav mr-auto" *ngIf="userService.username !== null">
+    <ul class="navbar-nav mr-auto" *ngIf="userService.username === null">
       <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" routerLink="/system/dashboard">Dashboard</a>
       </li>
