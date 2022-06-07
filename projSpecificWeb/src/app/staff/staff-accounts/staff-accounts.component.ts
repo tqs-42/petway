@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { UserService } from './../../services/user.service';
-import { Client } from './../../interfaces/Client';
+import { User } from './../../interfaces/User';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -10,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StaffAccountsComponent implements OnInit {
 
-  staffs: Client[] = [];
+  staffs: User[] = [];
 
   constructor(private UserService:UserService, private router: Router) { }
 
@@ -19,11 +19,11 @@ export class StaffAccountsComponent implements OnInit {
   }
 
   getStaffs():void {
-    //this.UserService.getAllStaff().subscribe(staffs => this.staffs = staffs)
+    this.UserService.getAllStaff().subscribe(staffs => this.staffs = staffs)
   }
 
-  deleteStaff(staffId: string): void {
-    //this.UserService.deleteStaff(staffId).subscribe(() => window.location.reload())
+  deleteStaff(staffId: number): void {
+    this.UserService.deleteStaff(staffId).subscribe(() => window.location.reload())
   }
 
 }

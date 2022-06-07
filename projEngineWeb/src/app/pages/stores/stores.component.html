@@ -4,78 +4,54 @@
 
 <div class="content-wrapper">
 
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0">Stores</h1>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <section class="content">
-
-    <div class="container-fluid">
-
-      <div class="row">
-        <div class="col-md-3">
-          <p>{{stores_length}}</p>
-          <app-info-box [icon]="'fas fa-tag'" [title]="'Total stores'" [description]="'22'"></app-info-box>
-        </div>
-        <div class="col-md-3">
-          <app-info-box [icon]="'fas fa-heart'" [title]="'Total of products (on stock)'" [description]="'910'">
-          </app-info-box>
-        </div>
-        <div class="col-md-3">
-          <app-info-box [icon]="'fas fa-cloud-download-alt'" [title]="'Total of products sold'" [description]="'80'">
-          </app-info-box>
-        </div>
-        <div class="col-md-3">
-          <app-info-box [icon]="'fas fa-comment'" [title]="'Stores revenue'" [description]="'54,000$'"></app-info-box>
-        </div>
-      </div>
-    </div>
-
-    <app-pie-chart></app-pie-chart>
-
-    <p>ideias para pie chart: distribuição por vendas da loja</p>
-
-    <p>gráficos: vendas/revenue por dia numa semana</p>
-
-    <p>aqui pode ter uma table com todas as stores, clicamos e vamos para a pagina com as orders feitas nessa loja,
-      reviews, etc...</p>
-
-    <br>
-    <br>
-    <h1>All Stores</h1>
-    <table class="table align-items-center table-flush">
-      <thead class="thead-light">
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Address</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let store of stores">
-          <th scope="row">
-            <div class="media-body">
-              <span class="mb-0 text-sm">{{store.name}}</span>
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Stores</h1>
+                </div>
             </div>
-          </th>
-          <td>
-            {{store.address}}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="row" id="cache">
-
-      <!-- <table [dataSource]="table"></table> -->
-
+        </div>
     </div>
 
-  </section>
+    <section class="content">
+
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-3">
+                    <app-info-box [icon]="'fas fa-tag'" [title]="'Total stores'"
+                        [description]="'22'"></app-info-box>
+                </div>
+                <div class="col-md-3">
+                    <app-info-box [icon]="'fas fa-heart'"
+                        [title]="'Total of products (on stock)'" [description]="'910'"></app-info-box>
+                </div>
+                <div class="col-md-3">
+                    <app-info-box [icon]="'fas fa-cloud-download-alt'"
+                        [title]="'Total of products sold'" [description]="'80'"></app-info-box>
+                </div>
+                <div class="col-md-3">
+                    <app-info-box [icon]="'fas fa-comment'" [title]="'Stores revenue'"
+                        [description]="'54,000$'"></app-info-box>
+                </div>
+            </div>
+        </div>
+
+        <app-pie-chart></app-pie-chart>
+
+        <p>ideias para pie chart: distribuição por vendas da loja</p>
+
+        <p>gráficos: vendas/revenue por dia numa semana</p>
+
+        <p>aqui pode ter uma table com todas as stores, clicamos e vamos para a pagina com as orders feitas nessa loja, reviews, etc...</p>
+
+        <div class="row" id="cache">
+
+            <!-- <table [dataSource]="table"></table> -->
+
+        </div>
+
+    </section>
 
 </div>

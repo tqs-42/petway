@@ -36,13 +36,9 @@ public class ProductService {
         int stock = Integer.parseInt(data.get("stock"));
         String store_id = data.get("store");
 
-        Category category = categoryRepository.findByName(category_name);
-        System.out.println("category: " + category);
-        System.out.println("Idstorev: " + store_id);
-        System.out.println("Ids: " + Long.parseLong(store_id));
+        Category category = categoryRepository.findByCategory(category_name);
         Store store = storeRepository.findById(Long.parseLong(store_id));
-        System.out.println(store);
-
+        
         Product product = new Product(name, description, image, price, stock, category, store);
 
         return productRepository.saveAndFlush(product);

@@ -20,13 +20,13 @@
           </thead>
           <tbody>
             <tr *ngFor="let staff of staffs">
-              <td style="color: rgb(32, 29, 29);">{{ staff.email }}</td>
+              <td style="color: rgb(32, 29, 29);">{{ staff.username }}</td>
               <td>
                 <form class="form-horizontal">
                   <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                       <button type="button" class="btn btn-outline-danger"
-                        (click)="deleteStaff(staff.email)">Delete</button>
+                        (click)="deleteStaff(staff.id)">Delete</button>
                     </div>
                   </div>
                 </form>

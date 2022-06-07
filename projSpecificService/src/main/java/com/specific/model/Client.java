@@ -39,9 +39,4 @@ public class Client extends User {
         this.address = address;
     }
 
-    @Override
-    public String toString() {
-        return "Client [address=" + address + "]";
-    }
-
 }

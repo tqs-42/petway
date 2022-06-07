@@ -37,9 +37,6 @@ public class Rider extends Person {
         super(email, address, fullname, password);
     }
 
-    public Rider(String email, String address, String fullname) {
-        super(email, address, fullname);
-    }
 
     public Rider() {
     }

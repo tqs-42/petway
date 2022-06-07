@@ -22,7 +22,7 @@ export class NewStaffComponent implements OnInit {
     }
     else{
       if (this.staff.username != "" && this.staff.password != "" && this.staff.repeatPassword != "") {
-        //this.userService.createUser(this.staff.username, this.staff.password).subscribe(() => this.router.navigateByUrl('/system/staff'))
+        this.userService.createUser(this.staff.username, this.staff.password).subscribe(() => this.router.navigateByUrl('/system/staff'))
       }
     }
   }

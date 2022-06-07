@@ -10,6 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "stores")
 public class Store {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -44,4 +45,7 @@ public class Store {
     public void setName(String name) {
         this.name = name;
     }
+
+    
+
 }

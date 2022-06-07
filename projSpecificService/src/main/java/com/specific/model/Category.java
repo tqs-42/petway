@@ -25,19 +25,22 @@ public class Category {
     @Column(name = "categoryId", nullable = false)
     private long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "category", nullable = false)
+    private String category;
 
     @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(name = "product_category", joinColumns = @JoinColumn(name = "categoryId"), inverseJoinColumns = @JoinColumn(name = "productId"))
+    @JoinTable(
+            name = "product_category",
+            joinColumns = @JoinColumn(name = "categoryId"),
+            inverseJoinColumns = @JoinColumn(name = "productId"))
     Set<Product> products;
-
-    public Category(String name) {
-        this.name = name;
+    
+    public Category(String category) {
+        this.category = category;
         this.products = new HashSet<Product>();
     }
 
-    public Category() {
+    public Category(){
 
     }
 
@@ -46,11 +49,11 @@ public class Category {
     }
 
     public String getCategory() {
-        return name;
+        return category;
     }
 
-    public void setCategory(String name) {
-        this.name = name;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public Set<Product> getProducts() {
@@ -63,7 +66,7 @@ public class Category {
 
     @Override
     public String toString() {
-        return "Category [name=" + name + ", id=" + id + ", products=" + "]";
+        return "Category [category=" + category + ", id=" + id + ", products="  + "]";
     }
 
 }

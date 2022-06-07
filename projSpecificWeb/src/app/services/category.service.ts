@@ -13,7 +13,7 @@ const httpOptions = {
 })
 export class CategoryService {
 
-  private baseUrl = "http://localhost:8080/category";
+  private baseUrl = environment.baseAPIPath + '/category';
 
   constructor(private http: HttpClient) { }
 
@@ -24,11 +24,11 @@ export class CategoryService {
 
 
   getAll() {
-    return this.http.get<Category[]>(this.baseUrl + '/categories')
+    return this.http.get<Category[]>(environment.baseAPIPath + '/category')
   }
 
 
   createCategory(name: string) {
-    this.http.post<Category>(this.baseUrl + "/add-category", { "name": name, "isActive": true }, httpOptions).subscribe(response => console.log(response))
+    this.http.post<Category>(this.baseUrl + "/", { "name":name, "isActive": true }, httpOptions).subscribe(response => console.log(response))
   }
 }

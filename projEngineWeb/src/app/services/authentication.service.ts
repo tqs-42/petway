@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { environment } from 'src/environments/environment';
-
 
 
 @Injectable({
@@ -10,27 +8,17 @@ import { environment } from 'src/environments/environment';
 })
 export class AuthenticationService {
   
-  private baseUrl = 'http://localhost:8080/';
+  private baseUrl = 'http://localhost:6869/';
   private token = localStorage.getItem('token');
 
-  //private currentUserSubject: BehaviorSubject<Person>;
-  //public currentUser: Observable<Person>;
-
-  constructor(private http: HttpClient) { 
-    //this.currentUserSubject = new BehaviorSubject<Person>(JSON.parse(localStorage.getItem('currentUser')!));
-    //this.currentUser = this.currentUserSubject.asObservable();
-  }
-
-  test() {
-    return this.http.get(this.baseUrl + 'riders/all-active-riders');
-  }
+  constructor(private http: HttpClient) { }
 
   login(form: FormGroup) {
 
     let email = form.value.email;
     let password = form.value.password;
 
-    return this.http.post(this.baseUrl + 'riders/login', { email, password });
+    return this.http.post(this.baseUrl + 'login', { email, password });
 
   }
 
@@ -43,6 +31,11 @@ export class AuthenticationService {
 
     let data = { fullname, address, email, password }
 
-    return this.http.post(`${environment.baseURL}/riders/register`, data);
+    console.log(data);
+
+    return this.http.post(this.baseUrl + 'register', data);
+
   }
+
+
 }

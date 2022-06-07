@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthenticationService } from './services/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -9,14 +7,4 @@ import { AuthenticationService } from './services/authentication.service';
 })
 export class AppComponent {
   title = 'projEngineWeb';
-
-  constructor(private authenticationService: AuthenticationService, private router: Router) {
-
-    // if (this.authenticationService.currentUserValue) {
-    //   this.router.navigate(['/']);
-    // } else {
-    //   this.router.navigate(['/login']);
-    // }
-  }
-
 }
