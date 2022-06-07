@@ -29,6 +29,6 @@ export class CategoryService {
 
 
   createCategory(name: string) {
-    this.http.post<Category>(this.baseUrl + "/", { "name": name, "isActive": true }, httpOptions).subscribe(response => console.log(response))
+    this.http.post<Category>(this.baseUrl + "/add-category", { "name": name, "isActive": true }, httpOptions).subscribe(response => console.log(response))
   }
 }
