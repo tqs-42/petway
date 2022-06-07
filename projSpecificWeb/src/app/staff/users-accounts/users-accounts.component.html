@@ -18,7 +18,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let user of users">
-              <td style="color: rgb(32, 29, 29);"><a routerLink="/system/users/{{ user.id }}">{{ user.username }}</a>
+              <td style="color: rgb(32, 29, 29);"><a routerLink="/system/users/{{ user.email }}">{{ user.email }}</a>
               </td>
             </tr>
           </tbody>

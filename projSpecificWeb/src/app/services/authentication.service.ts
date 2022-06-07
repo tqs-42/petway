@@ -17,12 +17,7 @@ export class AuthenticationService {
     let email = form.value.email;
     let password = form.value.password;
 
-    console.log("Email -- " + email + "   " + password)
-
-    let callback = this.http.post<any>(this.baseUrl + 'user/login', { email, password });
-
-    return callback;
-
+    return this.http.post<any>(this.baseUrl + 'user/login', { email, password });
   }
 
   register(form: FormGroup) {

@@ -1,9 +1,10 @@
+import { Manager } from './../../interfaces/Manager';
 import { Router } from '@angular/router';
-import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { UserService } from 'src/app/services/user.service';
+import { Client } from '../../interfaces/Client';
+
 
 @Component({
   selector: 'app-app',
@@ -16,9 +17,10 @@ export class AppComponent implements OnInit {
   loginForm !: FormGroup;
   showError : Boolean = false;
   message: String = 'Error.';
+  client: Client | undefined;
+  manager: Manager | undefined;
 
-
-  constructor(private fb : FormBuilder, private authService: AuthenticationService, private userService: UserService, private router : Router) { }
+  constructor(private fb : FormBuilder, private authService: AuthenticationService, private router : Router) { }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -68,33 +70,22 @@ export class AppComponent implements OnInit {
   }
 
   login(): void {
-    let error = false;
-
-    console.log(this.loginForm.value.password.length);
-
-    if (!error) {
-
-      console.log(this.authService.login(this.loginForm));
-
-      this.authService.login(this.loginForm).subscribe(
-        res => {
-          console.log(res)
-
-          let fullname = res.toString().split(":")[1].replace("{" , "").split(",")[0].replace("'","").replace("'","");
-          let dtype = res.toString().split(":")[2].replace("{" , "").split(",")[0].replace("'","").replace("'","").replace("}","").split(".")[3];
-
-          this.userService.email = this.loginForm.value.email;
-          this.userService.username = fullname;
-          this.userService.dtype = dtype;
+    this.authService.login(this.loginForm).subscribe(
+      res => {
+        if (res.hasOwnProperty("cart")) {
+          this.client = res;
           this.router.navigate(['/'])
-        },
-        () => {
-          this.showError = true;
-          this.message = 'Error.'
+        } else if (res.hasOwnProperty("store")) {
+          this.manager = res;
+          this.router.navigate(['/system/dashboard'])
         }
-      )
+      },
+      () => {
+        this.showError = true;
+        this.message = 'Error.'
+      }
+    )
 
-    }
   }
 
 }

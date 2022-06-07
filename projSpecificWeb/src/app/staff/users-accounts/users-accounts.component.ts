@@ -1,5 +1,5 @@
 import { UserService } from './../../services/user.service';
-import { User } from './../../interfaces/User';
+import { Client } from './../../interfaces/Client';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsersAccountsComponent implements OnInit {
 
-  users: User[] = [];
+  users: Client[] = [];
 
   constructor(private UserService:UserService) { }
 
