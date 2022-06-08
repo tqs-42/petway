@@ -3,7 +3,6 @@ import { Observable } from 'rxjs/internal/Observable';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import { Product } from './../interfaces/Product';
-import { Category } from '../interfaces/Category';
 
 
 const httpOptions = {
@@ -36,8 +35,18 @@ export class ProductService {
     return this.http.get<Product>(environment.baseAPIPath + '/product/' + id)
   }
 
-  createProduct(category:number, name: string, description: string, price: number, store: number, stock: number) {
-    this.http.post<Product>(this.baseUrl + "/add-product", {  "category": "category", "name": name, "description": description, "store": store, "stock": stock , "price": price,"isActive": true}, httpOptions).subscribe(response => console.log(response))
+  createProduct(category: string, name: string, description: string, price: number, store: number, stock: number, image: string) {
+
+    console.log("PARAMETROS PASSADOS --- ")
+    console.log(category)
+    console.log(name)
+    console.log(description)
+    console.log(price)
+    console.log(stock)
+    console.log(store)
+    console.log(image)
+
+    this.http.post<Product>(this.baseUrl + "/add-product", {  "category": category, "name": name, "description": description, "store": store, "stock": stock , "price": price, "image": image,"isActive": true}, httpOptions).subscribe(response => console.log("sou a resposta --- " + response))
   }
 
   updateProduct(product:Product) {

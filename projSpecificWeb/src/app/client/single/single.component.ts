@@ -9,12 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SingleComponent implements OnInit {
 
-  details: Product = { id: parseInt(location.href.split('/')[location.href.split('/').length-1]), name: "", description: "", price: 0, category: { id: 0, name: "", isActive: true }, isActive: true }
+  //details: Product = { id: parseInt(location.href.split('/')[location.href.split('/').length-1]), name: "", description: "", price: 0, category: { id: 0, name: "", isActive: true }, isActive: true }
 
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
-    this.productService.getOne(this.details.id).subscribe(prod => this.details = prod)
+    //this.productService.getOne(this.details.id).subscribe(prod => this.details = prod)
   }
 
 }

@@ -12,7 +12,7 @@ services:
             MYSQL_ROOT_PASSWORD: admin
             MYSQL_PASSWORD: admin 
         volumes:
-            - ./datafiles:/var/lib/mysql
+            - datafiles:/var/lib/mysql
         networks:
             - default
         restart: always
