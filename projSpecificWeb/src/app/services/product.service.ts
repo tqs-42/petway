@@ -36,7 +36,8 @@ export class ProductService {
 
   getProducts(): Observable<Product[]> {
     const url = this.baseUrl;
-    return this.http.get<Product[]>(url);
+    console.log(this.http.get<Product[]>(url + "/products"))
+    return this.http.get<Product[]>(url + "/products");
   }
 
   getAllSorting(sort:string){
@@ -52,16 +53,6 @@ export class ProductService {
   }
 
   createProduct(category: string, name: string, description: string, price: number, store: number, stock: number, image: string) {
-
-    console.log("PARAMETROS PASSADOS --- ")
-    console.log(category)
-    console.log(name)
-    console.log(description)
-    console.log(price)
-    console.log(stock)
-    console.log(store)
-    console.log(image)
-
     this.http.post<Product>(this.baseUrl + "/add-product", {  "category": category, "name": name, "description": description, "store": store, "stock": stock , "price": price, "image": image,"isActive": true}, httpOptions).subscribe(response => console.log("sou a resposta --- " + response))
   }
 

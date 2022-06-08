@@ -24,11 +24,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td style="color: rgb(32, 29, 29);"> product.name </td>
+            <tr *ngFor="let product of products">
+              <td style="color: rgb(32, 29, 29);"> {{ product.name }} </td>
               <td style="color: rgb(32, 29, 29);"> product.category.name </td>
-              <td style="color: rgb(32, 29, 29);"> product.price €</td>
-              <td style="color: rgb(32, 29, 29);">product.isActive?'Yes':'No'</td>
+              <td style="color: rgb(32, 29, 29);"> {{ product.price }} €</td>
+              <td style="color: rgb(32, 29, 29);"> {{ product.isActive?'Yes':'No' }}</td>
               <td style="color: rgb(32, 29, 29);">
                 <a routerLink=""><button class="btn btn-primary btn-sm">Ver</button></a>
               </td>

@@ -57,6 +57,7 @@ public class ProductService {
     }
 
     public List<Product> getProducts() {
+        System.out.println(productRepository.findAll());
         return productRepository.findAll();
     }
 

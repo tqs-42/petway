@@ -30,7 +30,7 @@ export class NewProductComponent implements OnInit {
           console.log(categories)
           this.categories = categories
         }
-      );
+      ); 
   }
 
   createProduct(): void{
