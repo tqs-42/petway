@@ -14,14 +14,14 @@ import { Observable } from 'rxjs/internal/Observable';
 })
 export class NewProductComponent implements OnInit {
   categories: Category[] = [];
-  product!: { category: number, name: string, description: string, price: number, stock: number, image: string, store: number};
+  product!: { category: string, name: string, description: string, price: number, stock: number, image: string, store: number};
 
   constructor(private productService: ProductService, private categoryService: CategoryService, private router: Router) { }
 
   ngOnInit(): void {
     this.getCategories();
     //no placeholder da store vai ter de ficar a loja deste manager e dar disable, ou se calhar so nao se mete la e fica internamente
-    this.product = {category: 0, name: "", description:"", price: 0, stock: 0, image: "", store: 0}
+    this.product = {category: "", name: "", description:"", price: 0, stock: 0, image: "", store: 0}
   }
 
   getCategories():void{
@@ -35,8 +35,9 @@ export class NewProductComponent implements OnInit {
 
   createProduct(): void{
     if (this.product.name != "" && this.product.description != "" && this.product.price != 0) {
-        this.productService.createProduct(this.product.category, this.product.name, this.product.description, this.product.store, this.product.stock ,this.product.price);
-        this.router.navigateByUrl('/system/product')
+      console.log(this.product.category);
+      this.productService.createProduct(this.product.category, this.product.name, this.product.description, this.product.price, this.product.store ,this.product.stock, this.product.image);
+      //this.router.navigateByUrl('/system/product')
     }
   }
 }
