@@ -10,6 +10,7 @@ import java.util.Map;
 import com.specific.exception.ConflictException;
 import com.specific.model.User;
 import com.specific.service.UserService;
+import javax.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -28,6 +29,19 @@ public class UserController {
         }
     }
 
+    @GetMapping("/userByEmail/{email}")
+    public ResponseEntity<User> findUserByEmail(@Valid @PathVariable String email) {
+        try {
+            User user = userService.getUserByEmail(email);
+            if (user == null) {
+                return ResponseEntity.badRequest().body(null);
+            }
+            return ResponseEntity.ok(user);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
     @PostMapping("/addUser")
     public User addUser(@RequestBody User user) {
         return userService.saveUser(user);
@@ -41,11 +55,6 @@ public class UserController {
     @GetMapping("/users")
     public List<User> findAllUsers() {
         return userService.getUsers();
-    }
-
-    @GetMapping("/userByEmail/{email}")
-    public User findUserByEmail(@PathVariable String email) {
-        return userService.getUserByEmail(email);
     }
 
     @PutMapping("/updateUser")

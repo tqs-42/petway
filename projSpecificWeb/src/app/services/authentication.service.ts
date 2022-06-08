@@ -1,23 +1,37 @@
-import { HttpClient } from '@angular/common/http';
+import { UserService } from './user.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { environment } from './../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  private baseUrl = 'http://localhost:8080/';
-
-  constructor(private http: HttpClient) { }
+  constructor(private userService: UserService, private http: HttpClient) {
+    let email = localStorage.getItem('userEmail');
+    if (email != null) {
+      this.http.get<any>(environment.baseAPIPath + '/user/userByEmail/' + email).subscribe(
+        (res) => {
+          console.log(res)
+          if (res.hasOwnProperty('cart')) {
+            this.userService.setClient(res);
+          } else if (res.hasOwnProperty('store')) {
+            this.userService.setManager(res);
+          }
+        }
+      );
+    }
+   }
 
   login(form: FormGroup) : Observable<any> {
 
     let email = form.value.email;
     let password = form.value.password;
 
-    return this.http.post<any>(this.baseUrl + 'user/login', { email, password });
+    return this.http.post<any>(environment.baseAPIPath + '/user/login', { email, password });
   }
 
   register(form: FormGroup) {
@@ -31,7 +45,7 @@ export class AuthenticationService {
 
     console.log(data);
 
-    return this.http.post(this.baseUrl + 'client/addClient', data);
+    return this.http.post(environment.baseAPIPath + '/client/addClient', data);
 
   }
 

@@ -9,6 +9,7 @@ import com.specific.model.Request;
 import com.specific.service.RequestService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/specific")
 public class RequestController {
     @Autowired

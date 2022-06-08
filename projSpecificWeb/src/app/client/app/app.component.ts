@@ -85,6 +85,7 @@ export class AppComponent implements OnInit {
         (res) => {
           if (res.hasOwnProperty('cart')) {
             this.userService.setClient(res);
+            localStorage.setItem('userEmail',res['email']);
             this.loginModalClose.nativeElement.click();
             this.router.navigate(['/']);
             this.showMsgRegister = false;
@@ -93,6 +94,7 @@ export class AppComponent implements OnInit {
             this.registerForm.reset();
           } else if (res.hasOwnProperty('store')) {
             this.userService.setManager(res);
+            localStorage.setItem('userEmail',res['email']);
             this.loginModalClose.nativeElement.click();
             this.router.navigate(['/system/dashboard']);
             this.showMsgRegister = false;

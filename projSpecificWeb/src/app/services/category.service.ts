@@ -1,3 +1,4 @@
+import { UserService } from './user.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -15,7 +16,21 @@ export class CategoryService {
 
   private baseUrl = "http://localhost:8080/category";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private userService:UserService) {
+    let email = localStorage.getItem('userEmail');
+    if (email != null) {
+      this.http.get<any>(environment.baseAPIPath + '/user/userByEmail/' + email).subscribe(
+        (res) => {
+          console.log(res)
+          if (res.hasOwnProperty('cart')) {
+            this.userService.setClient(res);
+          } else if (res.hasOwnProperty('store')) {
+            this.userService.setManager(res);
+          }
+        }
+      );
+    }
+  }
 
   getCategory(id: number): Observable<Category> {
     const url = this.baseUrl + '/' + id;

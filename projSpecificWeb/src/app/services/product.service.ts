@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import { Product } from './../interfaces/Product';
 import { Category } from '../interfaces/Category';
+import { UserService } from './user.service';
 
 
 const httpOptions = {
@@ -17,7 +18,21 @@ export class ProductService {
 
   private baseUrl = "http://localhost:8080/product";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private userService:UserService) {
+    let email = localStorage.getItem('userEmail');
+    if (email != null) {
+      this.http.get<any>(environment.baseAPIPath + '/user/userByEmail/' + email).subscribe(
+        (res) => {
+          console.log(res)
+          if (res.hasOwnProperty('cart')) {
+            this.userService.setClient(res);
+          } else if (res.hasOwnProperty('store')) {
+            this.userService.setManager(res);
+          }
+        }
+      );
+    }
+  }
 
   getProducts(): Observable<Product[]> {
     const url = this.baseUrl;

@@ -9,6 +9,7 @@ import com.specific.model.Cart;
 import com.specific.service.CartService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/specific")
 public class CartController {
     @Autowired

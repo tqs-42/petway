@@ -9,6 +9,7 @@ import com.specific.model.Manager;
 import com.specific.service.ManagerService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/specific")
 public class ManagerController {
 

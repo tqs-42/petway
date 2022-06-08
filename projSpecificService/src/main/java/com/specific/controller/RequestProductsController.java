@@ -9,6 +9,7 @@ import com.specific.model.RequestProducts;
 import com.specific.service.RequestProductsService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/specific")
 public class RequestProductsController {
     @Autowired

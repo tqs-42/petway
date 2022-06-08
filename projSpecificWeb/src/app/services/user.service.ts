@@ -25,7 +25,8 @@ export class UserService {
   dtype: string | null = null;
   userIsStaff: boolean = false;
 
-  constructor(private router: Router, private http: HttpClient) { }
+  constructor(private router: Router, private http: HttpClient) {
+  }
 
   setClient(client: Client) {
     this.client = client;
@@ -38,6 +39,7 @@ export class UserService {
   logout() {
     this.client = null;
     this.manager = null;
+    localStorage.removeItem('userEmail');
     this.router.navigate(['/']);
   }
 

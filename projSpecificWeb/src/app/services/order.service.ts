@@ -2,6 +2,7 @@ import { environment } from './../../environments/environment';
 import { Order } from './../interfaces/Order';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { UserService } from './user.service';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -12,13 +13,27 @@ const httpOptions = {
 })
 export class OrderService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private userService:UserService) {
+    let email = localStorage.getItem('userEmail');
+    if (email != null) {
+      this.http.get<any>(environment.baseAPIPath + '/user/userByEmail/' + email).subscribe(
+        (res) => {
+          console.log(res)
+          if (res.hasOwnProperty('cart')) {
+            this.userService.setClient(res);
+          } else if (res.hasOwnProperty('store')) {
+            this.userService.setManager(res);
+          }
+        }
+      );
+    }
+  }
 
   getAll() {
     return this.http.get<Order[]>(environment.baseAPIPath + '/order/')
   }
 
-  getOrdersByUser(userid: string) { 
+  getOrdersByUser(userid: string) {
     return this.http.get<Order[]>(environment.baseAPIPath + '/ordersUser/?user=' + userid)
   }
 
