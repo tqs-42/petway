@@ -34,6 +34,7 @@ public class Store {
     private Boolean active;
 
     @OneToMany(mappedBy = "store")
+    @JsonIgnore 
     Set<Manager> managers;
 
     @OneToMany(mappedBy = "store")
