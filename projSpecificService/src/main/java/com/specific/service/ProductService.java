@@ -31,12 +31,12 @@ public class ProductService {
         String name = data.get("name");
         String description = data.get("description");
         String image = data.get("image");
-        String category_name = data.get("category");
+        long category_id = Long.parseLong(data.get("category"));
         Double price = Double.parseDouble(data.get("price"));
         int stock = Integer.parseInt(data.get("stock"));
         String store_id = data.get("store");
 
-        Category category = categoryRepository.findByName(category_name);
+        Category category = categoryRepository.findById(category_id);
         System.out.println("category: " + category);
         System.out.println("Idstorev: " + store_id);
         System.out.println("Ids: " + Long.parseLong(store_id));
@@ -44,8 +44,11 @@ public class ProductService {
         System.out.println(store);
 
         Product product = new Product(name, description, image, price, stock, category, store);
+        Product product2 = productRepository.saveAndFlush(product);
+        System.out.println(product2);
+        // category.addToProducts(product);
 
-        return productRepository.saveAndFlush(product);
+        return product2;
     }
 
     public Store getStoreIdByManager(String manager) {

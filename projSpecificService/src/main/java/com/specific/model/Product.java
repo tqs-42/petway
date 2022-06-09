@@ -49,10 +49,9 @@ public class Product {
     @ManyToMany(mappedBy = "products")
     Set<Category> categories;
 
-    @OneToMany(mappedBy="product")
+    @OneToMany(mappedBy = "product")
     Set<RequestProducts> requests;
 
-    
     @Column(name = "stock", nullable = true)
     private int stock;
 
@@ -68,7 +67,8 @@ public class Product {
         this.stock = stock;
     }
 
-    public Product(String name, String description, String image, Double price, int stock, Category category, Store store) {
+    public Product(String name, String description, String image, Double price, int stock, Category category,
+            Store store) {
         this.name = name;
         this.description = description;
         this.image = image;
@@ -79,7 +79,7 @@ public class Product {
         this.store = store;
     }
 
-    public Product(){
+    public Product() {
 
     }
 
@@ -145,11 +145,9 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product [categories="  + ", description=" + description + ", id=" + id + ", image=" + image
-                + ", name=" + name + ", price=" + price + ", requests="  + ", stock=" + stock + ", store="
+        return "Product [categories=" + ", description=" + description + ", id=" + id + ", image=" + image
+                + ", name=" + name + ", price=" + price + ", requests=" + ", stock=" + stock + ", store="
                 + store + "]";
     }
-
-
 
 }

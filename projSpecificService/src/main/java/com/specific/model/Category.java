@@ -41,6 +41,10 @@ public class Category {
 
     }
 
+    public void addToProducts(Product product) {
+        products.add(product);
+    }
+
     public long getId() {
         return id;
     }
