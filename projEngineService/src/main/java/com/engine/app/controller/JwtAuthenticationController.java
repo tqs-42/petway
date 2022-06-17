@@ -49,7 +49,7 @@ public class JwtAuthenticationController {
         String email = data.get("email");
         String password = data.get("password");
 
-        authenticate(data.get("email"), data.get("password"));
+        authenticate(email, password);
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(email);
         final String token = jwtTokenUtil.generateToken(userDetails);
