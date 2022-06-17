@@ -8,13 +8,6 @@
   <div class="navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto" style="margin-top: 0"
       *ngIf="(userService.client === null && userService.manager === null) || userService.client !== null">
-      <li class="nav-item">
-        <a class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
-          routerLink="/">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLinkActive="active" routerLink="/product">Products</a>
-      </li>
       <li class="nav-item" *ngIf="userService.client !== null">
         <a class="nav-link" routerLinkActive="active" routerLink="/order">Orders</a>
       </li>
@@ -41,8 +34,10 @@
           <i class="fa fa-bell"></i>0</div>
         <div class="btn" routerLink="/cart" *ngIf="userService.client !== null"><i class="fa fa-shopping-cart"></i>
           {{ cartService.totalElements }}</div>
-        <div class="btn" *ngIf="userService.client !== null"><i class="fa fa-user"></i>{{ userService.client?.fullname }}</div>
-        <div class="btn" *ngIf="userService.manager !== null"><i class="fa fa-user"></i>{{ userService.manager?.fullname }}</div>
+        <div class="btn" *ngIf="userService.client !== null"><i
+            class="fa fa-user"></i>{{ userService.client?.fullname }}</div>
+        <div class="btn" *ngIf="userService.manager !== null"><i
+            class="fa fa-user"></i>{{ userService.manager?.fullname }}</div>
         <div class="btn btn-outline-danger" (click)="userService.logout()">Log Out</div>
       </span>
     </div>
