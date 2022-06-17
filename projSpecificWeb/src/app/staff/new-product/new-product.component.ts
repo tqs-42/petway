@@ -36,8 +36,10 @@ export class NewProductComponent implements OnInit {
 
   createProduct(): void{
     if (this.product.name != "" && this.product.description != "" && this.product.price != 0) {
-      console.log(this.product.category);
-      this.productService.createProduct(this.product.category, this.product.name, this.product.description, this.product.price, this.product.store ,this.product.stock, this.product.image);
+      if (this.userService.manager?.store.id) {
+        this.productService.createProduct(this.product.category, this.product.name, this.product.description, this.product.price, this.userService.manager?.store.id ,this.product.stock, this.product.image);
+      }
+
       //this.router.navigateByUrl('/system/product')
     }
   }

@@ -25,28 +25,16 @@ public class ProductService {
     private CategoryRepository categoryRepository;
 
     public Product saveProduct(Map<String, String> data) {
-        //String storeManager = data.get("storeManager");
         String name = data.get("name");
         String description = data.get("description");
         String image = data.get("image");
         Double price = Double.parseDouble(data.get("price"));
         int stock = Integer.parseInt(data.get("stock"));
-        String store_id = data.get("store");
-        long category_id = Long.parseLong(data.get("category"));
-
-        Category category = categoryRepository.findById(category_id);
-        System.out.println("category: " + category);
-        System.out.println("Idstorev: " + store_id);
-        System.out.println("Ids: " + Long.parseLong(store_id));
-        Store store = storeRepository.findById(Long.parseLong(store_id));
-        System.out.println(store);
-
+        Store store = storeRepository.findById(Long.parseLong(data.get("store")));
+        Category category = categoryRepository.findById(Long.parseLong(data.get("category")));
+        
         Product product = new Product(name, description, image, price, stock, category, store);
-        Product product2 = productRepository.saveAndFlush(product);
-        System.out.println(product2);
-        // category.addToProducts(product);
-
-        return product2;
+        return productRepository.saveAndFlush(product);
     }
 
     public Store getStoreIdByManager(String manager) {
