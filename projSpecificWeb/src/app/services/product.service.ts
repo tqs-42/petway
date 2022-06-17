@@ -53,7 +53,7 @@ export class ProductService {
   }
 
   createProduct(category: string, name: string, description: string, price: number, store: number, stock: number, image: string) {
-    this.http.post<Product>(this.baseUrl + "/add-product", {  "category": category, "name": name, "description": description, "store": store, "stock": stock , "price": price, "image": image,"isActive": true}, httpOptions).subscribe(response => console.log("sou a resposta --- " + response))
+    this.http.post<Product>(this.baseUrl + "/addProduct", {  "category": category, "name": name, "description": description, "store": store, "stock": stock , "price": price, "image": image,"isActive": true}, httpOptions).subscribe(response => console.log("sou a resposta --- " + response))
   }
 
   updateProduct(product:Product) {

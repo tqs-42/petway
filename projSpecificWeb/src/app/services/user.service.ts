@@ -18,13 +18,6 @@ export class UserService {
   client: Client | null = null;
   manager: Manager | null = null;
 
-  //ELIMINAR
-  token: BehaviorSubject<string | null> = new BehaviorSubject(localStorage.getItem('token'))
-  username: string | null = null;
-  email: string | null = null;
-  dtype: string | null = null;
-  userIsStaff: boolean = false;
-
   constructor(private router: Router, private http: HttpClient) {
   }
 

@@ -17,7 +17,7 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
-    @PostMapping("/add-product")
+    @PostMapping("/addProduct")
     public Product addProduct(@RequestBody Map<String, String> data) throws ConflictException {
         try {
             return service.saveProduct(data);

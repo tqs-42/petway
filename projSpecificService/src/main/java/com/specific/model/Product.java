@@ -42,6 +42,9 @@ public class Product {
     @Column(name = "price", nullable = false)
     private Double price;
 
+    @Column(name = "stock", nullable = true)
+    private int stock;
+
     @ManyToOne
     @JoinColumn(name = "storeId", nullable = false)
     private Store store;
@@ -51,9 +54,6 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     Set<RequestProducts> requests;
-
-    @Column(name = "stock", nullable = true)
-    private int stock;
 
     public Product(String name, String description, String image, Double price, Store store, Set<Category> categories,
             Set<RequestProducts> requests, int stock) {

@@ -4,6 +4,7 @@ import { Category } from './../../interfaces/Category';
 import { ProductService } from './../../services/product.service';
 import { Product } from './../../interfaces/Product';
 import { Component, OnInit } from '@angular/core';
+import { UserService } from './../../services/user.service';
 import { Observable } from 'rxjs/internal/Observable';
 
 
@@ -16,7 +17,7 @@ export class NewProductComponent implements OnInit {
   categories: Category[] = [];
   product!: { category: string, name: string, description: string, price: number, stock: number, image: string, store: number};
 
-  constructor(private productService: ProductService, private categoryService: CategoryService, private router: Router) { }
+  constructor(public userService:UserService,private productService: ProductService, private categoryService: CategoryService, private router: Router) { }
 
   ngOnInit(): void {
     this.getCategories();
@@ -30,7 +31,7 @@ export class NewProductComponent implements OnInit {
           console.log(categories)
           this.categories = categories
         }
-      ); 
+      );
   }
 
   createProduct(): void{

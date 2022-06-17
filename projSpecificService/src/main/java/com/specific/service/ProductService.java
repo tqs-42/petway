@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
-import com.specific.exception.ConflictException;
 import com.specific.model.Category;
 import com.specific.model.Product;
 import com.specific.model.Store;
@@ -26,15 +25,14 @@ public class ProductService {
     private CategoryRepository categoryRepository;
 
     public Product saveProduct(Map<String, String> data) {
-        String storeManager = data.get("storeManager");
-
+        //String storeManager = data.get("storeManager");
         String name = data.get("name");
         String description = data.get("description");
         String image = data.get("image");
-        long category_id = Long.parseLong(data.get("category"));
         Double price = Double.parseDouble(data.get("price"));
         int stock = Integer.parseInt(data.get("stock"));
         String store_id = data.get("store");
+        long category_id = Long.parseLong(data.get("category"));
 
         Category category = categoryRepository.findById(category_id);
         System.out.println("category: " + category);
