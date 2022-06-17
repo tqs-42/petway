@@ -18,7 +18,7 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
       - name: Build Generic Service
-        run: docker-compose build --build-arg PROFILE=CI --build-arg GENERIC_URL=localhost generic
+        run: docker-compose build
       - name: Start Generic Service on Docker
         run: docker-compose up -d 
     
