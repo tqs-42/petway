@@ -9,11 +9,5 @@ import com.specific.model.Store;
 
 @Repository
 public interface StoreRepository extends JpaRepository<Store,Long> {
-
-    Store getStoreByManagers(String manager);
-
-    List<Store> findAll();
-
     Store findById(long id);
-    
 }

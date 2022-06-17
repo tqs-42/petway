@@ -13,7 +13,7 @@ export class AuthenticationService {
   constructor(private userService: UserService, private http: HttpClient) {
     let email = localStorage.getItem('userEmail');
     if (email != null) {
-      this.http.get<any>(environment.baseAPIPath + '/user/userByEmail/' + email).subscribe(
+      this.http.get<any>(environment.baseAPIPath + '/users/byEmail/' + email).subscribe(
         (res) => {
           console.log(res)
           if (res.hasOwnProperty('cart')) {
@@ -31,7 +31,7 @@ export class AuthenticationService {
     let email = form.value.email;
     let password = form.value.password;
 
-    return this.http.post<any>(environment.baseAPIPath + '/user/login', { email, password });
+    return this.http.post<any>(environment.baseAPIPath + '/users/login', { email, password });
   }
 
   register(form: FormGroup) {
@@ -45,7 +45,7 @@ export class AuthenticationService {
 
     console.log(data);
 
-    return this.http.post(environment.baseAPIPath + '/client/addClient', data);
+    return this.http.post(environment.baseAPIPath + '/clients/add', data);
 
   }
 

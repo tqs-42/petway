@@ -14,7 +14,7 @@ import javax.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
@@ -29,7 +29,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/userByEmail/{email}")
+    @GetMapping("/byEmail/{email}")
     public ResponseEntity<User> findUserByEmail(@Valid @PathVariable String email) {
         try {
             User user = userService.getUserByEmail(email);
@@ -40,30 +40,5 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(null);
         }
-    }
-
-    @PostMapping("/addUser")
-    public User addUser(@RequestBody User user) {
-        return userService.saveUser(user);
-    }
-
-    @PostMapping("/addUsers")
-    public List<User> addUsers(@RequestBody List<User> users) {
-        return userService.saveUsers(users);
-    }
-
-    @GetMapping("/users")
-    public List<User> findAllUsers() {
-        return userService.getUsers();
-    }
-
-    @PutMapping("/updateUser")
-    public User updateUser(@RequestBody User user) {
-        return userService.updateUser(user);
-    }
-
-    @DeleteMapping("/deleteUser/{email}")
-    public String deleteUser(@PathVariable String email) {
-        return userService.deleteUser(email);
     }
 }

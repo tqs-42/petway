@@ -16,12 +16,12 @@ const httpOptions = {
 })
 export class ProductService {
 
-  private baseUrl = "http://localhost:8080/product";
+  private baseUrl = "http://localhost:8080/products";
 
   constructor(private http: HttpClient, private userService:UserService) {
     let email = localStorage.getItem('userEmail');
     if (email != null) {
-      this.http.get<any>(environment.baseAPIPath + '/user/userByEmail/' + email).subscribe(
+      this.http.get<any>(environment.baseAPIPath + '/users/byEmail/' + email).subscribe(
         (res) => {
           console.log(res)
           if (res.hasOwnProperty('cart')) {
@@ -53,7 +53,7 @@ export class ProductService {
   }
 
   createProduct(category: string, name: string, description: string, price: number, store: number, stock: number, image: string) {
-    this.http.post<Product>(this.baseUrl + "/addProduct", {  "category": category, "name": name, "description": description, "store": store, "stock": stock , "price": price, "image": image}, httpOptions).subscribe(response => console.log("sou a resposta --- " + response))
+    this.http.post<Product>(this.baseUrl + "/add", {  "category": category, "name": name, "description": description, "store": store, "stock": stock , "price": price, "image": image}, httpOptions).subscribe(response => console.log("sou a resposta --- " + response))
   }
 
   updateProduct(product:Product) {

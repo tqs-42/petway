@@ -14,12 +14,12 @@ const httpOptions = {
 })
 export class CategoryService {
 
-  private baseUrl = "http://localhost:8080/category";
+  private baseUrl = "http://localhost:8080/categories";
 
   constructor(private http: HttpClient, private userService:UserService) {
     let email = localStorage.getItem('userEmail');
     if (email != null) {
-      this.http.get<any>(environment.baseAPIPath + '/user/userByEmail/' + email).subscribe(
+      this.http.get<any>(environment.baseAPIPath + '/users/byEmail/' + email).subscribe(
         (res) => {
           console.log(res)
           if (res.hasOwnProperty('cart')) {
@@ -44,6 +44,6 @@ export class CategoryService {
 
 
   createCategory(name: string) {
-    this.http.post<Category>(this.baseUrl + "/add-category", { "name": name, "isActive": true }, httpOptions).subscribe(response => console.log(response))
+    this.http.post<Category>(this.baseUrl + "/add", { "name": name, "isActive": true }, httpOptions).subscribe(response => console.log(response))
   }
 }
