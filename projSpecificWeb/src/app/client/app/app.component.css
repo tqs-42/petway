@@ -1,0 +1,10 @@
+hr{
+    height: 1px;
+    background-color: rgb(0, 0, 0);
+    border: none;
+}
+
+.header, .btn-secondary {
+    background-color: rgba(139, 139, 136, 0.467);
+    color: black;
+}
