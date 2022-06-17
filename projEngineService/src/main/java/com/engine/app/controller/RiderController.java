@@ -1,109 +1,86 @@
 package com.engine.app.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.engine.app.exception.ConflictException;
+import com.engine.app.model.Rider;
+import com.engine.app.service.RiderService;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-
+import com.engine.app.exception.ConflictException;
 import com.engine.app.model.Rider;
 import com.engine.app.service.RiderService;
 
-import java.util.List;
-import java.util.Map;
-
 @RestController
-@CrossOrigin("http://localhost:4200")
 @RequestMapping("/riders")
+@CrossOrigin("http://localhost:4200")
 public class RiderController {
 
     @Autowired
     private RiderService riderService;
 
-    @PostMapping("/login")
-    public ResponseEntity<String> loginRider(@RequestBody Map<String, String> data) throws Exception {
-        try {
-            riderService.loginRider(data.get("email"), data.get("password"));
-        } catch (ConflictException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-        return ResponseEntity.ok().build();
-    }
-
     @PostMapping("/register")
-    public ResponseEntity<String> registerRider(@RequestBody Map<String,String> data) throws Exception {
+    public ResponseEntity<Rider> registerRider(@RequestBody Map<String,String> data) throws Exception {
+        Rider rider;
         try {
-            riderService.registerRider(data.get("email"), data.get("password"), data.get("address"), data.get("fullname"));
+            rider = riderService.registerRider(data.get("email"), data.get("password"), data.get("address"), data.get("fullname"));
         } catch (ConflictException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/rider/{email}")
-    public ResponseEntity<Rider> getRiderByEmail(@Valid @PathVariable String email) {
-        try {
-            if (riderService.getRiderByEmail(email) == null) {
-                return ResponseEntity.badRequest().body(null);
-            }
-            return ResponseEntity.ok(riderService.getRiderByEmail(email));
-        } catch (Exception e) {
             return ResponseEntity.badRequest().body(null);
         }
+        return ResponseEntity.ok(rider);
     }
 
-    @GetMapping("/all-riders")
+    @GetMapping("/rider")
+    public ResponseEntity<Rider> getRiderByEmail(@RequestParam() String email) {
+        Rider rider = riderService.getRiderByEmail(email);
+        if (rider == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        return ResponseEntity.ok(rider);
+    }
+
+    @GetMapping("/allRiders")
     public ResponseEntity<List<Rider>> getAllRiders() {
-        try {
-            return ResponseEntity.ok(riderService.getAllRiders());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(null);
-        }
+        return ResponseEntity.ok(riderService.getAllRiders());
     }
 
-    @GetMapping("/all-active-riders")
+    @GetMapping("/activeRiders")
     public ResponseEntity<List<Rider>> getAllActiveRiders() {
-        try {
-            return ResponseEntity.ok(riderService.getAllActiveRiders());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(null);
-        }
+        return ResponseEntity.ok(riderService.getAllActiveRiders());
     }
 
-    @GetMapping("/total-riders")
+    @GetMapping("/totalRiders")
     public ResponseEntity<Integer> getTotalRiders() {
-        try {
-            return ResponseEntity.ok(riderService.getAllRiders().size());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(null);
-        }
+        return ResponseEntity.ok(riderService.getAllRiders().size());
     }
 
-    @GetMapping("/total-active-riders")
+    @GetMapping("/totalActiveRiders")
     public ResponseEntity<Integer> getTotalActiveRiders() {
-        try {
-            return ResponseEntity.ok(riderService.getAllActiveRiders().size());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(null);
-        }
+        return ResponseEntity.ok(riderService.getAllActiveRiders().size());
     }
 
-    @PutMapping("/change-status/{email}")
-    public ResponseEntity<String> changeStatus(@Valid @PathVariable String email) {
+    @PutMapping("/changeStatus/{email}")
+    public ResponseEntity<String> changeStatus(@Valid @PathVariable String email) throws BadCredentialsException {
         try {
             riderService.changeStatus(email);
-        } catch (Exception e) {
+        } catch (BadCredentialsException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
         return ResponseEntity.ok("Status changed successfully");

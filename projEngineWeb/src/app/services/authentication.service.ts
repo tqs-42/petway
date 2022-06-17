@@ -12,6 +12,7 @@ export class AuthenticationService {
   
   private baseUrl = 'http://localhost:8080/';
   private token = localStorage.getItem('token');
+  userValue: any;
 
   //private currentUserSubject: BehaviorSubject<Person>;
   //public currentUser: Observable<Person>;
@@ -43,6 +44,6 @@ export class AuthenticationService {
 
     let data = { fullname, address, email, password }
 
-    return this.http.post(`${environment.baseURL}/riders/register`, data);
+    return this.http.post(this.baseUrl + "riders/register", data);
   }
 }

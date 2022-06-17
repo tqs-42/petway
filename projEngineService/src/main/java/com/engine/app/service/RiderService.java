@@ -3,6 +3,7 @@ package com.engine.app.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 
 
@@ -19,18 +20,7 @@ public class RiderService {
     @Autowired
     private RiderRepository riderRepository;
 
-    public void loginRider(String email, String password) throws ConflictException {
-        Rider rider = riderRepository.findByEmail(email);
-        if (rider == null) {
-            throw new ConflictException("Rider not found");
-        }
-        
-        if (!password.equals(rider.getPassword())) {
-            throw new ConflictException("Wrong password");
-        }
-    }
-
-    public Rider registerRider(String email, String password, String address, String fullname) throws ConflictException {
+    public Rider registerRider(String email,String password,String address, String fullname) throws ConflictException {
         if (riderRepository.findByEmail(email) != null) {
             throw new ConflictException("Rider " + email + " already registered");
         } else {
@@ -38,6 +28,7 @@ public class RiderService {
             rider.setPassword(password);
             rider.setIsActive(true);
             riderRepository.save(rider);
+
         }
         return null;
     }
@@ -54,9 +45,14 @@ public class RiderService {
         return riderRepository.findAllActiveRiders();
     }
     
-    public void changeStatus(String email) {
+    public Rider changeStatus(String email) throws BadCredentialsException {
         Rider rider = riderRepository.findByEmail(email);
+        if (rider == null) {
+            throw new BadCredentialsException("Rider with the email " + email + " does not exist"); 
+        }
         rider.setIsActive(!rider.getIsActive());
         riderRepository.save(rider);
+        return rider;
     }
+    
 }
