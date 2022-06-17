@@ -75,8 +75,7 @@ class RiderControllerTest {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.email", is(rider.getEmail())))
             .andExpect(jsonPath("$.address", is(rider.getAddress())))
-            .andExpect(jsonPath("$.fullname", is(rider.getFullname())))
-            .andExpect(jsonPath("$.password", is(rider.getPassword())));
+            .andExpect(jsonPath("$.fullname", is(rider.getFullname())));
 
         verify(riderService, times(1)).registerRider(anyString(),anyString(),anyString(),anyString());
 
@@ -120,8 +119,7 @@ class RiderControllerTest {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.email", is(rider.getEmail())))
             .andExpect(jsonPath("$.address", is(rider.getAddress())))
-            .andExpect(jsonPath("$.fullname", is(rider.getFullname())))
-            .andExpect(jsonPath("$.password", is(rider.getPassword())));
+            .andExpect(jsonPath("$.fullname", is(rider.getFullname())));
 
         verify(riderService, times(1)).getRiderByEmail(anyString());
 
@@ -161,15 +159,12 @@ class RiderControllerTest {
             .andExpect(jsonPath("$[0].email", is(allRiders.get(0).getEmail())))
             .andExpect(jsonPath("$[0].address", is(allRiders.get(0).getAddress())))
             .andExpect(jsonPath("$[0].fullname", is(allRiders.get(0).getFullname())))
-            .andExpect(jsonPath("$[0].password", is(allRiders.get(0).getPassword())))
             .andExpect(jsonPath("$[1].email", is(allRiders.get(1).getEmail())))
             .andExpect(jsonPath("$[1].address", is(allRiders.get(1).getAddress())))
             .andExpect(jsonPath("$[1].fullname", is(allRiders.get(1).getFullname())))
-            .andExpect(jsonPath("$[1].password", is(allRiders.get(1).getPassword())))
             .andExpect(jsonPath("$[2].email", is(allRiders.get(2).getEmail())))
             .andExpect(jsonPath("$[2].address", is(allRiders.get(2).getAddress())))
-            .andExpect(jsonPath("$[2].fullname", is(allRiders.get(2).getFullname())))
-            .andExpect(jsonPath("$[2].password", is(allRiders.get(2).getPassword())));;
+            .andExpect(jsonPath("$[2].fullname", is(allRiders.get(2).getFullname())));
 
         verify(riderService, times(1)).getAllRiders();
 
@@ -193,17 +188,14 @@ class RiderControllerTest {
             .andExpect(jsonPath("$[0].email", is(activeRiders.get(0).getEmail())))
             .andExpect(jsonPath("$[0].address", is(activeRiders.get(0).getAddress())))
             .andExpect(jsonPath("$[0].fullname", is(activeRiders.get(0).getFullname())))
-            .andExpect(jsonPath("$[0].password", is(activeRiders.get(0).getPassword())))
             .andExpect(jsonPath("$[0].isActive", is(activeRiders.get(0).getIsActive())))
             .andExpect(jsonPath("$[1].email", is(activeRiders.get(1).getEmail())))
             .andExpect(jsonPath("$[1].address", is(activeRiders.get(1).getAddress())))
             .andExpect(jsonPath("$[1].fullname", is(activeRiders.get(1).getFullname())))
-            .andExpect(jsonPath("$[1].password", is(activeRiders.get(1).getPassword())))
             .andExpect(jsonPath("$[1].isActive", is(activeRiders.get(1).getIsActive())))
             .andExpect(jsonPath("$[2].email", is(activeRiders.get(2).getEmail())))
             .andExpect(jsonPath("$[2].address", is(activeRiders.get(2).getAddress())))
             .andExpect(jsonPath("$[2].fullname", is(activeRiders.get(2).getFullname())))
-            .andExpect(jsonPath("$[2].password", is(activeRiders.get(2).getPassword())))
             .andExpect(jsonPath("$[2].isActive", is(activeRiders.get(2).getIsActive())));
 
         verify(riderService, times(1)).getAllActiveRiders();

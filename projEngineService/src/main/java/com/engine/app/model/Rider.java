@@ -13,7 +13,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "admin")
+@Table(name = "rider")
 @Inheritance(strategy=InheritanceType.JOINED)
 public class Rider extends Person {
 

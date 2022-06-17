@@ -9,26 +9,29 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.engine.app.model.Rider;
-import com.engine.app.repository.RiderRepository;
+import com.engine.app.model.Person;
+import com.engine.app.repository.PersonRepository;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
 
 	@Autowired
-    private RiderRepository riderRepository;
+    private PersonRepository personRepository;
 
 	@Override
-	public UserDetails loadUserByUsername(String email)  {
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-		Rider rider = riderRepository.findByEmail(email);
+		Person person = personRepository.findByEmail(email).orElseThrow(() -> {
+            return new UsernameNotFoundException("Person does not exist");
+        });
 
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(rider.getClass().getSimpleName()));
+        authorities.add(new SimpleGrantedAuthority(person.getClass().getSimpleName()));
 
-        return new User(rider.getEmail(), rider.getPassword(), authorities);
+        return new User(person.getEmail(), person.getPassword(), authorities);
 	}
 
 }

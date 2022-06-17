@@ -1,6 +1,9 @@
-FROM openjdk:11
-COPY ./target/app-0.0.1-SNAPSHOT.jar projEngineService.jar
+FROM maven:3.8.1-adoptopenjdk-11
 
-EXPOSE 8001
+WORKDIR /engineService
 
-CMD ["java", "-jar", "projEngineService.jar"]
+COPY . /engineService/
+
+RUN mvn -DskipTests clean package
+
+ENTRYPOINT ["java","-jar","/engineService/target/app-0.0.1-SNAPSHOT.jar"]

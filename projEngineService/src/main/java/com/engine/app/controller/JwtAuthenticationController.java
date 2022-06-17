@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.engine.app.config.JwtTokenUtil;
 import com.engine.app.exception.ConflictException;
+import com.engine.app.model.JwtRequest;
 import com.engine.app.model.JwtResponse;
 import com.engine.app.service.JwtUserDetailsService;
 import com.engine.app.service.RiderService;
 
 
-
+@RequestMapping
 @RestController
-@RequestMapping("/riders")
 @CrossOrigin("http://localhost:4200")
 public class JwtAuthenticationController {
 
@@ -45,15 +45,14 @@ public class JwtAuthenticationController {
     Logger logger = LoggerFactory.getLogger(JwtAuthenticationController.class);
 
     @PostMapping("/login")
-    public ResponseEntity<JwtResponse> createAuthenticationToken(@RequestBody Map<String,String> data) throws Exception {
-        String email = data.get("email");
-        String password = data.get("password");
+    public ResponseEntity<JwtResponse> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
-        authenticate(email, password);
+        authenticate(authenticationRequest);
+		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
+		final String token = jwtTokenUtil.generateToken(userDetails);
 
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-        final String token = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(token));
+        return ResponseEntity.ok(new JwtResponse(token, userDetails.getAuthorities().iterator().next(), userDetails.getUsername()));
+
     }
 
     @PostMapping("/register")
@@ -66,12 +65,12 @@ public class JwtAuthenticationController {
         return ResponseEntity.ok().build();
     }
 
-    private void authenticate(String username, String password) throws Exception {
+    private void authenticate(JwtRequest jwtRequest) throws Exception {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        } catch (DisabledException e) {
-            throw new Exception("USER_DISABLED", e);
+            System.out.println(jwtRequest.getEmail() + " | " + jwtRequest.getPassword());
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(jwtRequest.getEmail(), jwtRequest.getPassword()));
         } catch (BadCredentialsException e) {
+            System.out.println("BAD CREDENTIALS");
             throw new Exception("INVALID_CREDENTIALS", e);
         }
     }
