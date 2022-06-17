@@ -1,5 +1,7 @@
 package com.specific.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.specific.model.Category;
@@ -15,5 +17,10 @@ public class CategoryController {
     @PostMapping("/add")
     public Category addCategory(@RequestBody Category category) {
         return service.saveCategory(category);
+    }
+
+    @GetMapping("")
+    public List<Category> findAllCategories() {
+        return service.getCategories();
     }
 }

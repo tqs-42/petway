@@ -28,7 +28,6 @@ export class NewProductComponent implements OnInit {
   getCategories():void{
     this.categoryService.getAll().subscribe(
         categories => {
-          console.log(categories)
           this.categories = categories
         }
       );

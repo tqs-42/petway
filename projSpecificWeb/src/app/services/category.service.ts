@@ -21,7 +21,6 @@ export class CategoryService {
     if (email != null) {
       this.http.get<any>(environment.baseAPIPath + '/users/byEmail/' + email).subscribe(
         (res) => {
-          console.log(res)
           if (res.hasOwnProperty('cart')) {
             this.userService.setClient(res);
           } else if (res.hasOwnProperty('store')) {
@@ -32,14 +31,8 @@ export class CategoryService {
     }
   }
 
-  getCategory(id: number): Observable<Category> {
-    const url = this.baseUrl + '/' + id;
-    return this.http.get<Category>(url);
-  }
-
-
   getAll() {
-    return this.http.get<Category[]>(this.baseUrl + '/categories')
+    return this.http.get<Category[]>(this.baseUrl)
   }
 
 

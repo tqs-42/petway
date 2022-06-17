@@ -23,7 +23,6 @@ export class ProductService {
     if (email != null) {
       this.http.get<any>(environment.baseAPIPath + '/users/byEmail/' + email).subscribe(
         (res) => {
-          console.log(res)
           if (res.hasOwnProperty('cart')) {
             this.userService.setClient(res);
           } else if (res.hasOwnProperty('store')) {
@@ -36,8 +35,7 @@ export class ProductService {
 
   getProducts(): Observable<Product[]> {
     const url = this.baseUrl;
-    console.log(this.http.get<Product[]>(url + "/products"))
-    return this.http.get<Product[]>(url + "/products");
+    return this.http.get<Product[]>(url);
   }
 
   getAllSorting(sort:string){
