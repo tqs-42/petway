@@ -21,6 +21,4 @@ jobs:
         run: docker-compose build --build-arg PROFILE=CI --build-arg GENERIC_URL=localhost generic
       - name: Start Generic Service on Docker
         run: docker-compose up -d 
-
-    working-directory: ./projSpecificService
     
