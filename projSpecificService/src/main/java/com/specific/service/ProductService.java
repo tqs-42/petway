@@ -2,6 +2,8 @@ package com.specific.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
 import com.specific.model.Category;
 import com.specific.model.Product;
@@ -39,5 +41,9 @@ public class ProductService {
         Product product = new Product(name, description, image, price, stock, category, store);
         System.out.println(product);
         return productRepository.saveAndFlush(product);
+    }
+
+    public List<Product> getProducts() {
+        return productRepository.findAll();
     }
 }

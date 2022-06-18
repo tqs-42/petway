@@ -8,5 +8,6 @@ export interface Product {
   stock: number
   category: Category
   store : Store 
+  image : string
   isActive: boolean;
 }

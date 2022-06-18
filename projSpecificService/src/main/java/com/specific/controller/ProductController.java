@@ -2,6 +2,8 @@ package com.specific.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.Map;
 import com.specific.exception.ConflictException;
 import com.specific.model.Product;
@@ -21,5 +23,10 @@ public class ProductController {
         } catch (Exception e) {
             throw new ConflictException("Product already exists");
         }
+    }
+
+    @GetMapping("")
+    public List<Product> findAllProducts() {
+        return service.getProducts();
     }
 }
