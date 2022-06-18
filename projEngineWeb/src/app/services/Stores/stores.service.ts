@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -11,12 +12,9 @@ const httpOptions = {
 })
 export class StoresService {
 
-  private baseUrl = "http://localhost:8080/";
-
   constructor(private http: HttpClient) { }
 
   getAllStores(): Observable<any> {
-    const url = this.baseUrl;
-    return this.http.get<any>(url + "stores/get-all-stores", httpOptions);
+    return this.http.get<any>(environment.baseURL + "stores/get-all-stores", httpOptions);
   }
 }
