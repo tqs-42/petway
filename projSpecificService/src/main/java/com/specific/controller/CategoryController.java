@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import com.specific.exception.ConflictException;
 import com.specific.model.Category;
 import com.specific.service.CategoryService;
 
@@ -15,7 +17,7 @@ public class CategoryController {
     private CategoryService service;
 
     @PostMapping("/add")
-    public Category addCategory(@RequestBody Category category) {
+    public Category addCategory(@RequestBody Category category) throws ConflictException {
         return service.saveCategory(category);
     }
 

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import com.specific.controller.CategoryController;
+import com.specific.exception.ConflictException;
 import com.specific.model.Category;
 import com.specific.model.Product;
 import com.specific.service.CategoryService;
@@ -20,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 //import io.restassured.module.mockmvc.RestAssuredMockMvc;
 
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -42,17 +44,19 @@ class CategoryControllerTest {
         RestAssuredMockMvc.mockMvc(mvc);
     }
 
+    // Valid Tests
+
     @Test
     void whenGetCategories_thenReturnAllCategories() throws Exception {
-        List<Category> ret = new ArrayList<>();
+        List<Category> categories = new ArrayList<>();
         Category category1 = new Category("Dog Food");
         Category category2 = new Category("Toys");
         Category category3 = new Category("Parrot Food");
-        ret.add(category1);
-        ret.add(category2);
-        ret.add(category3);
+        categories.add(category1);
+        categories.add(category2);
+        categories.add(category3);
 
-        when(categoryService.getCategories()).thenReturn(ret);
+        when(categoryService.getCategories()).thenReturn(categories);
 
         RestAssuredMockMvc.given().contentType(ContentType.JSON)
                 .when().get("/categories").then().assertThat().statusCode(200).and()
@@ -65,17 +69,35 @@ class CategoryControllerTest {
     }
 
     @Test
-    void whenPostInvalidCategory_thenFailCreate() throws Exception {
-        // Category res = new Category("legumes");
-        // when(categoryService.saveCategory(Mockito.any())).thenReturn(res);
-        // List<Category> ret = new ArrayList<>();
-        // ret.add(new Category("Legumes"));
-        // ret.add(new Category("Fruta"));
-        // ret.add(new Category("Doces"));
-        // when(categoryService.getCategories()).thenReturn(ret);
-        // RestAssuredMockMvc.given().contentType(ContentType.JSON)
-        // .when().post("/categories?name=legumes").then().assertThat().statusCode(400);
-        // verify(categoryService, times(1)).getCategories();
+    void whenCreateCategory_thenCreateCategory() throws Exception {
+        Category category = new Category("Toys");
+
+        when(categoryService.saveCategory(Mockito.any())).thenReturn(category);
+        RestAssuredMockMvc.given().contentType(ContentType.JSON).body(category)
+                .when().post("/categories/add").then().assertThat().statusCode(200)
+                .body("name", equalTo("Toys"));
+        verify(categoryService, times(1)).saveCategory(Mockito.any());
+
+    }
+
+    // Invalid Tests
+
+    @Test
+    void whenPostExistingCategory_thenShouldNotCreate() throws Exception {
+        List<Category> categories = new ArrayList<>();
+        categories.add(new Category("Dog Food"));
+        categories.add(new Category("Toys"));
+        categories.add(new Category("Treats"));
+        when(categoryService.getCategories()).thenReturn(categories);
+
+        Category category = new Category("Toys");
+
+        doThrow(new ConflictException("Category already exists")).when(categoryService).saveCategory(Mockito.any());
+
+        RestAssuredMockMvc.given().contentType(ContentType.JSON).body(category)
+                .when().post("/categories/add").then().assertThat().statusCode(409);
+
+        verify(categoryService, times(1)).saveCategory(Mockito.any());
 
     }
 

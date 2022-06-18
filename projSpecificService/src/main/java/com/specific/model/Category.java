@@ -26,8 +26,8 @@ public class Category {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy="category")
-    @JsonIgnore 
+    @OneToMany(mappedBy = "category")
+    @JsonIgnore
     Set<Product> products;
 
     public Category(String name) {
@@ -37,10 +37,6 @@ public class Category {
 
     public Category() {
 
-    }
-
-    public void addToProducts(Product product) {
-        products.add(product);
     }
 
     public long getId() {
