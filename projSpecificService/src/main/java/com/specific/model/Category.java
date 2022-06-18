@@ -10,9 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Data
@@ -27,8 +26,8 @@ public class Category {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "categories")
-    @JsonIgnore
+    @OneToMany(mappedBy="category")
+    @JsonIgnore 
     Set<Product> products;
 
     public Category(String name) {
