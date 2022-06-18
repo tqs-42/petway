@@ -1,7 +1,6 @@
 package com.engine.app.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -11,14 +10,11 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.engine.app.exception.ConflictException;
 import com.engine.app.model.Rider;
 import com.engine.app.service.RiderService;
 
@@ -29,17 +25,6 @@ public class RiderController {
 
     @Autowired
     private RiderService riderService;
-
-    @PostMapping("/register")
-    public ResponseEntity<Rider> registerRider(@RequestBody Map<String,String> data) throws Exception {
-        Rider rider;
-        try {
-            rider = riderService.registerRider(data.get("email"), data.get("password"), data.get("address"), data.get("fullname"));
-        } catch (ConflictException e) {
-            return ResponseEntity.badRequest().body(null);
-        }
-        return ResponseEntity.ok(rider);
-    }
 
     @GetMapping("/rider")
     public ResponseEntity<Rider> getRiderByEmail(@RequestParam() String email) {
