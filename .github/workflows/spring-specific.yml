@@ -8,7 +8,7 @@ on:
 
 jobs:
   verify:
-    runs-on: self-hosted
+    runs-on: ubuntu-18.04
     name: Running 
     steps:
       - uses: actions/checkout@v2
@@ -18,7 +18,7 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
       - name: Build Generic Service
-        run: docker-compose build
+        run: docker-compose build projspecificservice
       - name: Start Generic Service on Docker
-        run: docker-compose up -d 
+        run: docker-compose up -d projspecificservice
     
