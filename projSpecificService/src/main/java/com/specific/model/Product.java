@@ -1,19 +1,13 @@
 package com.specific.model;
 
 import lombok.Data;
-
-import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -46,24 +40,12 @@ public class Product {
     @JoinColumn(name = "storeId", nullable = false)
     private Store store;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(name = "product_category", joinColumns = @JoinColumn(name = "productId"), inverseJoinColumns = @JoinColumn(name = "categoryId"))
-    Set<Category> categories;
-
+    @ManyToOne
+    @JoinColumn(name = "categoryId", nullable = false)
+    private Category category;  
+    
     @OneToMany(mappedBy = "product")
     Set<RequestProducts> requests;
-
-    public Product(String name, String description, String image, Double price, Store store, Set<Category> categories,
-            Set<RequestProducts> requests, int stock) {
-        this.name = name;
-        this.description = description;
-        this.image = image;
-        this.price = price;
-        this.store = store;
-        this.categories = categories;
-        this.requests = requests;
-        this.stock = stock;
-    }
 
     public Product(String name, String description, String image, Double price, int stock, Category category,
             Store store) {
@@ -72,8 +54,7 @@ public class Product {
         this.image = image;
         this.price = price;
         this.stock = stock;
-        this.categories = new HashSet<>();
-        this.categories.add(category);
+        this.category = category;
         this.store = store;
     }
 
@@ -125,12 +106,12 @@ public class Product {
         this.store = store;
     }
 
-    public Set<Category> getCategories() {
-        return categories;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Set<RequestProducts> getRequests() {
