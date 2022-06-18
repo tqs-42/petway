@@ -18,7 +18,7 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
       - name: Build Generic Service
-        run: docker-compose build projspecificservice
+        run: docker-compose build specific-service
       - name: Start Generic Service on Docker
-        run: docker-compose up -d projspecificservice
+        run: docker-compose up -d specific-service
     
