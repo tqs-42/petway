@@ -8,6 +8,8 @@ import java.util.Map;
 import com.specific.exception.ConflictException;
 import com.specific.model.Product;
 import com.specific.service.ProductService;
+import javax.validation.Valid;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -28,5 +30,10 @@ public class ProductController {
     @GetMapping("")
     public List<Product> findAllProducts() {
         return service.getProducts();
+    }
+
+    @GetMapping("edit/{id}")
+    public Product findProduct(@Valid @PathVariable long id) {
+        return service.getProduct(id);
     }
 }

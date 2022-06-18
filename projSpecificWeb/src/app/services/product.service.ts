@@ -38,6 +38,11 @@ export class ProductService {
     return this.http.get<Product[]>(url);
   }
 
+  getProduct(id: number): Observable<Product[]> {
+    const url = this.baseUrl + "/edit/" + id;
+    return this.http.get<Product[]>(url);
+  }
+
   getAllSorting(sort:string){
     return this.http.get<Product[]>(environment.baseAPIPath + '/product/?ordering=' + sort)
   }
@@ -54,8 +59,8 @@ export class ProductService {
     this.http.post<Product>(this.baseUrl + "/add", {  "category": category, "name": name, "description": description, "store": store, "stock": stock , "price": price, "image": image}, httpOptions).subscribe(response => console.log("sou a resposta --- " + response))
   }
 
-  updateProduct(product:Product) {
-    this.http.put<Product>(this.baseUrl + "/"+ product.id, { "id": product.id, "name": product.name, "description": product.description, "price": product.price, "isActive": product.isActive, "category": product.category.id }, httpOptions).subscribe(response => console.log(response))
-  }
+  // updateProduct(product:Product) {
+  //   this.http.put<Product>(this.baseUrl + "/"+ product.id, { "id": product.id, "name": product.name, "description": product.description, "price": product.price, "isActive": product.isActive, "category": product.category.id }, httpOptions).subscribe(response => console.log(response))
+  // }
 
 }

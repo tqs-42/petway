@@ -9,5 +9,4 @@ export interface Product {
   category: Category
   store : Store 
   image : string
-  isActive: boolean;
 }
