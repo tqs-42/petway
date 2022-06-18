@@ -24,24 +24,24 @@
 
 <div class="text-center container bg-light">
   <div class="py-5 text-center d-inline-flex">
-    <img src="/assets/static/images/1.jpg" class="rounded">
+    <img src="/assets/static/images/{{ details?.image }}" class="rounded">
     <div id="details" class="text-left ml-5">
-      <h2>ROYAL CANIN CHIHUAHUA ADULT</h2>
+      <h2>{{ details?.name }}</h2>
       <div>
         <h5>Shop</h5>
-        <p class="text-secondary">Pet City</p>
+        <p class="text-secondary">{{ details?.store?.name }}</p>
       </div>
       <div>
         <h5>Category</h5>
-        <p class="text-secondary">Food</p>
+        <p class="text-secondary">{{ details?.category?.name }}</p>
       </div>
       <div>
         <h5>Description</h5>
-        <p class="text-secondary">Wet food.</p>
+        <p class="text-secondary">{{ details?.description }}</p>
       </div>
       <div>
-        <h4>1,11 €</h4>
-        <app-add-product [productId]="1"></app-add-product>
+        <h4>{{ details?.price }} €</h4>
+        <app-add-product [productId]="id"></app-add-product>
       </div>
     </div>
     <div class="clearfix"> </div>
