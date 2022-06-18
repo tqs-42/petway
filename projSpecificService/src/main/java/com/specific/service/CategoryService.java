@@ -12,6 +12,9 @@ public class CategoryService {
     private CategoryRepository repository;
 
     public Category saveCategory(Category category) {
+        // if (repository.findByName(category.getName())) {
+        //
+        // }
         return repository.save(category);
     }
 

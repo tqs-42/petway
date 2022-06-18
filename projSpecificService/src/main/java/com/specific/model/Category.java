@@ -48,11 +48,15 @@ public class Category {
         return id;
     }
 
-    public String getCategory() {
-        return name;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setCategory(String name) {
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 
