@@ -84,8 +84,10 @@ public class CategoryRepositoryTest {
         List<Category> allCategories = categoryRepository.findAll();
 
         assertThat(allCategories).isNotNull();
-        assertThat(allCategories).hasSize(2).extracting(Category::getId).contains(c1.getId(), c2.getId());
-        assertThat(allCategories).hasSize(2).extracting(Category::getName).contains(c1.getName(), c2.getName());
+        assertThat(allCategories).hasSize(2).extracting(Category::getId).contains(c1.getId(),
+                c2.getId());
+        assertThat(allCategories).hasSize(2).extracting(Category::getName).contains(c1.getName(),
+                c2.getName());
 
     }
 
