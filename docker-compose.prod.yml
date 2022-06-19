@@ -19,6 +19,7 @@ services:
             interval: 20s
             timeout: 10s
             retries: 2
+            
     engine-service-prod:
       depends_on:
         - engine-database-prod
