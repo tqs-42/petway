@@ -21,4 +21,8 @@ jobs:
         run: docker-compose build engine-service
       - name: Start Generic Service on Docker
         run: docker-compose up -d engine-service
+      - name: Run tests with Maven
+        run: |
+          cd projEngineService
+          mvn test
     
