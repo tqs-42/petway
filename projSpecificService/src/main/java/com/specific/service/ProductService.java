@@ -31,15 +31,7 @@ public class ProductService {
         int stock = Integer.parseInt(data.get("stock"));
         Store store = storeRepository.findById(Long.parseLong(data.get("store")));
         Category category = categoryRepository.findById(Long.parseLong(data.get("category")));
-        System.out.println(name);
-        System.out.println(description);
-        System.out.println(image);
-        System.out.println(price);
-        System.out.println(stock);
-        System.out.println(store);
-        System.out.println(category);
         Product product = new Product(name, description, image, price, stock, category, store);
-        System.out.println(product);
         return productRepository.saveAndFlush(product);
     }
 
@@ -48,6 +40,6 @@ public class ProductService {
     }
 
     public Product getProductById(long id) {
-        return productRepository.findById(id).orElse(null);
+        return productRepository.findById(id);
     }
 }

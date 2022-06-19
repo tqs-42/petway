@@ -2,8 +2,8 @@ package com.specific.model;
 
 import lombok.Data;
 
+import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Data
 @Entity
@@ -30,6 +32,7 @@ public class Cart {
     private Client client;
 
     @OneToMany(mappedBy="cart")
+    @JsonIgnore
     Set<RequestProducts> products;
 
     @OneToOne(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -41,8 +44,13 @@ public class Cart {
         this.request = request;
     }
 
+    public Cart(Client client){
+        this.client = client;
+        products = new HashSet<>();
+    }
+
     public Cart(){
-        
+        products = new HashSet<>();
     }
 
     public long getId() {

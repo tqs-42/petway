@@ -36,11 +36,7 @@ public class Category {
     }
 
     public Category() {
-
-    }
-
-    public void addToProducts(Product product) {
-        products.add(product);
+        this.products = new HashSet<Product>();
     }
 
     public long getId() {

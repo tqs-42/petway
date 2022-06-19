@@ -83,7 +83,7 @@ export class AppComponent implements OnInit {
     } else {
       this.authService.login(this.loginForm).subscribe(
         (res) => {
-          if (res.hasOwnProperty('cart')) {
+          if (res.hasOwnProperty('address')) {
             this.userService.setClient(res);
             localStorage.setItem('userEmail',res['email']);
             this.loginModalClose.nativeElement.click();

@@ -41,24 +41,17 @@ public class Store {
     @JsonIgnore 
     Set<Product> products;
 
-    
-
     public Store(String name, String address, Boolean active) {
         this.name = name;
         this.address = address;
         this.active = active;
-    }
-
-    public Store(String name, String address, Boolean active, Set<Manager> managers) {
-        this.name = name;
-        this.address = address;
-        this.active = active;
-        this.managers = new HashSet<Manager>();
+        this.managers = new HashSet<>();
         this.products = new HashSet<>();
     }
 
     public Store(){
-        
+        this.managers = new HashSet<>();
+        this.products = new HashSet<>();
     }
 
     public long getId() {
