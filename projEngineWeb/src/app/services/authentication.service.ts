@@ -12,19 +12,16 @@ import { Person } from '../classes/Person';
 })
 export class AuthenticationService {
 
-  private token = localStorage.getItem('token');
-  userValue: any;
-
-  private currentUserSubject: BehaviorSubject<Person>;
-  public currentUser: Observable<Person>;
+  private userSubject: BehaviorSubject<Person>;
+  public user: Observable<Person>;
 
   constructor(private http: HttpClient) { 
-    this.currentUserSubject = new BehaviorSubject<Person>(JSON.parse(localStorage.getItem('currentUser')!));
-    this.currentUser = this.currentUserSubject.asObservable();
+    this.userSubject = new BehaviorSubject<Person>(JSON.parse(localStorage.getItem('user')!));
+    this.user = this.userSubject.asObservable();
   }
 
-  test() {
-    return this.http.get(environment.baseURL + 'riders/all-active-riders');
+  public get userValue(): Person {
+    return this.userSubject.value;
   }
 
   login(form: FormGroup) {
