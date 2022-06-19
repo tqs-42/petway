@@ -14,6 +14,8 @@
 	<description>A specific application/market propositionthat leverages on the deliveries platform,</description>
 	<properties>
 		<java.version>11</java.version>
+		<sonar.organization>tqs-42</sonar.organization>
+  		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
 		<dependency>
