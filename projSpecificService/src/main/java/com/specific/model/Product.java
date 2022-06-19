@@ -42,8 +42,8 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "categoryId", nullable = false)
-    private Category category;  
-    
+    private Category category;
+
     @OneToMany(mappedBy = "product")
     Set<RequestProducts> requests;
 
@@ -56,6 +56,11 @@ public class Product {
         this.stock = stock;
         this.category = category;
         this.store = store;
+    }
+
+    public Product(String name, Category category) {
+        this.name = name;
+        this.category = category;
     }
 
     public Product() {

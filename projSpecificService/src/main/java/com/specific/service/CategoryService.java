@@ -14,11 +14,8 @@ public class CategoryService {
     private CategoryRepository repository;
 
     public Category saveCategory(Category category) throws ConflictException {
-        List<Category> categories = getCategories();
-        for (Category category2 : categories) {
-            if (category2.getName().toLowerCase().equals(category.getName().toLowerCase())) {
-                throw new ConflictException("Category already exists");
-            }
+        if (repository.findByName(category.getName()) != null) {
+            throw new ConflictException("Category already exists");
         }
         return repository.save(category);
     }
