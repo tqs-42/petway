@@ -34,14 +34,20 @@ public class Store {
     private Boolean active;
 
     @OneToMany(mappedBy = "store")
-    @JsonIgnore 
+    @JsonIgnore
     Set<Manager> managers;
 
     @OneToMany(mappedBy = "store")
-    @JsonIgnore 
+    @JsonIgnore
     Set<Product> products;
 
-    
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Boolean isActive() {
+        return this.active;
+    }
 
     public Store(String name, String address, Boolean active) {
         this.name = name;
@@ -57,8 +63,8 @@ public class Store {
         this.products = new HashSet<>();
     }
 
-    public Store(){
-        
+    public Store() {
+
     }
 
     public long getId() {
@@ -111,5 +117,4 @@ public class Store {
                 + name + ", products=" + "]";
     }
 
-    
 }

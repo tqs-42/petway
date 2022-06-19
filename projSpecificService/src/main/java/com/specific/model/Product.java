@@ -127,6 +127,18 @@ public class Product {
         this.requests = requests;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public int getStock() {
+        return this.stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
     @Override
     public String toString() {
         return "Product [categories=" + ", description=" + description + ", id=" + id + ", image=" + image
@@ -135,3 +147,8 @@ public class Product {
     }
 
 }
+
+                
+                
+                
+                

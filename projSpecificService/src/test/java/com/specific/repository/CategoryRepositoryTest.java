@@ -1,9 +1,7 @@
 package com.specific.repository;
 
 import java.util.List;
-import java.util.Optional;
 
-import javax.validation.ConstraintViolationException;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
@@ -58,6 +56,20 @@ public class CategoryRepositoryTest {
     }
 
     @Test
+    void testCreateCategoryAndFindByName_thenReturn() {
+
+        Category category = new Category();
+        category.setName("Food");
+
+        entityManager.persistAndFlush(category);
+
+        Category res = categoryRepository.findByName(category.getName());
+
+        assertThat(res).isEqualTo(category);
+
+    }
+
+    @Test
     void testCreateCategoriesAndFindByAll_thenReturnThem() {
 
         Category c1 = new Category();
@@ -82,6 +94,12 @@ public class CategoryRepositoryTest {
     @Test
     void testWhenFindByInvalidId_thenReturnNull() {
         Category res = categoryRepository.findById(-1L);
+        assertThat(res).isNull();
+    }
+
+    @Test
+    void testWhenFindByInvalidName_thenReturnNull() {
+        Category res = categoryRepository.findByName("Dont Exist");
         assertThat(res).isNull();
     }
 
