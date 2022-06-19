@@ -1,0 +1,89 @@
+
+version: "3.1"
+
+services:
+    engine-database-prod:
+        image: mysql:8.0
+        platform: linux/amd64
+        ports: 
+            - "3307:3306"
+        environment:
+            MYSQL_DATABASE: engineDB
+            MYSQL_USER: admin
+            MYSQL_ROOT_PASSWORD: admin
+            MYSQL_PASSWORD: admin 
+        volumes:
+            - datafiles:/var/lib/mysql
+        restart: always
+        healthcheck:
+            test: "mysql engineDB -uadmin -padmin -e 'SELECT 1;'"
+            interval: 20s
+            timeout: 10s
+            retries: 2
+
+    engine-service-prod:
+      depends_on:
+        engine-database-prod:
+          condition: service_healthy
+      build: ./projEngineService
+      restart: always
+      ports:
+        - 6869:8001
+      environment:
+        SPRING_APPLICATION_JSON: '{
+          "spring.datasource.url"  : "jdbc:mysql://engine-database:3306/engineDB?useSSL=true&createDatabaseIfNotExist=true",
+          "spring.datasource.username" : "admin",
+          "spring.datasource.password" : "admin",
+          "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL8Dialect",
+          "spring.jpa.hibernate.ddl-auto" : "update",
+          "server.port": 8001 }'
+      healthcheck:
+        test: "curl http://localhost:8001"
+        interval: 20s
+        timeout: 10s
+        retries: 2
+
+    specificDataBase:
+        image: mysql:8.0
+        ports: 
+            - "3306:3306"
+        environment:
+            MYSQL_DATABASE: specificDB
+            MYSQL_USER: admin
+            MYSQL_ROOT_PASSWORD: admin
+            MYSQL_PASSWORD: admin 
+        volumes:
+            - ./datafiles:/var/lib/mysql
+        networks:
+            - default
+        restart: always
+        healthcheck:
+            test: "mysql specificDB -uadmin -padmin -e 'SELECT 1;'"
+            interval: 20s
+            timeout: 10s
+            retries: 2
+
+    projspecificservice:
+        depends_on:
+            specificDataBase:
+                condition: service_healthy
+        build: ./projSpecificService
+        restart: on-failure
+        ports:
+            - 6868:8000
+        environment:
+            SPRING_APPLICATION_JSON: '{
+                "spring.datasource.url"  : "jdbc:mysql://specificDataBase:3306/specificDB?useSSL=true",
+                "spring.datasource.username" : "admin",
+                "spring.datasource.password" : "admin",
+                "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL8Dialect",
+                "spring.jpa.hibernate.ddl-auto" : "update",
+                "server.port": 8000 }'
+        healthcheck:
+            test: "curl http://localhost:8000"
+            interval: 20s
+            timeout: 10s
+            retries: 2
+    
+volumes:
+  datafiles:
