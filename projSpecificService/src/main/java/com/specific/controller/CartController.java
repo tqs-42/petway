@@ -1,5 +1,6 @@
 package com.specific.controller;
 
+import java.util.Set;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,15 @@ public class CartController {
     public ResponseEntity<RequestProducts> putProductAmout(@Valid @PathVariable String email, @Valid @PathVariable Long productId, @Valid @PathVariable int amount) {
         try {
             return ResponseEntity.ok(service.putProductAmout(email, productId, amount));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    @GetMapping("/user/{email}/products")
+    public ResponseEntity<Set<RequestProducts>> getProducts(@Valid @PathVariable String email) {
+        try {
+            return ResponseEntity.ok(service.getProducts(email));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(null);
         }

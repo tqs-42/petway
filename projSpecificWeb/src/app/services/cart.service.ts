@@ -16,7 +16,8 @@ export class CartService {
   constructor(private http: HttpClient) { }
 
   getAll() {
-    let result = this.http.get<CartProduct[]>(environment.baseAPIPath + '/cart/')
+    let email = localStorage.getItem('userEmail');
+    let result = this.http.get<RequestProducts[]>(environment.baseAPIPath + '/carts/user/' + email + '/products')
 
     result.subscribe(items => this.totalElements = items.reduce((acc, item) => acc += item.amount, 0))
 
@@ -30,7 +31,7 @@ export class CartService {
 
   add(product: number, amount: number) {
     let email = localStorage.getItem('userEmail');
-    return this.http.put<CartProduct>(environment.baseAPIPath + '/carts/user/' + email + '/product/' + product + '/amount/' + amount, httpOptions)
+    return this.http.put<RequestProducts>(environment.baseAPIPath + '/carts/user/' + email + '/product/' + product + '/amount/' + amount, httpOptions)
   }
 
   delete(product: number) {

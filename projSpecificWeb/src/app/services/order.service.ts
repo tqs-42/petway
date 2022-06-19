@@ -1,3 +1,4 @@
+import { CartService } from './cart.service';
 import { environment } from './../../environments/environment';
 import { Order } from './../interfaces/Order';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -13,7 +14,7 @@ const httpOptions = {
 })
 export class OrderService {
 
-  constructor(private http: HttpClient, private userService:UserService) {
+  constructor(private http: HttpClient, private userService:UserService, public cartService:CartService) {
     let email = localStorage.getItem('userEmail');
     if (email != null) {
       this.http.get<any>(environment.baseAPIPath + '/users/byEmail/' + email).subscribe(
@@ -27,6 +28,7 @@ export class OrderService {
         }
       );
     }
+    cartService.getAll();
   }
 
   getAll() {

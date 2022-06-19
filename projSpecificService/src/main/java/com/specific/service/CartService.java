@@ -60,5 +60,11 @@ public class CartService {
         }
         return null;
     }
+
+    public Set<RequestProducts> getProducts(String email){
+        Client client = clientRepository.findByEmail(email);
+        Cart cart = repository.findByClient(client);
+        return cart.getProducts();
+    }
     
 }
