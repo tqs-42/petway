@@ -9,4 +9,4 @@ jobs:
     runs-on: [self-hosted, linux]
     steps:
       - uses: actions/checkout@v1
-      - run: sh deploy-engine.sh
+      - run: sh ./deploy-bash/deploy-engine.sh
