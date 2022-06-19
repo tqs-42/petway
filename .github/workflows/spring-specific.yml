@@ -21,4 +21,8 @@ jobs:
         run: docker-compose build projspecificservice
       - name: Start Generic Service on Docker
         run: docker-compose up -d projspecificservice
+      - name: Run tests with Maven
+        run: |
+          cd projSpecificService
+          mvn test
     
