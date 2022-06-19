@@ -23,18 +23,12 @@ export class RegisterComponent implements OnInit {
       address: [null, [Validators.required]],
       fullname: [null, [Validators.required]],
       password:[null, [Validators.required, Validators.minLength(8)]],
-      password_repeat:[null, [Validators.required, Validators.minLength(8)]]
     });
   }
 
   public submit(): void {
     
     let error = false;
-
-    if (this.registerForm.value.password != this.registerForm.value.password_repeat) {
-      this.showConfirmPasswordError = true;
-      error = true;
-    }
 
     if (this.registerForm.invalid) {
       this.showError = true;
@@ -50,8 +44,8 @@ export class RegisterComponent implements OnInit {
           this.showError = true;
         }
       })
-
     }
+
   }
 
 }

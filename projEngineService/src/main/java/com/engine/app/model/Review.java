@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "reviews")
 public class Review {
@@ -26,6 +28,7 @@ public class Review {
     private Delivery delivery;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private Rider rider;
 
     public Review(Delivery delivery, Rider rider) {

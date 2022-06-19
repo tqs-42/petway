@@ -24,6 +24,9 @@ import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RequestInterceptor } from './services/request.interceptor';
+import { Router } from '@angular/router';
+import { AuthenticationService } from './services/authentication.service';
+import { JwtInterceptor } from './services/jwt.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,8 +57,20 @@ import { RequestInterceptor } from './services/request.interceptor';
     })
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+
+  constructor(private router : Router, private authenticationService : AuthenticationService) {
+    /* 
+    if (this.authenticationService.userValue) {
+      this.router.navigate(['/']);
+    } else {
+      this.router.navigate(['/login']);
+    }
+    */
+  }
+
+}

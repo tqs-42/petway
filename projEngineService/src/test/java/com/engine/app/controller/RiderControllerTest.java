@@ -54,57 +54,6 @@ class RiderControllerTest {
     private JwtUserDetailsService userDetailsService;
 
     @Test
-    void testRegisterRiderWhenValid_thenStatus200() throws Exception {
-
-        JSONObject payload = new JSONObject();
-        payload.put("email", "rider123@ua.pt");
-        payload.put("address", "Rua da estrada");
-        payload.put("fullname", "John Smith");
-        payload.put("password", "password");
-
-        Rider rider = new Rider("rider@ua.pt", "Rua da estrada", "John Smith", "password");
-
-        when(riderService.registerRider(anyString(),anyString(),anyString(),anyString())).thenReturn(rider);
-
-        mvc.perform(post("/riders/register")
-            .contentType(MediaType.APPLICATION_JSON)
-            .header("Authorization", "Bearer token")
-            .characterEncoding("UTF-8")
-            .content(String.valueOf(payload))
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.email", is(rider.getEmail())))
-            .andExpect(jsonPath("$.address", is(rider.getAddress())))
-            .andExpect(jsonPath("$.fullname", is(rider.getFullname())));
-
-        verify(riderService, times(1)).registerRider(anyString(),anyString(),anyString(),anyString());
-
-    }
-
-    @Test
-    void testRegisterRiderWhenUserAlreadyExists_thenStatus400() throws Exception {
-
-        JSONObject payload = new JSONObject();
-        payload.put("email", "rider123@ua.pt");
-        payload.put("address", "Rua da estrada");
-        payload.put("fullname", "John Smith");
-        payload.put("password", "password");
-
-        when(riderService.registerRider(anyString(),anyString(),anyString(),anyString())).thenThrow(ConflictException.class);
-
-        mvc.perform(post("/riders/register")
-            .contentType(MediaType.APPLICATION_JSON)
-            .header("Authorization", "Bearer token")
-            .characterEncoding("UTF-8")
-            .content(String.valueOf(payload))
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isBadRequest());
-
-        verify(riderService, times(1)).registerRider(anyString(),anyString(),anyString(),anyString());
-
-    }
-
-    @Test
     void testGetRiderByEmail_thenStatus200() throws Exception {
 
         Rider rider = new Rider("rider@ua.pt", "Rua da estrada", "John Smith", "password");

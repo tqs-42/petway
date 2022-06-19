@@ -17,6 +17,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "deliveries")
 public class Delivery {
@@ -31,15 +34,22 @@ public class Delivery {
     private Review review;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private Rider rider;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    private Store store;
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     @JoinColumn(name = "event_id")
     private List<Event> events = new ArrayList<>();
 
-    public Delivery(Review review, Rider rider) {
+    public Delivery(Review review, Rider rider, Store store) {
         this.review = review;
         this.rider = rider;
+        this.store = store;
     }
 
     public Delivery() {
@@ -59,6 +69,22 @@ public class Delivery {
 
     public void setRider(Rider rider) {
         this.rider = rider;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 
     
