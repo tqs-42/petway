@@ -9,4 +9,4 @@ mv -v ./* ./deploy_engine/
 
 cd deploy_engine
 
-docker-compose up -d
+docker-compose -f docker-compose.prod.yml up -d
