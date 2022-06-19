@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -29,6 +30,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 	@Autowired
     private PersonRepository personRepository;
 
+    @Lazy
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -56,7 +58,7 @@ public class JwtUserDetailsService implements UserDetailsService {
         }
     }
 
-    public JwtResponse generateTokenLogin(JwtRequest jwtRequest) throws InvalidCredentialsException {
+    public JwtResponse generateTokenLogin(JwtRequest jwtRequest) throws InvalidCredentialsException, UsernameNotFoundException {
         this.authenticate(jwtRequest);
 		final UserDetails userDetails = this.loadUserByUsername(jwtRequest.getEmail());
 		final String token = jwtTokenUtil.generateToken(userDetails);

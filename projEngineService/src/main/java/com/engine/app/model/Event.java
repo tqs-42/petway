@@ -10,8 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
-import org.hibernate.annotations.CreationTimestamp;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+
 
 @Entity
 @Table(name = "events")
@@ -23,12 +26,12 @@ public class Event {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private Delivery delivery;
 
     @Column(name = "status", nullable = false)
     private DeliveryStatus status;
 
-    @CreationTimestamp
     @Column(name = "timestamp", nullable = false)
     private Timestamp timestamp;
 

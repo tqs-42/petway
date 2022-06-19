@@ -7,21 +7,19 @@ import { AuthenticationService } from './authentication.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-  constructor(private accountService: AuthenticationService) { }
+  constructor(private authenticationService : AuthenticationService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    
     // add auth header with jwt if user is logged in and request is to the api url
-    const user = this.accountService.userValue;
+    const user = this.authenticationService.userValue;
     const isLoggedIn = user && user.token;
     const isApiUrl = request.url.startsWith(environment.baseURL);
 
     if (isLoggedIn && isApiUrl) {
-      const ls = localStorage.getItem('token');
-      const token = ls?.split(':')[1];
-      const token_final =  token?.replace("\"", '').replace("\"", '').replace("}", '');
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${token_final}`
+          Authorization: `Bearer ${user.token}`
         }
       });
     }

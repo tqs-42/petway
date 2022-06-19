@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "rider")
 @Inheritance(strategy=InheritanceType.JOINED)
@@ -21,10 +23,12 @@ public class Rider extends Person {
     private Boolean isActive;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     @JoinColumn(name = "review_id")
     private List<Review> reviews = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     @JoinColumn(name = "delivery_id")
     private List<Delivery> deliveries = new ArrayList<>();
 

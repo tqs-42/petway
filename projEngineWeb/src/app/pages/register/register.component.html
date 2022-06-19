@@ -27,21 +27,21 @@
                 <input type="text" placeholder="Enter Address" name="address" id="address" formControlName="address"
                     required>
             </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label for="password"><b>Password</b></label>
+            </div>
             <div class="col-md-9">
                 <input type="password" placeholder="Enter Password" name="password" id="password"
                     formControlName="password" required>
             </div>
-            <div class="text-center form-group">
-                <button type="submit" class="btn btn-primary my-4">Sign Up</button>
-            </div>
-            <div class="col-md-9">
-                <input type="password" placeholder="Repeat Password" name="password-repeat" id="password-repeat"
-                    formControlName="password_repeat" required>
-            </div>
-            <p *ngIf="showConfirmPasswordError" class="text-danger">Passwords are not equal</p>
+        </div>
+        <div class="text-center form-group">
+            <button type="submit" class="btn btn-primary my-4">Sign Up</button>
         </div>
         <hr>
-        <p *ngIf="showError" class="text-danger">Error. Please fill all fields!</p>
+        <p *ngIf="showError" class="text-danger">Invalid registration</p>
         <div class="row">
             <p>Already have an account? <a routerLink="/login">Sign in</a>.</p>
         </div>

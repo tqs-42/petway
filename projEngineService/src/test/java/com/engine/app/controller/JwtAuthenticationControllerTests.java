@@ -25,6 +25,7 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.engine.app.config.JwtRequestFilter;
@@ -32,6 +33,7 @@ import com.engine.app.config.JwtTokenUtil;
 import com.engine.app.config.WebSecurityConfig;
 import com.engine.app.exception.ConflictException;
 import com.engine.app.exception.InvalidCredentialsException;
+import com.engine.app.exception.PersonNotFoundException;
 import com.engine.app.model.JwtRequest;
 import com.engine.app.model.JwtResponse;
 import com.engine.app.model.Rider;
@@ -157,7 +159,7 @@ class JwtAuthenticationControllerTests {
     }
 
     @Test
-    void testLoginInvalid_thenStatus401() throws Exception {
+    void testLoginInvalidCredentials_thenStatus401() throws Exception {
 
         JSONObject payload = new JSONObject();
         payload.put("email", "rider123@ua.pt");

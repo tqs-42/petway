@@ -16,6 +16,6 @@ export class RidersService {
   constructor(private http: HttpClient) { }
 
   getActiveRiders(): Observable<any> {
-    return this.http.get<any>(environment.baseURL + "riders/all-active-riders", httpOptions);
+    return this.http.get<any>(environment.baseURL + "riders/activeRiders", httpOptions);
   }
 }
