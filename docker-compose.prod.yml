@@ -21,7 +21,9 @@ services:
             retries: 2
 
     engine-service-prod:
-      depends_on: engine-database-prod
+      depends_on:
+        - engine-database-prod:
+           condition: service_healthy
       build: ./projEngineService
       restart: always
       ports:
