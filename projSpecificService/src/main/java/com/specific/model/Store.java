@@ -15,7 +15,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Data
 @Entity
 @Table(name = "STORE")
 public class Store {

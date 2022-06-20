@@ -18,7 +18,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Data
 @Entity
 @Table(name = "CART")
 public class Cart {
@@ -55,6 +54,10 @@ public class Cart {
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public Client getClient() {

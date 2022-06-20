@@ -9,7 +9,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
-@Data
 @Entity
 @Table(name = "MANAGER")
 public class Manager extends User{

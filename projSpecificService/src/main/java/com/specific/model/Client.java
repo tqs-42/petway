@@ -11,7 +11,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Data
 @Entity
 @Table(name = "CLIENT")
 public class Client extends User {
@@ -42,9 +41,12 @@ public class Client extends User {
         this.address = address;
     }
 
-    @Override
-    public String toString() {
-        return "Client [address=" + address + "]";
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
 }

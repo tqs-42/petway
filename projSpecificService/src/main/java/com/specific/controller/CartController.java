@@ -1,10 +1,14 @@
 package com.specific.controller;
 
+import java.util.List;
 import java.util.Set;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.specific.exception.ResourceNotFoundException;
 import com.specific.model.RequestProducts;
 import com.specific.service.CartService;
 
@@ -16,12 +20,9 @@ public class CartController {
     private CartService service;
 
     @GetMapping("/user/{email}/product/{productId}")
-    public ResponseEntity<RequestProducts> getProductAmout(@Valid @PathVariable String email, @Valid @PathVariable Long productId) {
-        try {
-            return ResponseEntity.ok(service.getProductAmout(email, productId));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(null);
-        }
+    public ResponseEntity<RequestProducts> getProductAmout(@Valid @PathVariable String email, @Valid @PathVariable Long productId)  throws ResourceNotFoundException {
+        RequestProducts requestProducts = service.getProductAmout(email, productId).orElseThrow(() -> new ResourceNotFoundException("clientEmail " + email + ", productID " + productId + ", NOT FOUND."));
+        return ResponseEntity.ok().body(requestProducts);
     }
 
     
@@ -35,11 +36,8 @@ public class CartController {
     }
 
     @GetMapping("/user/{email}/products")
-    public ResponseEntity<Set<RequestProducts>> getProducts(@Valid @PathVariable String email) {
-        try {
-            return ResponseEntity.ok(service.getProducts(email));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(null);
-        }
+    public ResponseEntity<List<RequestProducts>> getProducts(@Valid @PathVariable String email) throws ResourceNotFoundException {
+        List<RequestProducts> requestsProducts = service.getProducts(email).orElseThrow(() -> new ResourceNotFoundException("clientEmail " + email + ", NOT FOUND."));
+        return ResponseEntity.ok().body(requestsProducts);
     }
 }

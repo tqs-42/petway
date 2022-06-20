@@ -15,7 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Data
 @Entity
 @Table(name = "PRODUCT")
 public class Product {
@@ -69,6 +68,10 @@ public class Product {
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
