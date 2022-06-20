@@ -43,7 +43,7 @@ public class CartService {
         return Optional.empty();
     }
 
-    public RequestProducts putProductAmout(String email, long productId, int amount) {
+    public  Optional<RequestProducts> putProductAmout(String email, long productId, int amount) {
         Client client = clientRepository.findByEmail(email);
         Cart cart = repository.findByClient(client);
         Set<RequestProducts> requestsProducts = cart.getProducts();
@@ -51,19 +51,19 @@ public class CartService {
             if (requestProducts.getProduct().getId() == productId) {
                 if (amount == 0) {
                     requestProductsRepository.deleteById(requestProducts.getId());
-                    return null;
+                    return Optional.of(new RequestProducts(0, cart, requestProducts.getProduct()));
                 } else {
                     requestProducts.setAmount(amount);
-                    return requestProductsRepository.save(requestProducts);
+                    return Optional.of(requestProductsRepository.save(requestProducts));
                 }
             }
         }
 
-        if (amount != 0) {
-            Product product = productRepository.findById(productId);
-            return requestProductsRepository.save(new RequestProducts(amount, cart, product));
+        Product product = productRepository.findById(productId);
+        if (amount != 0 && client != null && cart != null && product != null) {
+            return Optional.of(requestProductsRepository.save(new RequestProducts(amount, cart, product)));
         }
-        return null;
+        return Optional.empty();
     }
 
     public Optional<List<RequestProducts>> getProducts(String email){

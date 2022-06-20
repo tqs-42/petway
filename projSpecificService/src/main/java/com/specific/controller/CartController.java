@@ -1,6 +1,7 @@
 package com.specific.controller;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +28,9 @@ public class CartController {
 
     
     @PutMapping("/user/{email}/product/{productId}/amount/{amount}")
-    public ResponseEntity<RequestProducts> putProductAmout(@Valid @PathVariable String email, @Valid @PathVariable Long productId, @Valid @PathVariable int amount) {
-        try {
-            return ResponseEntity.ok(service.putProductAmout(email, productId, amount));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(null);
-        }
+    public ResponseEntity<RequestProducts> putProductAmout(@Valid @PathVariable String email, @Valid @PathVariable Long productId, @Valid @PathVariable int amount) throws ResourceNotFoundException {
+        RequestProducts requestProducts = service.putProductAmout(email, productId, amount).orElseThrow(() -> new ResourceNotFoundException("clientEmail " + email + ", productID " + productId + ", NOT FOUND."));
+        return ResponseEntity.ok().body(requestProducts);
     }
 
     @GetMapping("/user/{email}/products")

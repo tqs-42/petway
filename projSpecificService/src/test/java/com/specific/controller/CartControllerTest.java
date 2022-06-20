@@ -2,33 +2,21 @@ package com.specific.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.specific.model.Cart;
-import com.specific.model.Category;
 import com.specific.model.Client;
 import com.specific.model.Product;
 import com.specific.model.RequestProducts;
 import com.specific.service.CartService;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import io.restassured.http.ContentType;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import static org.hamcrest.Matchers.*;
@@ -155,4 +143,53 @@ public class CartControllerTest {
         verify(service, times(1)).getProducts("a");
     }
 
+
+    //nao usei isto:
+    //201->created
+    //200->deleted
+    //200->put
+    @Test
+    void testWhenPutRequestProductsByValidEmailValidproductId_thenReturnRequestProducts() throws Exception {
+        when(service.putProductAmout("a", 1L, 3)).thenReturn(Optional.of(requestProducts));
+      
+        RestAssuredMockMvc.given().contentType(ContentType.JSON)
+        .when().put("carts/user/a/product/1/amount/3").then().statusCode(200)
+        .body("id", equalTo((int) requestProducts.getId()))
+        .body("amount", equalTo(3))
+        .body("cart.id", equalTo(1))
+        .body("product.id", equalTo(1));
+
+        
+        verify(service, times(1)).putProductAmout("a", 1L, 3);
+    }
+
+    @Test
+    void testWhenPutRequestProductsByInvalidEmailValidproductId_thenReturnRequestProducts() throws Exception {
+        when(service.putProductAmout("a", 1L, 3)).thenReturn(Optional.of(requestProducts));
+      
+        RestAssuredMockMvc.given().contentType(ContentType.JSON)
+        .when().put("carts/user/b/product/1/amount/3").then().statusCode(404);
+
+        verify(service, times(1)).putProductAmout("b", 1L, 3);
+    }
+
+    @Test
+    void testWhenPutRequestProductsByValidEmailInvalidproductId_thenReturnRequestProducts() throws Exception {
+        when(service.putProductAmout("a", 1L, 3)).thenReturn(Optional.of(requestProducts));
+      
+        RestAssuredMockMvc.given().contentType(ContentType.JSON)
+        .when().put("carts/user/a/product/20/amount/3").then().statusCode(404);
+
+        verify(service, times(1)).putProductAmout("a", 20L, 3);
+    }
+
+    @Test
+    void testWhenPutRequestProductsByInvalidEmailInvalidproductId_thenReturnRequestProducts() throws Exception {
+        when(service.putProductAmout("a", 1L, 3)).thenReturn(Optional.of(requestProducts));
+      
+        RestAssuredMockMvc.given().contentType(ContentType.JSON)
+        .when().put("carts/user/b/product/20/amount/3").then().statusCode(404);
+
+        verify(service, times(1)).putProductAmout("b", 20L, 3);
+    }
 }
