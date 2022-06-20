@@ -27,22 +27,34 @@
     <img src="/assets/static/images/{{ details?.image }}" class="rounded">
     <div id="details" class="text-left ml-5">
       <h2>{{ details?.name }}</h2>
-      <div>
-        <h5>Shop</h5>
-        <p class="text-secondary">{{ details?.store?.name }}</p>
+      <div style="display: flex; justify-content: space-between;">
+        <p>Shop</p>
+        <div style="margin-left: 10px;">
+          <h5>{{ details?.store?.name }}</h5>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between;">
+        <p>Category</p>
+        <div style="margin-left: 10px;">
+          <h5>{{ details?.category?.name }}</h5>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between;">
+        <p>Description</p>
+        <div style="margin-left: 10px;">
+          <h5>{{ details?.description }} </h5>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between;">
+        <p>Unitary Price</p>
+        <div style="margin-left: 10px;">
+          <h5>{{ details?.price }} €</h5>
+        </div>
       </div>
       <div>
-        <h5>Category</h5>
-        <p class="text-secondary">{{ details?.category?.name }}</p>
-      </div>
-      <div>
-        <h5>Description</h5>
-        <p class="text-secondary">{{ details?.description }}</p>
-      </div>
-      <div>
-        <h4>{{ details?.price }} €</h4>
         <app-add-product [productId]="id"></app-add-product>
       </div>
+
     </div>
     <div class="clearfix"> </div>
   </div>
