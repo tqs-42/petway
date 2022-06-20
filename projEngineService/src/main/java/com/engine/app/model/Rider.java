@@ -24,11 +24,6 @@ public class Rider extends Person {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    @JoinColumn(name = "review_id")
-    private List<Review> reviews = new ArrayList<>();
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
     @JoinColumn(name = "delivery_id")
     private List<Delivery> deliveries = new ArrayList<>();
 
@@ -56,13 +51,5 @@ public class Rider extends Person {
         this.isActive = isActive;
     }
 
-
-
-    @Override
-    public String toString() {
-        return "Rider " + super.toString() + " [deliveries=" + deliveries + ", isActive=" + isActive + ", reviews=" + reviews + "]";
-    }
-    
-    
     
 }

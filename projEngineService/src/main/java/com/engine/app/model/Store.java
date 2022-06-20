@@ -37,6 +37,13 @@ public class Store {
     @JoinColumn(name = "delivery_id")
     private List<Delivery> deliveries = new ArrayList<>();
 
+    public Store(Long id, String name, Double latitude, Double longitude) {
+        this.id = id;
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     public Store(String name, Double latitude, Double longitude) {
         this.name = name;
         this.latitude = latitude;

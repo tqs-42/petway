@@ -62,7 +62,7 @@ class StoreControllerTests {
     @Test
     void testCreateValidStore_thenStatus200() throws Exception {
 
-        Store store = new Store("Petlandia", 40.232323, -12.313231);
+        Store store = new Store(1L, "Petlandia", 40.232323, -12.313231);
 
         JSONObject payload = new JSONObject();
         payload.put("name", "Petlandia");
@@ -77,6 +77,7 @@ class StoreControllerTests {
             .content(String.valueOf(payload))
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
+            .andExpect(jsonPath("$.id", is(store.getId().intValue())))
             .andExpect(jsonPath("$.name", is(store.getName())))
             .andExpect(jsonPath("$.latitude", is(store.getLatitude())))
             .andExpect(jsonPath("$.longitude", is(store.getLongitude())));
@@ -141,7 +142,7 @@ class StoreControllerTests {
     @Test
     void testGetValidStore_thenStatus200() throws Exception {
 
-        Store store = new Store("Petlandia", 40.232323, -12.313231);
+        Store store = new Store(1L, "Petlandia", 40.232323, -12.313231);
 
         when(storeService.getStore(anyLong())).thenReturn(store);
 
@@ -150,6 +151,7 @@ class StoreControllerTests {
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
+            .andExpect(jsonPath("$.id", is(1)))
             .andExpect(jsonPath("$.name", is(store.getName())))
             .andExpect(jsonPath("$.latitude", is(store.getLatitude())))
             .andExpect(jsonPath("$.longitude", is(store.getLongitude())));
@@ -174,49 +176,11 @@ class StoreControllerTests {
     }
 
     @Test
-    void testGetValidStoreDeliveries_thenStatus200() throws Exception {
-
-        Store store = new Store("Petlandia", 40.232323, -12.313231);
-
-        ArrayList<Delivery> deliveries = new ArrayList<>();
-        deliveries.add(new Delivery(new Review(), new Rider(), store));
-        deliveries.add(new Delivery(new Review(), new Rider(), store));
-        store.setDeliveries(deliveries);
-
-        when(storeService.getStore(anyLong())).thenReturn(store);
-
-        mvc.perform(get("/stores/storeDeliveries")
-            .param("id", "1")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.length()", is(deliveries.size())));
-
-        verify(storeService, times(1)).getStore(anyLong());
-
-    }
-
-    @Test
-    void testGetInvalidStoreDeliveries_thenStatus400() throws Exception {
-
-        when(storeService.getStore(anyLong())).thenThrow(ResourceNotFoundException.class);
-
-        mvc.perform(get("/stores/storeDeliveries")
-            .param("id", "1")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isBadRequest());
-
-        verify(storeService, times(1)).getStore(anyLong());
-
-    }
-
-    @Test
     void testGetAllStores_thenStatus200() throws Exception {
 
         ArrayList<Store> stores = new ArrayList<>();
-        stores.add(new Store("Petlandia", 40.232323, -12.313231));
-        stores.add(new Store("Perritoworld", 43.286348, 32.12172));
+        stores.add(new Store(1L, "Petlandia", 40.232323, -12.313231));
+        stores.add(new Store(2L, "Perritoworld", 43.286348, 32.12172));
 
         when(storeService.getAllStores()).thenReturn(stores);
 
@@ -224,9 +188,11 @@ class StoreControllerTests {
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
+            .andExpect(jsonPath("$[0].id", is(stores.get(0).getId().intValue())))
             .andExpect(jsonPath("$[0].name", is(stores.get(0).getName())))
             .andExpect(jsonPath("$[0].latitude", is(stores.get(0).getLatitude())))
             .andExpect(jsonPath("$[0].longitude", is(stores.get(0).getLongitude())))
+            .andExpect(jsonPath("$[1].id", is(stores.get(1).getId().intValue())))
             .andExpect(jsonPath("$[1].name", is(stores.get(1).getName())))
             .andExpect(jsonPath("$[1].latitude", is(stores.get(1).getLatitude())))
             .andExpect(jsonPath("$[1].longitude", is(stores.get(1).getLongitude())))

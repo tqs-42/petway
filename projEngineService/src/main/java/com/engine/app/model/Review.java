@@ -1,5 +1,8 @@
 package com.engine.app.model;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,11 +11,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "reviews")
@@ -27,13 +28,16 @@ public class Review {
     @JoinColumn(name = "delivery_id", referencedColumnName = "id")
     private Delivery delivery;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
-    private Rider rider;
+    @Column(name = "score")
+    private Integer score;
 
-    public Review(Delivery delivery, Rider rider) {
+    @Column(name = "timestamp")
+    private Timestamp timestamp;
+
+    public Review(Delivery delivery, Integer score, Timestamp timestamp) {
         this.delivery = delivery;
-        this.rider = rider;
+        this.score = score;
+        this.timestamp = timestamp;
     }
 
     public Review() {
@@ -47,12 +51,20 @@ public class Review {
         this.delivery = delivery;
     }
 
-    public Rider getRider() {
-        return rider;
+    public Integer getScore() {
+        return score;
     }
 
-    public void setRider(Rider rider) {
-        this.rider = rider;
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 
     
