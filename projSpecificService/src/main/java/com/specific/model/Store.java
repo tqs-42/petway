@@ -15,7 +15,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Data
 @Entity
 @Table(name = "STORE")
 public class Store {
@@ -34,11 +33,11 @@ public class Store {
     private Boolean active;
 
     @OneToMany(mappedBy = "store")
-    @JsonIgnore 
+    @JsonIgnore
     Set<Manager> managers;
 
     @OneToMany(mappedBy = "store")
-    @JsonIgnore 
+    @JsonIgnore
     Set<Product> products;
 
     public Store(String name, String address, Boolean active) {
@@ -49,7 +48,7 @@ public class Store {
         this.products = new HashSet<>();
     }
 
-    public Store(){
+    public Store() {
         this.managers = new HashSet<>();
         this.products = new HashSet<>();
     }
@@ -104,5 +103,4 @@ public class Store {
                 + name + ", products=" + "]";
     }
 
-    
 }
