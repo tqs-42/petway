@@ -1,6 +1,6 @@
 package com.engine.app.model;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Version;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -32,7 +33,7 @@ public class Event {
     @Column(name = "status", nullable = false)
     private DeliveryStatus status;
 
-    @Column(name = "timestamp", nullable = false)
+    @CreationTimestamp
     private Timestamp timestamp;
 
     public Event(Delivery delivery, DeliveryStatus status) {

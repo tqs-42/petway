@@ -59,30 +59,7 @@ public class StoreController {
         }
         return ResponseEntity.ok(store);
     }
-
-    @GetMapping("/storeDeliveries")
-    public ResponseEntity<List<Delivery>> getStoreDeliveries(@RequestParam String id) throws Exception {
-        Store store;
-        try {
-            store = storeService.getStore(Long.valueOf(id));
-        } catch (ResourceNotFoundException e) {
-            return ResponseEntity.badRequest().body(null);
-        }
-        List<Delivery> deliveries = store.getDeliveries();
-        return ResponseEntity.ok(deliveries);
-    }
-
-    @GetMapping("/totalStoreDeliveries")
-    public ResponseEntity<Integer> getTotalStoreDeliveries(@RequestParam String id) throws Exception {
-        Store store;
-        try {
-            store = storeService.getStore(Long.valueOf(id));
-        } catch (ResourceNotFoundException e) {
-            return ResponseEntity.badRequest().body(null);
-        }
-        return ResponseEntity.ok(store.getDeliveries().size());
-    }
-
+    
     @GetMapping("/totalStores")
     public ResponseEntity<Integer> getTotalStores() throws Exception {
         try {

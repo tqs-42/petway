@@ -34,17 +34,22 @@ public class Delivery {
     private Review review;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
     private Rider rider;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
     private Store store;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     @JoinColumn(name = "event_id")
     private List<Event> events = new ArrayList<>();
+
+    public Delivery(Long id, Review review, Rider rider, Store store) {
+        this.id = id;
+        this.review = review;
+        this.rider = rider;
+        this.store = store;
+    }
 
     public Delivery(Review review, Rider rider, Store store) {
         this.review = review;
@@ -87,6 +92,12 @@ public class Delivery {
         this.events = events;
     }
 
-    
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
 }
