@@ -10,4 +10,5 @@ import com.specific.model.Store;
 @Repository
 public interface StoreRepository extends JpaRepository<Store,Long> {
     Store findById(long id);
+    Store findByName(String name);
 }

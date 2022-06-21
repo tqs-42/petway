@@ -1,6 +1,9 @@
-FROM openjdk:11
-COPY ./target/app-0.0.1-SNAPSHOT.jar projSpecificService.jar
+FROM maven:3.8.1-adoptopenjdk-11
 
-EXPOSE 8000
+WORKDIR /specificService
 
-CMD ["java", "-jar", "projSpecificService.jar"]
+COPY . /specificService/
+
+RUN mvn -DskipTests clean package
+
+ENTRYPOINT ["java","-jar","/specificService/target/app-0.0.1-SNAPSHOT.jar"]
