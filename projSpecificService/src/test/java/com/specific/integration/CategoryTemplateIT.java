@@ -20,6 +20,8 @@ import com.specific.model.Category;
 import com.specific.repository.CategoryRepository;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 import org.testcontainers.shaded.com.fasterxml.jackson.core.type.TypeReference;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -86,7 +88,9 @@ class CategoryTemplateIT {
     }
 
     @Test
-    void testCategoryAlreadyExists_thenReturnConflit() throws ConflictException {
+    void testCategoryAlreadyExists_thenReturnConflit() throws ConflictException
+
+    {
         categoryRepository.saveAndFlush(new Category("Food"));
 
         Category sameCategory = new Category("Food");
@@ -101,25 +105,31 @@ class CategoryTemplateIT {
 
     }
 
-    // @Test
-    // public void testWhenAllCategory_thenOKRequest() {
-    // HttpHeaders headers = new HttpHeaders();
-    // ObjectMapper mapper = new ObjectMapper();
+    @Test
+    public void testWhenAllCategory_thenOKRequest() {
+        HttpHeaders headers = new HttpHeaders();
+        ResponseEntity<List> response = testRestTemplate.exchange(
+                getBaseUrl(), HttpMethod.GET, new HttpEntity<Object>(headers),
+                List.class);
 
-    // ResponseEntity<Map> response = testRestTemplate.exchange(
-    // getBaseUrl(), HttpMethod.GET, new HttpEntity<Object>(headers), Map.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-    // assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        List<Category> found = response.getBody();
 
-    // Map<String, Object> found = response.getBody();
+        List<Category> categories = new ArrayList<>();
 
-    // List<Category> categories = mapper.convertValue(
-    // found.get("products"), new TypeReference<List<Category>>() {
-    // });
+        for (Object category : found) {
+            String categoria = String.valueOf(category);
+            String id_str = categoria.split(",")[0].split("=")[1];
+            long id = Long.parseLong(id_str);
+            String name = categoria.split(",")[1].split("=")[1].replace("}", "");
 
-    // assertThat(categories).contains(category1);
-    // assertThat(categories).contains(category2);
-    // }
+            categories.add(new Category(id, name));
+        }
+
+        assertThat(categories.get(0).getName()).contains(category1.getName());
+        assertThat(categories.get(1).getName()).contains(category2.getName());
+    }
 
     String getBaseUrl() {
         return "http://localhost:" + randomServerPort + "/categories";

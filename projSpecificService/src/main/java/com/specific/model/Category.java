@@ -29,6 +29,12 @@ public class Category {
     @JsonIgnore
     Set<Product> products;
 
+    public Category(long id, String name) {
+        this.id = id;
+        this.name = name;
+        this.products = new HashSet<Product>();
+    }
+
     public Category(String name) {
         this.name = name;
         this.products = new HashSet<Product>();
