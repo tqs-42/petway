@@ -27,7 +27,8 @@
           <tbody>
             <tr *ngFor="let product of products">
               <td style="color: rgb(32, 29, 29);">
-                <img src="{{ product.image }}" alt=" {{ product.name }}">
+                <img src="/assets/static/images/{{ product.image }}" alt=" {{ product.name }}" width="100" height="100"
+                  style="object-fit: cover;">
               </td>
               <td style="color: rgb(32, 29, 29);"> {{ product.name }} </td>
               <td style="color: rgb(32, 29, 29);"> {{ product.category.name }} </td>
