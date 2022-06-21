@@ -25,10 +25,11 @@ public class RequestEventsService {
         return requestEvents;
     }
 
-    public Set<Product> getProductsInfoByOrderId(long orderId) {
+    public String getProductsInfoByOrderId(long orderId) {
         System.out.println("antes");
-        System.out.println(requestEventsRepository.getProductRequestInformation(orderId));
-        return null;
+        System.out.println("order id: " + orderId);
+        System.out.println(requestEventsRepository.getProductByOrderId(orderId));
+        return requestEventsRepository.getProductByOrderId(orderId);
     }
 
 }

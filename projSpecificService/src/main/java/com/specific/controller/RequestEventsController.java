@@ -41,7 +41,7 @@ public class RequestEventsController {
     }
     
     @GetMapping("/products/{orderId}")
-    public ResponseEntity<Set<Product>> getProductsInfoInRequestEvent(@Valid @PathVariable long orderId) {
+    public ResponseEntity<String> getProductsInfoInRequestEvent(@Valid @PathVariable long orderId) {
         try {
             return ResponseEntity.ok(service.getProductsInfoByOrderId(orderId));
         } catch (Exception e) {
