@@ -1,6 +1,6 @@
+import { RequestProducts } from './../../interfaces/RequestProducts';
 import { OrderService } from './../../services/order.service';
 import { CartService } from './../../services/cart.service';
-import { CartProduct } from './../../interfaces/CartProduct';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class ViewCartComponent implements OnInit {
 
-  items: CartProduct[] = []
+  items: RequestProducts[] = []
 
   constructor(private cartService: CartService, private orderService: OrderService, private router: Router) { }
 

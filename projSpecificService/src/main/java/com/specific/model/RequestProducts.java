@@ -11,7 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Data
 @Entity
 @Table(name = "REQUEST_PRODUCTS")
 public class RequestProducts {

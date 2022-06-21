@@ -1,6 +1,8 @@
 package com.specific.model;
 
 import lombok.Data;
+
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,8 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Data
 @Entity
 @Table(name = "PRODUCT")
 public class Product {
@@ -45,6 +47,7 @@ public class Product {
     private Category category;
 
     @OneToMany(mappedBy = "product")
+    @JsonIgnore
     Set<RequestProducts> requests;
 
     public Product(String name, String description, String image, Double price, int stock, Category category,
@@ -56,6 +59,7 @@ public class Product {
         this.stock = stock;
         this.category = category;
         this.store = store;
+        this.requests = new HashSet<>();
     }
 
     public Product(String name, Category category) {
@@ -64,7 +68,7 @@ public class Product {
     }
 
     public Product() {
-
+        this.requests = new HashSet<>();
     }
 
     public long getId() {

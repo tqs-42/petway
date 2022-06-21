@@ -12,7 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-@Data
 @Entity
 @Table(name = "REQUEST")
 public class Request {

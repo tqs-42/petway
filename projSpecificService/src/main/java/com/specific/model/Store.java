@@ -15,7 +15,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Data
 @Entity
 @Table(name = "STORE")
 public class Store {
@@ -53,18 +52,13 @@ public class Store {
         this.name = name;
         this.address = address;
         this.active = active;
-    }
-
-    public Store(String name, String address, Boolean active, Set<Manager> managers) {
-        this.name = name;
-        this.address = address;
-        this.active = active;
-        this.managers = new HashSet<Manager>();
+        this.managers = new HashSet<>();
         this.products = new HashSet<>();
     }
 
-    public Store() {
-
+    public Store(){
+        this.managers = new HashSet<>();
+        this.products = new HashSet<>();
     }
 
     public long getId() {

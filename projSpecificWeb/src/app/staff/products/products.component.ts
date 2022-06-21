@@ -27,7 +27,6 @@ export class ProductsComponent implements OnInit {
     console.log(productId)
     this.products.forEach(product => {
       if (product.id == productId) {
-        product.isActive = false
         console.log(product)
         this.productService.updateProduct(product)
       }
@@ -40,7 +39,6 @@ export class ProductsComponent implements OnInit {
     console.log(productId)
     this.products.forEach(product => {
       if (product.id == productId) {
-        product.isActive = true
         console.log(product)
         this.productService.updateProduct(product)
       }

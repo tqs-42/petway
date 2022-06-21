@@ -14,7 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Data
 @Entity
 @Table(name = "CATEGORY")
 public class Category {
@@ -36,7 +35,7 @@ public class Category {
     }
 
     public Category() {
-
+        this.products = new HashSet<Product>();
     }
 
     public long getId() {

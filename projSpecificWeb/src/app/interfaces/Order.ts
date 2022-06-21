@@ -5,3 +5,5 @@ export interface Order {
   states: { datetime: string, state: { id: number, name: string } }[]
   items: { price: number, amount: number, product: Product }[]
 }
+
+//NAO ESTA A SER USADO

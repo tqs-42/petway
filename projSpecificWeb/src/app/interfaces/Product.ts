@@ -4,10 +4,9 @@ export interface Product {
   id: number
   name: string
   description: string
+  image: string
   price: number
   stock: number
-  category: Category
-  store : Store 
-  image : string
-  isActive: boolean;
+  store: Store
+  category: Category;
 }

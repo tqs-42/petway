@@ -16,18 +16,24 @@ export class ProductsComponent implements OnInit {
   name = ""
   check = ""
   sort = ""
-  
+
   constructor(private productService: ProductService, private categoryService: CategoryService) { }
-  
+
   ngOnInit(): void {
-    this.productService.getAll(this.name).subscribe(products => this.products = products)
+    console.log("element")
+
+    this.productService.getProducts().subscribe(products => this.products = products)
+    console.log(this.products)
+    this.products.forEach(element => {
+      console.log(element)
+    });
     this.categoryService.getAll().subscribe(categories => this.categories = categories)
   }
 
   update_search(name: string):void {
     this.productService.getAll(this.name).subscribe(products => this.products = products)
   }
-  
+
   change_category(): void {
     this.productService.getAll("", this.check).subscribe(products => this.products = products)
   }

@@ -23,7 +23,7 @@ export class ProductService {
     if (email != null) {
       this.http.get<any>(environment.baseAPIPath + '/users/byEmail/' + email).subscribe(
         (res) => {
-          if (res.hasOwnProperty('cart')) {
+          if (res.hasOwnProperty('address')) {
             this.userService.setClient(res);
           } else if (res.hasOwnProperty('store')) {
             this.userService.setManager(res);
@@ -47,7 +47,7 @@ export class ProductService {
   }
 
   getOne(id: number) {
-    return this.http.get<Product>(environment.baseAPIPath + '/product/' + id)
+    return this.http.get<Product>(environment.baseAPIPath + '/products/' + id)
   }
 
   createProduct(category: string, name: string, description: string, price: number, store: number, stock: number, image: string) {
@@ -55,7 +55,7 @@ export class ProductService {
   }
 
   updateProduct(product:Product) {
-    this.http.put<Product>(this.baseUrl + "/"+ product.id, { "id": product.id, "name": product.name, "description": product.description, "price": product.price, "isActive": product.isActive, "category": product.category.id }, httpOptions).subscribe(response => console.log(response))
+    this.http.put<Product>(this.baseUrl + "/"+ product.id, { "id": product.id, "name": product.name, "description": product.description, "price": product.price, "category": product.category.id }, httpOptions).subscribe(response => console.log(response))
   }
 
 }

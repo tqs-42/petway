@@ -49,9 +49,10 @@ import { ShowProductComponent } from './staff/show-product/show-product.componen
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
   ],
   //providers: [ { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true } ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
