@@ -1,0 +1,12 @@
+name: CD Specific
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: [self-hosted, linux]
+    steps:
+      - uses: actions/checkout@v1
+      - run: sh ./deploy-bash/deploy-specific.sh

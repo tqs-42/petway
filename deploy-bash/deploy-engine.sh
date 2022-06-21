@@ -1,15 +1,15 @@
 #!/bin/bash
 
 mvn clean package -DskipTests
-docker-compose -f docker-compose.prod.yml down
+docker-compose -f docker-compose.prod1.yml down
 
 if [ -d "$DIR" ]; then
-	rm -rf deploy_env
+	rm -rf deploy1_env
 fi
 
-mkdir deploy_engine
-mv -v ./* ./deploy_engine/
+mkdir deploy1_engine
+mv -v ./* ./deploy1_engine/
 
-cd deploy_engine
+cd deploy1_engine
 
-sudo docker-compose -f docker-compose.prod.yml up --build -d
+sudo docker-compose -f docker-compose.prod1.yml up --build -d
