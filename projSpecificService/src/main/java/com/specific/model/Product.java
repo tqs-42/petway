@@ -62,6 +62,14 @@ public class Product {
         this.requests = new HashSet<>();
     }
 
+    public Product(String name, String description, Double price, int stock, Store store) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.stock = stock;
+        this.store = store;
+    }
+
     public Product() {
         this.requests = new HashSet<>();
     }

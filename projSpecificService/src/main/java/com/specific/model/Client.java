@@ -49,4 +49,9 @@ public class Client extends User {
         this.cart = cart;
     }
 
+    @Override
+    public String toString() {
+        return "Client [address=" + address + "]";
+    }
+
 }

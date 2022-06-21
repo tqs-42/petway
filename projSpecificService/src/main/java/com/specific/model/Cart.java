@@ -84,4 +84,9 @@ public class Cart {
         this.request = request;
     }
 
+    @Override
+    public String toString() {
+        return "Cart [client=" + client + ", id=" + id + "]";
+    }
+
 }

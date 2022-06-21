@@ -70,6 +70,11 @@ public class RequestProducts {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    @Override
+    public String toString() {
+        return "RequestProducts [amount=" + amount + ", id=" + id + "]";
     }  
 
     
