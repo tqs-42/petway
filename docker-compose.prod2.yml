@@ -23,8 +23,7 @@ services:
 
     specific-service:
        depends_on:
-         specific-database:
-           condition: service_healthy
+         - specific-database
        build: ./projSpecificService
        restart: on-failure
        ports:
