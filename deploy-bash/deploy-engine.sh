@@ -1,5 +1,9 @@
 #!/bin/bash
 
+
+mvn clean package -DskipTests
+docker-compose -f docker-compose.prod.yml down
+
 if [ -d "$DIR" ]; then
 	rm -rf deploy_env
 fi
