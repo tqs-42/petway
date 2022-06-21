@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.specific.config.JwtRequestFilter;
 import com.specific.config.WebSecurityConfig;
+import com.specific.exception.ConflictException;
 import com.specific.exception.ResourceNotFoundException;
 import com.specific.model.Client;
 import com.specific.model.Product;
@@ -59,7 +60,7 @@ public class CartControllerTest {
 
     // verificar mais campos
     @Test
-    void testWhenGetRequestProductsByValidEmailAndValidproductId_thenReturnRequestProducts() {
+    void testWhenGetRequestProductsByValidEmailAndValidproductId_thenReturnRequestProducts() throws ResourceNotFoundException {
         when(service.getProductAmout("eva@ua.pt", 1L)).thenReturn(Optional.of(requestProducts));
 
         RestAssuredMockMvc.given().contentType(ContentType.JSON)
@@ -153,13 +154,8 @@ public class CartControllerTest {
         verify(service, times(1)).getProducts("eva@ua.pt");
     }
 
-
-    //nao usei isto:
-    //201->created
-    //200->deleted
-    //200->put
     @Test
-    void testWhenPutRequestProductsByValidEmailValidproductId_thenReturnRequestProducts() {
+    void testWhenPutRequestProductsByValidEmailValidproductId_thenReturnRequestProducts()  throws ResourceNotFoundException, ConflictException {
         when(service.putProductAmout("eva@ua.pt", 1L, 3)).thenReturn(Optional.of(requestProducts));
       
         RestAssuredMockMvc.given().contentType(ContentType.JSON)
@@ -173,8 +169,10 @@ public class CartControllerTest {
         verify(service, times(1)).putProductAmout("eva@ua.pt", 1L, 3);
     }
 
+    //FALTA TESTAR QUANDO DA O ConflictException
     @Test
-    void testWhenPutRequestProductsByInvalidEmailValidproductId_thenReturnStatus404() throws ResourceNotFoundException {
+    void testWhenPutRequestProductsByInvalidEmailValidproductId_thenReturnStatus404()  throws ResourceNotFoundException, ConflictException {
+        System.out.println("----------------AQUI---------------------------");
         when(service.putProductAmout("eva@ua.pt", 1L, 3)).thenReturn(Optional.of(requestProducts));
       
         RestAssuredMockMvc.given().contentType(ContentType.JSON)
@@ -184,7 +182,7 @@ public class CartControllerTest {
     }
 
     @Test
-    void testWhenPutRequestProductsByValidEmailInvalidproductId_thenReturnStatus404() throws ResourceNotFoundException {
+    void testWhenPutRequestProductsByValidEmailInvalidproductId_thenReturnStatus404() throws ResourceNotFoundException, ConflictException {
         when(service.putProductAmout("eva@ua.pt", 1L, 3)).thenReturn(Optional.of(requestProducts));
       
         RestAssuredMockMvc.given().contentType(ContentType.JSON)
@@ -194,7 +192,7 @@ public class CartControllerTest {
     }
 
     @Test
-    void testWhenPutRequestProductsByInvalidEmailInvalidproductId_thenReturnStatus404() throws ResourceNotFoundException {
+    void testWhenPutRequestProductsByInvalidEmailInvalidproductId_thenReturnStatus404() throws ResourceNotFoundException, ConflictException {
         when(service.putProductAmout("eva@ua.pt", 1L, 3)).thenReturn(Optional.of(requestProducts));
       
         RestAssuredMockMvc.given().contentType(ContentType.JSON)

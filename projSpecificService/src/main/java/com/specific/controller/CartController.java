@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.specific.exception.ConflictException;
 import com.specific.exception.ResourceNotFoundException;
 import com.specific.model.RequestProducts;
 import com.specific.service.CartService;
@@ -28,11 +29,13 @@ public class CartController {
 
     
     @PutMapping("/user/{email}/product/{productId}/amount/{amount}")
-    public ResponseEntity<RequestProducts> putProductAmout(@Valid @PathVariable String email, @Valid @PathVariable Long productId, @Valid @PathVariable int amount) throws ResourceNotFoundException {
-        RequestProducts requestProducts = service.putProductAmout(email, productId, amount).orElseThrow(() -> new ResourceNotFoundException("clientEmail " + email + ", productID " + productId + ", NOT FOUND."));
+    public ResponseEntity<RequestProducts> putProductAmout(@Valid @PathVariable String email, @Valid @PathVariable Long productId, @Valid @PathVariable int amount) throws ResourceNotFoundException, ConflictException {
+        Optional<RequestProducts>  requestProductsOptional = service.putProductAmout(email, productId, amount);
+        RequestProducts requestProducts = requestProductsOptional.orElseThrow(() -> new ResourceNotFoundException("clientEmail " + email + ", productID " + productId + ", NOT FOUND."));
+        requestProducts = requestProductsOptional.orElseThrow(() -> new ConflictException("[ERROR] The products in the cart must be from the same store!"));
         return ResponseEntity.ok().body(requestProducts);
     }
-
+ 
     @GetMapping("/user/{email}/products")
     public ResponseEntity<List<RequestProducts>> getProducts(@Valid @PathVariable String email) throws ResourceNotFoundException {
         List<RequestProducts> requestsProducts = service.getProducts(email).orElseThrow(() -> new ResourceNotFoundException("clientEmail " + email + ", NOT FOUND."));
