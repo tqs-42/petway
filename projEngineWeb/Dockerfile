@@ -8,8 +8,6 @@ COPY . /projEngineWeb
 
 RUN npm install && npm run build
 
-RUN npm install && npm start
-
 # stage 2
 
 FROM nginx:alpine
