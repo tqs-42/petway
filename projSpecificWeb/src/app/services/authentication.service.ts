@@ -30,8 +30,10 @@ export class AuthenticationService {
 
     let email = form.value.email;
     let password = form.value.password;
+    console.log(email);
+    console.log(password);
 
-    return this.http.post<any>(environment.baseAPIPath + '/users/login', { email, password });
+    return this.http.post<any>(environment.baseAPIPath + '/login', { email, password });
   }
 
   register(form: FormGroup) {
@@ -45,7 +47,7 @@ export class AuthenticationService {
 
     console.log(data);
 
-    return this.http.post(environment.baseAPIPath + '/clients/add', data);
+    return this.http.post(environment.baseAPIPath + '/registerClient', data);
 
   }
 

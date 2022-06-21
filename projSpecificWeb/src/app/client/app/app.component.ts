@@ -83,6 +83,7 @@ export class AppComponent implements OnInit {
     } else {
       this.authService.login(this.loginForm).subscribe(
         (res) => {
+          console.log(res);
           if (res.hasOwnProperty('address')) {
             this.userService.setClient(res);
             localStorage.setItem('userEmail',res['email']);

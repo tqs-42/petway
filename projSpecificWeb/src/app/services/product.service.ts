@@ -16,8 +16,6 @@ const httpOptions = {
 })
 export class ProductService {
 
-  private baseUrl = "http://localhost:8080/products";
-
   constructor(private http: HttpClient, private userService:UserService) {
     let email = localStorage.getItem('userEmail');
     if (email != null) {
@@ -34,8 +32,7 @@ export class ProductService {
   }
 
   getProducts(): Observable<Product[]> {
-    const url = this.baseUrl;
-    return this.http.get<Product[]>(url);
+    return this.http.get<Product[]>(environment.baseAPIPath + "/products");
   }
 
   getAllSorting(sort:string){
@@ -51,11 +48,11 @@ export class ProductService {
   }
 
   createProduct(category: string, name: string, description: string, price: number, store: number, stock: number, image: string) {
-    this.http.post<Product>(this.baseUrl + "/add", {  "category": category, "name": name, "description": description, "store": store, "stock": stock , "price": price, "image": image}, httpOptions).subscribe(response => console.log("sou a resposta --- " + response))
+    this.http.post<Product>(environment.baseAPIPath + "/products/add", {  "category": category, "name": name, "description": description, "store": store, "stock": stock , "price": price, "image": image}, httpOptions).subscribe(response => console.log("sou a resposta --- " + response))
   }
 
   updateProduct(product:Product) {
-    this.http.put<Product>(this.baseUrl + "/"+ product.id, { "id": product.id, "name": product.name, "description": product.description, "price": product.price, "category": product.category.id }, httpOptions).subscribe(response => console.log(response))
+    this.http.put<Product>(environment.baseAPIPath + "/products/"+ product.id, { "id": product.id, "name": product.name, "description": product.description, "price": product.price, "category": product.category.id }, httpOptions).subscribe(response => console.log(response))
   }
 
 }
