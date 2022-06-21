@@ -39,6 +39,12 @@ services:
         interval: 20s
         timeout: 10s
         retries: 2
+    engine-frontend:
+        build:
+          context: ./projEngineWeb
+          dockerfile: ./Dockerfile
+        ports: 
+          - '4200:4200'
 
     # specificDataBase:
     #     image: mysql:8.0
