@@ -14,7 +14,15 @@ export class OrdersCliComponent implements OnInit {
   orders: Order[] = []
 
   ngOnInit(): void {
-    this.orderService.getAll().subscribe(orders => this.orders = orders)
+    this.orderService.getAll().subscribe(orders => {
+      this.orders = orders
+    })
+
   }
+
+
+
+
+
 
 }

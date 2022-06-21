@@ -10,36 +10,17 @@
               <th>Identifier</th>
               <th>State</th>
               <th>Date</th>
-              <th>Rider</th>
               <th></th>
             </tr>
           </thead>
-          <tbody>
-            <!--
-                        <tr *ngFor="let order of orders">
-                            <td> {{ order.id }} </td>
-                            <td> {{ order.states[order.states.length - 1].state.name }} </td>
-                            <td> {{ order.states[order.states.length - 1].datetime }} </td>
+          <tbody>       
+            <tr *ngFor="let order of orders">
+                <td> {{ order.id }} </td>
+                <td> {{ order.status }} </td>
+                <td> {{ order.eventDate }} </td>
 
-                            <td><a routerLink="/order/{{ order.id }}">Ver Detalhes</a></td>
-                        </tr>
-                        -->
-            <tr>
-              <td> 2 </td>
-              <td> Pending </td>
-              <td> 23/05/2022 </td>
-              <td> (Looking for...) </td>
-
-              <td><a routerLink="/order/1">Ver Detalhes</a></td>
-            </tr>
-            <tr>
-              <td> 1 </td>
-              <td> Processing </td>
-              <td> 23/05/2022 </td>
-              <td> Joao </td>
-
-              <td><a routerLink="/order/1">Ver Detalhes</a></td>
-            </tr>
+                <td><a routerLink="/order/{{ order.id }}">Ver Detalhes</a></td>
+            </tr>      
           </tbody>
 
         </table>
