@@ -1,31 +1,28 @@
-import { UserService } from './user.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from './../../environments/environment';
+import { User } from '../interfaces/User';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  constructor(private userService: UserService, private http: HttpClient) {
-    let email = localStorage.getItem('userEmail');
-    if (email != null) {
-      this.http.get<any>(environment.baseAPIPath + '/users/byEmail/' + email).subscribe(
-        (res) => {
-          console.log(res)
-          if (res.hasOwnProperty('address')) {
-            this.userService.setClient(res);
-          } else if (res.hasOwnProperty('store')) {
-            this.userService.setManager(res);
-          }
-        }
-      );
-    }
-   }
+  private userSubject: BehaviorSubject<User>;
+  public user: Observable<User>;
 
+  constructor(private http: HttpClient) { 
+
+    this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')!));
+    this.user = this.userSubject.asObservable();
+  }
+
+  public get userValue(): User {
+    return this.userSubject.value;
+  }
+  
   login(form: FormGroup) : Observable<any> {
 
     let email = form.value.email;
@@ -52,3 +49,5 @@ export class AuthenticationService {
   }
 
 }
+
+

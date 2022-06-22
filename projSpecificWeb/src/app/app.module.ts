@@ -22,6 +22,9 @@ import { NewProductComponent } from './staff/new-product/new-product.component';
 import { ProductComponent } from './components/client/product/product.component';
 import { AddProductComponent } from './components/client/addproduct/addproduct.component';
 import { ShowProductComponent } from './staff/show-product/show-product.component';
+import { JwtInterceptor } from './services/jwt.interceptor';
+import { Router } from '@angular/router';
+import { AuthenticationService } from './services/authentication.service';
 
 @NgModule({
   declarations: [
@@ -51,7 +54,12 @@ import { ShowProductComponent } from './staff/show-product/show-product.componen
     ReactiveFormsModule,
     FormsModule
   ],
-  //providers: [ { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true } ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },  
+
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+}

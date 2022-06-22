@@ -83,8 +83,14 @@ export class AppComponent implements OnInit {
     } else {
       this.authService.login(this.loginForm).subscribe(
         (res) => {
+          console.log(this.loginForm);
           console.log(res);
-          if (res.hasOwnProperty('address')) {
+          console.log(res["role"]["authority"])
+
+
+          localStorage.setItem('user',JSON.stringify(res));
+
+          if (res['role']["authority"] == 'Client') {
             this.userService.setClient(res);
             localStorage.setItem('userEmail',res['email']);
             this.loginModalClose.nativeElement.click();
@@ -93,7 +99,7 @@ export class AppComponent implements OnInit {
             this.showErrorLogin = false;
             this.loginForm.reset();
             this.registerForm.reset();
-          } else if (res.hasOwnProperty('store')) {
+          } else if ((res['role']["authority"] == 'Manager')) {
             this.userService.setManager(res);
             localStorage.setItem('userEmail',res['email']);
             this.loginModalClose.nativeElement.click();
@@ -104,10 +110,13 @@ export class AppComponent implements OnInit {
             this.loginForm.reset();
           }else{
             this.showErrorLogin = true;
+            console.log("error")
           }
         },
         () => {
           this.showErrorLogin = true;
+          console.log("error")
+
           this.messageLogin = 'Error. Wrong credentials!';
         }
       );
