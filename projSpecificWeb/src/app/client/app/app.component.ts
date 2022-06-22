@@ -107,10 +107,12 @@ export class AppComponent implements OnInit {
           localStorage.setItem('user',JSON.stringify(res));
 
           if (res['role']["authority"] == 'Client') {
-            this.userService.setClient(res);
-            console.log(this.userService.client);
             localStorage.setItem('userEmail',res['email']);
             localStorage.setItem('dtype','Client');
+            this.authService.getUserFullName(res['email']).subscribe(name =>{
+              this.userService.setClient({ "email": res['email'], fullname: name["fullname"] })
+              localStorage.setItem('userFullName', name["fullname"]);
+            })
             this.loginModalClose.nativeElement.click();
             this.router.navigate(['/']);
             this.showMsgRegister = false;
@@ -121,8 +123,10 @@ export class AppComponent implements OnInit {
             localStorage.setItem('userEmail',res['email']);
             localStorage.setItem('dtype','Manager');
             this.authService.getStoreFromManager(res['email']).subscribe(loja =>{
-              console.log(loja)
-              this.userService.setManager({ "email": res['email'], store: loja, fullname: '' })
+              this.authService.getUserFullName(res['email']).subscribe(name =>{
+                this.userService.setManager({ "email": res['email'], store: loja, fullname: name["fullname"] })
+                localStorage.setItem('userFullName', name["fullname"]);
+              })
               localStorage.setItem('store', loja);
             })
             this.loginModalClose.nativeElement.click();

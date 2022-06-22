@@ -34,6 +34,7 @@ export class UserService {
     this.manager = null;
     localStorage.removeItem('userEmail');
     localStorage.removeItem('dtype');
+    localStorage.removeItem('userFullName');
     this.router.navigate(['/']);
   }
 

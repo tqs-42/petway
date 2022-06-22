@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 import { ProductInfo } from './../interfaces/ProductInfo';
 import { AuthenticationService } from './authentication.service';
+import { Store } from '../interfaces/Store';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -19,16 +20,17 @@ export class OrderService {
   constructor(private authService: AuthenticationService,private http: HttpClient, private userService:UserService, public cartService:CartService) {
     let email = localStorage.getItem('userEmail');
     let dtype = localStorage.getItem('dtype');
-    if (email != null && dtype != null && dtype === "Client") {
-      this.userService.setClient({ "email": email, fullname: ''})
-    } else if (email != null && dtype != null && dtype === "Manager") {
-      this.authService.getStoreFromManager(email).subscribe(loja =>{
-        console.log(loja)
-        if (email != null) {
-          this.userService.setManager({ "email": email, store: loja, fullname: '' })
-        }
-      })
+    let loja = localStorage.getItem('store');
+    let userFullName = localStorage.getItem('userFullName');
+    if (email != null && dtype != null && dtype === "Client" && userFullName != null) {
+      this.userService.setClient({ "email": email, fullname: userFullName})
+    } else if (email != null && dtype != null && dtype === "Manager" && loja != null && userFullName != null) {
+          this.userService.setManager({ "email": email, store: this.forceCast<Store>(loja), fullname: userFullName })
     }
+  }
+
+  forceCast<Store>(input: any): Store {
+    return input;
   }
 
   getAll() {

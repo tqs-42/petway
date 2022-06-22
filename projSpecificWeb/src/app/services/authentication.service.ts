@@ -27,10 +27,11 @@ export class AuthenticationService {
     let email = localStorage.getItem('userEmail');
     let dtype = localStorage.getItem('dtype');
     let loja = localStorage.getItem('store');
-    if (email != null && dtype != null && dtype === "Client") {
-      this.userService.setClient({ "email": email, fullname: ''})
-    } else if (email != null && dtype != null && dtype === "Manager" && loja != null) {
-          this.userService.setManager({ "email": email, store: this.forceCast<Store>(loja), fullname: '' })
+    let userFullName = localStorage.getItem('userFullName');
+    if (email != null && dtype != null && dtype === "Client" && userFullName != null) {
+      this.userService.setClient({ "email": email, fullname: userFullName})
+    } else if (email != null && dtype != null && dtype === "Manager" && loja != null && userFullName != null) {
+          this.userService.setManager({ "email": email, store: this.forceCast<Store>(loja), fullname: userFullName })
     }
   }
 
@@ -54,6 +55,10 @@ export class AuthenticationService {
 
   getStoreFromManager(managerEmail: String) : Observable<any> {
     return this.http.get<Store>(environment.baseAPIPath + "/manageres/user/" + managerEmail +"/store", httpOptions);
+  }
+
+  getUserFullName(email: String) : Observable<any> {
+    return this.http.get<String>(environment.baseAPIPath + "/users/user/" + email +"/fullname", httpOptions);
   }
 
   register(form: FormGroup) {
