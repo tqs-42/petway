@@ -17,7 +17,12 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.springframework.http.*;
 import com.github.dockerjava.api.exception.ConflictException;
 import com.specific.model.Category;
+import com.specific.model.Product;
+import com.specific.model.Store;
 import com.specific.repository.CategoryRepository;
+import com.specific.repository.ProductRepository;
+import com.specific.repository.StoreRepository;
+
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 import org.testcontainers.shaded.com.fasterxml.jackson.core.type.TypeReference;
 
@@ -38,6 +43,12 @@ class ProductTemplateIT {
     int randomServerPort;
 
     @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
+    private StoreRepository storeRepository;
+
+    @Autowired
     private CategoryRepository categoryRepository;
 
     @Autowired
@@ -54,85 +65,115 @@ class ProductTemplateIT {
         registry.add("spring.datasource.username", container::getUsername);
     }
 
-    private Category category1;
-    private Category category2;
+    private Product product;
+    private Store store;
+    private Category category;
 
     @BeforeEach
     void setUp() {
-        this.category1 = new Category("Dog Food");
-        this.category2 = new Category("Toys");
+        this.category = new Category();
+        this.store = new Store();
 
-        categoryRepository.saveAndFlush(category1);
-        categoryRepository.saveAndFlush(category2);
+        this.category.setName("Categoria");
+        this.store.setName("Loja");
+        this.store.setAddress("A minha morada");
+        this.product = new Product("Produtinho", "description", "image", 15.0, 1, this.category, this.store);
+
+        categoryRepository.saveAndFlush(this.category);
+        storeRepository.saveAndFlush(this.store);
 
     }
 
     @AfterEach
     void resetDb() {
-        categoryRepository.deleteAll();
-        categoryRepository.flush();
     }
 
     @Test
-    void testCreateValidCategory_thenCreateIt() {
-        Category newCategory = new Category("Food");
+    void testAddProduct_thenCode200() {
+        this.category = new Category();
+        this.store = new Store();
+
+        this.category.setName("Categoria");
+        this.store.setName("Loja");
+        this.store.setAddress("A minha morada");
+        this.product = new Product("Produtinho", "description", "image", 15.0, 1, this.category, this.store);
+        this.product.setId(66L);
 
         RestAssured.given()
                 .contentType("application/json")
-                .body(newCategory)
+                .body(this.product)
                 .when()
                 .post(getBaseUrl() + "/add")
                 .then()
-                .body("name", equalTo(newCategory.getName()))
                 .statusCode(200);
+
+        // HttpHeaders headers = new HttpHeaders();
+        // headers.setContentType(MediaType.APPLICATION_JSON);
+
+        // ResponseEntity<Product> response = testRestTemplate.exchange(
+        // getBaseUrl() + "/add", HttpMethod.POST, new HttpEntity<>(product, headers),
+        // Product.class);
+
+        System.out.println("FDGP");
+
+        // System.out.println(response.getStatusCode());
+
+        // HttpHeaders headers = new HttpHeaders();
+        // headers.setContentType(MediaType.APPLICATION_JSON);
+
+        // ResponseEntity<Product> response = testRestTemplate.exchange(
+        // getBaseUrl() + "/add", HttpMethod.POST, new HttpEntity<>(p1, headers),
+        // Product.class);
+
+        // assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
-    @Test
-    void testCategoryAlreadyExists_thenReturnConflit() throws ConflictException
+    // @Test
+    // void testCategoryAlreadyExists_thenReturnConflit() throws ConflictException
 
-    {
-        categoryRepository.saveAndFlush(new Category("Food"));
+    // {
+    // categoryRepository.saveAndFlush(new Category("Food"));
 
-        Category sameCategory = new Category("Food");
+    // Category sameCategory = new Category("Food");
 
-        RestAssured.given()
-                .contentType("application/json")
-                .body(sameCategory)
-                .when()
-                .post(getBaseUrl() + "/add")
-                .then()
-                .statusCode(409);
+    // RestAssured.given()
+    // .contentType("application/json")
+    // .body(sameCategory)
+    // .when()
+    // .post(getBaseUrl() + "/add")
+    // .then()
+    // .statusCode(409);
 
-    }
+    // }
 
-    @Test
-    public void testWhenAllCategory_thenOKRequest() {
-        HttpHeaders headers = new HttpHeaders();
-        ResponseEntity<List> response = testRestTemplate.exchange(
-                getBaseUrl(), HttpMethod.GET, new HttpEntity<Object>(headers),
-                List.class);
+    // @Test
+    // public void testWhenAllCategory_thenOKRequest() {
+    // HttpHeaders headers = new HttpHeaders();
+    // ResponseEntity<List> response = testRestTemplate.exchange(
+    // getBaseUrl(), HttpMethod.GET, new HttpEntity<Object>(headers),
+    // List.class);
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    // assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-        List<Category> found = response.getBody();
+    // List<Category> found = response.getBody();
 
-        List<Category> categories = new ArrayList<>();
+    // List<Category> categories = new ArrayList<>();
 
-        for (Object category : found) {
-            String categoria = String.valueOf(category);
-            String id_str = categoria.split(",")[0].split("=")[1];
-            long id = Long.parseLong(id_str);
-            String name = categoria.split(",")[1].split("=")[1].replace("}", "");
+    // for (Object category : found) {
+    // String categoria = String.valueOf(category);
+    // String id_str = categoria.split(",")[0].split("=")[1];
+    // long id = Long.parseLong(id_str);
+    // String name = categoria.split(",")[1].split("=")[1].replace("}", "");
 
-            categories.add(new Category(id, name));
-        }
+    // categories.add(new Category(id, name));
+    // }
 
-        assertThat(categories.get(0).getName()).contains(category1.getName());
-        assertThat(categories.get(1).getName()).contains(category2.getName());
-    }
+    // assertThat(categories.get(0).getName()).contains(category1.getName());
+    // assertThat(categories.get(1).getName()).contains(category2.getName());
+    // }
 
     String getBaseUrl() {
-        return "http://localhost:" + randomServerPort + "/categories";
+        return "http://localhost:" + randomServerPort + "/products";
     }
 
 }

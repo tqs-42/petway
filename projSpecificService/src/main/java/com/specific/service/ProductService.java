@@ -36,7 +36,7 @@ public class ProductService {
         Product product = new Product(name, description, image, price, stock, category, store);
 
         if (productRepository.findByName(product.getName()) != null) {
-            throw new ConflictException("Category already exists");
+            throw new ConflictException("Product already exists");
         }
 
         return productRepository.saveAndFlush(product);

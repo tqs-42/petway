@@ -145,14 +145,9 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product [categories=" + ", description=" + description + ", id=" + id + ", image=" + image
+        return "Product [categories=" + category + ", description=" + description + ", id=" + id + ", image=" + image
                 + ", name=" + name + ", price=" + price + ", requests=" + ", stock=" + stock + ", store="
                 + store + "]";
     }
 
 }
-
-                
-                
-                
-                
