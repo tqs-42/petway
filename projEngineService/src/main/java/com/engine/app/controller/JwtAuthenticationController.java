@@ -24,7 +24,7 @@ import com.engine.app.service.RiderService;
 
 @RequestMapping
 @RestController
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200","http://localhost:19006"})
 public class JwtAuthenticationController {
 
     @Autowired

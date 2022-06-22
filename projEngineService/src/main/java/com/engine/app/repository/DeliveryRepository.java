@@ -13,8 +13,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DeliveryRepository extends JpaRepository<Delivery, Long> {
 
-    List<Delivery> findByStatus(DeliveryStatus status);
-
     List<Delivery> findByRider(Rider rider);
 
     List<Delivery> findByStore(Store store);

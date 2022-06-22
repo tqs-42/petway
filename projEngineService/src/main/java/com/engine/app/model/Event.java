@@ -36,6 +36,8 @@ public class Event {
     @CreationTimestamp
     private Timestamp timestamp;
 
+    public Event() {}
+
     public Event(Delivery delivery, DeliveryStatus status) {
         this.delivery = delivery;
         this.status = status;
