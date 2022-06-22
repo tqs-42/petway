@@ -15,7 +15,7 @@ const httpOptions = {
 export class CategoryService {
 
   constructor(private http: HttpClient, private userService:UserService) {
-    let email = localStorage.getItem('userEmail');
+    let email = localStorage.getItem('email');
     if (email != null) {
       this.http.get<any>(environment.baseAPIPath + '/users/byEmail/' + email).subscribe(
         (res) => {
