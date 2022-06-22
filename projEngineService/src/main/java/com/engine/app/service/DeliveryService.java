@@ -29,7 +29,6 @@ public class DeliveryService {
     @Autowired
     private EventRepository eventRepository;
     
-    
     public Delivery getDelivery(Long id) throws ResourceNotFoundException {
         Optional<Delivery> optional = deliveryRepository.findById(id);
         if (optional.isPresent()) return optional.get();

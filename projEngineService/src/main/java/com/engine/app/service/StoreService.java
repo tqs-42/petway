@@ -30,7 +30,7 @@ public class StoreService {
     }
 
     public Boolean deleteStore(Long id) throws ResourceNotFoundException {
-        Optional<Store> optional = storeRepository.findById(String.valueOf(id));
+        Optional<Store> optional = storeRepository.findById(id);
         if (optional.isPresent()) {
             storeRepository.delete(optional.get());
             return true;
@@ -40,7 +40,7 @@ public class StoreService {
     }
 
     public Store getStore(Long id) throws ResourceNotFoundException {
-        Optional<Store> optional = storeRepository.findById(String.valueOf(id));
+        Optional<Store> optional = storeRepository.findById(id);
         if (optional.isPresent()) return optional.get();
         else throw new ResourceNotFoundException("Store doesn't exist");
     }

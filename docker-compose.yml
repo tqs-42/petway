@@ -36,6 +36,7 @@ services:
           "spring.datasource.password" : "admin",
           "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL8Dialect",
           "spring.jpa.hibernate.ddl-auto" : "update",
+          "spring.jackson.serialization.fail-on-empty-beans" : false,
           "server.port": 8001 }'
       healthcheck:
         test: "curl http://localhost:8001"

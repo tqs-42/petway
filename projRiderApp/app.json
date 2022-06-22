@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "projRiderApp",
+    "slug": "projRiderApp",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "projRiderApp"
+}

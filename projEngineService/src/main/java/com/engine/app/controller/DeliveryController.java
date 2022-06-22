@@ -38,7 +38,7 @@ import com.engine.app.service.StoreService;
 
 @RestController
 @RequestMapping("/deliveries")
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200","http://localhost:19006"})
 public class DeliveryController {
 
     @Autowired
@@ -121,7 +121,8 @@ public class DeliveryController {
         } catch (IllegalArgumentException e){
             return ResponseEntity.badRequest().body(null);
         }
-        return ResponseEntity.ok(deliveryService.getAllDeliveriesByStatus(deliveryStatus));
+        List<Delivery> deliveries = deliveryService.getAllDeliveriesByStatus(deliveryStatus);
+        return ResponseEntity.ok(deliveries);
     }
 
     @GetMapping("/riderDeliveries")
