@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+
+import com.specific.exception.ConflictException;
 import com.specific.model.Category;
 import com.specific.model.Product;
 import com.specific.model.Store;
@@ -23,7 +25,7 @@ public class ProductService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public Product saveProduct(Map<String, String> data) {
+    public Product saveProduct(Map<String, String> data) throws ConflictException {
         String name = data.get("name");
         String description = data.get("description");
         String image = data.get("image");
@@ -32,6 +34,11 @@ public class ProductService {
         Store store = storeRepository.findById(Long.parseLong(data.get("store")));
         Category category = categoryRepository.findById(Long.parseLong(data.get("category")));
         Product product = new Product(name, description, image, price, stock, category, store);
+
+        if (productRepository.findByName(product.getName()) != null) {
+            throw new ConflictException("Product already exists");
+        }
+
         return productRepository.saveAndFlush(product);
     }
 

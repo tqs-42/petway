@@ -52,10 +52,10 @@ import { AuthenticationService } from './services/authentication.service';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },  
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
 
   ],
   bootstrap: [AppComponent]

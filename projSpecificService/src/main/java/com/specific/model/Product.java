@@ -44,8 +44,8 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "categoryId", nullable = false)
-    private Category category;  
-    
+    private Category category;
+
     @OneToMany(mappedBy = "product")
     @JsonIgnore
     Set<RequestProducts> requests;
@@ -68,6 +68,11 @@ public class Product {
         this.price = price;
         this.stock = stock;
         this.store = store;
+    }
+
+    public Product(String name, Category category) {
+        this.name = name;
+        this.category = category;
     }
 
     public Product() {
@@ -138,9 +143,17 @@ public class Product {
         this.requests = requests;
     }
 
+    public int getStock() {
+        return this.stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
     @Override
     public String toString() {
-        return "Product [categories=" + ", description=" + description + ", id=" + id + ", image=" + image
+        return "Product [categories=" + category + ", description=" + description + ", id=" + id + ", image=" + image
                 + ", name=" + name + ", price=" + price + ", requests=" + ", stock=" + stock + ", store="
                 + store + "]";
     }

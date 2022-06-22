@@ -40,6 +40,14 @@ public class Store {
     @JsonIgnore
     Set<Product> products;
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Boolean isActive() {
+        return this.active;
+    }
+
     public Store(String name, String address, Boolean active) {
         this.name = name;
         this.address = address;

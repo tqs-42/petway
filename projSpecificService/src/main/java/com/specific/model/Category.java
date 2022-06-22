@@ -25,9 +25,15 @@ public class Category {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy="category")
-    @JsonIgnore 
+    @OneToMany(mappedBy = "category")
+    @JsonIgnore
     Set<Product> products;
+
+    public Category(long id, String name) {
+        this.id = id;
+        this.name = name;
+        this.products = new HashSet<Product>();
+    }
 
     public Category(String name) {
         this.name = name;

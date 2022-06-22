@@ -4,7 +4,24 @@ hr{
     border: none;
 }
 
+.lol {
+    background-color: rgba(172, 172, 172, 0.467);
+}
+
 .header, .btn-secondary {
     background-color: rgba(139, 139, 136, 0.467);
     color: black;
+}
+
+.product {
+    display: flex;
+    padding-right: calc(8% + 3px);
+    justify-content: space-between;
+}
+
+.address {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+
 }

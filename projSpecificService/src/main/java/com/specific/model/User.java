@@ -74,8 +74,4 @@ public class User {
         return "User [email=" + email + ", fullname=" + fullname + ", password=" + password + "]";
     }
 
-    public User orElseThrow(Object object) {
-        return null;
-    }
-    
 }

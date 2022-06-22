@@ -4,6 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ViewChild } from '@angular/core';
+import { CartService } from 'src/app/services/cart.service';
+import { RequestProducts } from 'src/app/interfaces/RequestProducts';
 
 @Component({
   selector: 'app-app',
@@ -25,10 +27,28 @@ export class AppComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthenticationService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private cartService: CartService
   ) {}
+  
+  items: RequestProducts[] = []
+  total: number = 0
+  storeName: string = ""
+
+  updateItems = () => this.cartService.getAll().subscribe(items =>
+    {
+      this.items = items
+      this.items.forEach(element => {
+        this.total += + (element.amount * element.product.price)
+        this.storeName = element.product.store.name
+      });
+    } 
+    )
 
   ngOnInit(): void {
+    this.updateItems()
+    
+
     this.registerForm = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
       address: [null, [Validators.required]],
@@ -40,7 +60,7 @@ export class AppComponent implements OnInit {
     this.loginForm = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required, Validators.minLength(8)]],
-    });
+    }); 
   }
 
   register(): void {
@@ -123,5 +143,9 @@ export class AppComponent implements OnInit {
         }
       );
     }
+  }
+
+  checkout(): void {
+
   }
 }
