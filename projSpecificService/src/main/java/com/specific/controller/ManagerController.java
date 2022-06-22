@@ -15,7 +15,7 @@ import com.specific.service.ManagerService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/manageres")
+@RequestMapping("/managers")
 public class ManagerController {
 
     @Autowired
