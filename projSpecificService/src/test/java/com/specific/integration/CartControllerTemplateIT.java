@@ -39,10 +39,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class CartControllerTemplateIT {
+class CartControllerTemplateIT {
     @LocalServerPort
     int randomServerPort;
 
@@ -89,18 +88,21 @@ public class CartControllerTemplateIT {
     }
 
     @BeforeEach
-    public void setUp(){
-        client = clientRepository.saveAndFlush(new Client("eva@ua.pt",  bcryptEncoder.encode("qwertyui"), "Eva Bartolomeu", "Aveiro"));
+    public void setUp() {
+        client = clientRepository
+                .saveAndFlush(new Client("eva@ua.pt", bcryptEncoder.encode("qwertyui"), "Eva Bartolomeu", "Aveiro"));
         JwtRequest request = new JwtRequest(client.getEmail(), "qwertyui");
-        ResponseEntity<Map> response = testRestTemplate.postForEntity("http://localhost:" + randomServerPort + "/login", request, Map.class);
+        ResponseEntity<Map> response = testRestTemplate.postForEntity("http://localhost:" + randomServerPort + "/login",
+                request, Map.class);
         token = response.getBody().get("token").toString();
 
         store = storeRepository.saveAndFlush(new Store("PetyCity", "Rua Maria", true));
         category = categoryRepository.saveAndFlush(new Category("Toy"));
-        product = productRepository.saveAndFlush(new Product("Corda", "Fixe", "image", 12.2 , 20, category, store));
+        product = productRepository.saveAndFlush(new Product("Corda", "Fixe", "image", 12.2, 20, category, store));
 
-        //nao salvar??
-        //requestProducts = requestProductsRepository.saveAndFlush(new RequestProducts(3, client.getCart(), product));
+        // nao salvar??
+        // requestProducts = requestProductsRepository.saveAndFlush(new
+        // RequestProducts(3, client.getCart(), product));
         requestProducts = new RequestProducts(3, client.getCart(), product);
     }
 
@@ -118,58 +120,62 @@ public class CartControllerTemplateIT {
         storeRepository.deleteAll();
         storeRepository.flush();
 
-        cartRepository.deleteAll();;
+        cartRepository.deleteAll();
+        ;
         cartRepository.flush();
     }
 
-
     @Test
-    public void testGetProductsInvalidTokenByInvalidEmail_thenUnauthorized(){
+    void testGetProductsInvalidTokenByInvalidEmail_thenUnauthorized() {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + "bad_token");
         ResponseEntity<RequestProducts> response = testRestTemplate.exchange(
-            getBaseUrl() + "/user/ve/product/" + product.getId(), HttpMethod.GET, new HttpEntity<>(headers),
-            RequestProducts.class);
+                getBaseUrl() + "/user/ve/product/" + product.getId(), HttpMethod.GET, new HttpEntity<>(headers),
+                RequestProducts.class);
         assertThat(response.getStatusCode(), equalTo(HttpStatus.UNAUTHORIZED));
     }
 
-    /* 
-    @Test
-    @DisplayName("Get Person Addresses: Invalid Token, return UNAUTHORIZED")
-    public void testGetAddressesInvalidToken_thenUnauthorized() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + "bad_token");
-        ResponseEntity<List> response = testRestTemplate.exchange(
-                getBaseUrl()+ "/getAll", HttpMethod.GET, new HttpEntity<Object>(headers),
-                List.class);
-
-        assertThat(response.getStatusCode(), equalTo(HttpStatus.UNAUTHORIZED));
-    }
-
-
-    @Test
-    @DisplayName("Add Address: Invalid Token returns UNAUTHORIZED")
-    public void testAddAddressInvalidToken_thenUnauthorized() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + "bad_token");
-
-        ResponseEntity<Address> response = testRestTemplate.exchange(
-                getBaseUrl() + "/add", HttpMethod.POST, new HttpEntity<>(addressDTO, headers),
-                Address.class);
-
-        assertThat(response.getStatusCode(), equalTo(HttpStatus.UNAUTHORIZED));
-    }
-
-
-    @Test
-    void testGetCarById_withIdInvalid(){
-        ResponseEntity<Car> response = restTemplate
-        .exchange("/api/carById/-9", HttpMethod.GET, null, new ParameterizedTypeReference<Car>() {
-        });
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-    }
-    */
+    /*
+     * @Test
+     * 
+     * @DisplayName("Get Person Addresses: Invalid Token, return UNAUTHORIZED")
+     * public void testGetAddressesInvalidToken_thenUnauthorized() {
+     * HttpHeaders headers = new HttpHeaders();
+     * headers.set("Authorization", "Bearer " + "bad_token");
+     * ResponseEntity<List> response = testRestTemplate.exchange(
+     * getBaseUrl()+ "/getAll", HttpMethod.GET, new HttpEntity<Object>(headers),
+     * List.class);
+     * 
+     * assertThat(response.getStatusCode(), equalTo(HttpStatus.UNAUTHORIZED));
+     * }
+     * 
+     * 
+     * @Test
+     * 
+     * @DisplayName("Add Address: Invalid Token returns UNAUTHORIZED")
+     * public void testAddAddressInvalidToken_thenUnauthorized() {
+     * HttpHeaders headers = new HttpHeaders();
+     * headers.set("Authorization", "Bearer " + "bad_token");
+     * 
+     * ResponseEntity<Address> response = testRestTemplate.exchange(
+     * getBaseUrl() + "/add", HttpMethod.POST, new HttpEntity<>(addressDTO,
+     * headers),
+     * Address.class);
+     * 
+     * assertThat(response.getStatusCode(), equalTo(HttpStatus.UNAUTHORIZED));
+     * }
+     * 
+     * 
+     * @Test
+     * void testGetCarById_withIdInvalid(){
+     * ResponseEntity<Car> response = restTemplate
+     * .exchange("/api/carById/-9", HttpMethod.GET, null, new
+     * ParameterizedTypeReference<Car>() {
+     * });
+     * 
+     * assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+     * }
+     */
 
     public String getBaseUrl() {
         return "http://localhost:" + randomServerPort + "/carts";

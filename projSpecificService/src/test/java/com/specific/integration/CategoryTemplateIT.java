@@ -106,7 +106,7 @@ class CategoryTemplateIT {
     }
 
     @Test
-    public void testWhenAllCategory_thenOKRequest() {
+    void testWhenAllCategory_thenOKRequest() {
         HttpHeaders headers = new HttpHeaders();
         ResponseEntity<List> response = testRestTemplate.exchange(
                 getBaseUrl(), HttpMethod.GET, new HttpEntity<Object>(headers),

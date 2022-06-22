@@ -1,7 +1,5 @@
 package com.specific.model;
 
-import lombok.Data;
-
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;

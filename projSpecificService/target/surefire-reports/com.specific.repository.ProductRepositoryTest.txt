@@ -1,0 +1,7 @@
+-------------------------------------------------------------------------------
+Test set: com.specific.repository.ProductRepositoryTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.015 s <<< FAILURE! - in com.specific.repository.ProductRepositoryTest
+com.specific.repository.ProductRepositoryTest  Time elapsed: 0.015 s  <<< ERROR!
+java.lang.IllegalStateException: Check failed: Docker environment should have more than 2GB free disk space
+

@@ -7,7 +7,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.specific.model.Product;
 import com.specific.model.RequestEvents;
 import com.specific.repository.RequestEventsRepository;
 
@@ -18,13 +17,11 @@ public class RequestEventsService {
     private RequestEventsRepository requestEventsRepository;
 
     public Set<RequestEvents> getAllRequestEvents(String email) {
-        Set<RequestEvents> requestEvents = requestEventsRepository.findRequestEventsByEmail(email);
-        return requestEvents;
+        return requestEventsRepository.findRequestEventsByEmail(email);
     }
 
     public RequestEvents getRequestEvents(long id) {
-        RequestEvents requestEvents = requestEventsRepository.findRequestEventsByRequestId(id);
-        return requestEvents;
+        return requestEventsRepository.findRequestEventsByRequestId(id);
     }
 
     public List<Map<String, Object>> getProductsInfoByOrderId(long orderId) {

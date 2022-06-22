@@ -1,16 +1,12 @@
 package com.specific.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import com.specific.exception.ConflictException;
 import com.specific.exception.ResourceNotFoundException;
-import com.specific.model.User;
 import com.specific.service.UserService;
 import javax.validation.Valid;
 
@@ -23,9 +19,10 @@ public class UserController {
     private UserService service;
 
     @GetMapping("/user/{email}/fullname")
-    public Map<String,String> getFullName(@Valid @PathVariable String email) throws ResourceNotFoundException {
-        String userFullName = service.getFullName(email).orElseThrow(() -> new ResourceNotFoundException("managerEmail " + email + ", or store NOT FOUND."));
-        Map<String,String> data = new HashMap<>();
+    public Map<String, String> getFullName(@Valid @PathVariable String email) throws ResourceNotFoundException {
+        String userFullName = service.getFullName(email)
+                .orElseThrow(() -> new ResourceNotFoundException("managerEmail " + email + ", or store NOT FOUND."));
+        Map<String, String> data = new HashMap<>();
         data.put("fullname", userFullName);
         return data;
     }

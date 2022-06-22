@@ -31,7 +31,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
-public class CartServiceTest {
+class CartServiceTest {
     @Mock(lenient = true)
     private CartRepository cartRepository;
 
@@ -56,7 +56,8 @@ public class CartServiceTest {
     private RequestProducts requestProducts3;
     private Store store;
 
-    //FALTA TESTAR QUANDO ADICIONAMOS PRODUTOS DE DIFERENTES LOJAS, GERA A EXECECAO DE CONFLITO
+    // FALTA TESTAR QUANDO ADICIONAMOS PRODUTOS DE DIFERENTES LOJAS, GERA A EXECECAO
+    // DE CONFLITO
     @BeforeEach
     public void setUp() throws Exception {
         client = new Client("eva@ua.pt", "qwertyui", "Eva Bartolomeu", "Aveiro");
@@ -64,11 +65,11 @@ public class CartServiceTest {
 
         store = new Store("PetyCity", "Rua Maria", true);
 
-        product = new Product("Corda", "Fixe", 12.2 , 20, store);
+        product = new Product("Corda", "Fixe", 12.2, 20, store);
         product.setId(1L);
-        product2 = new Product("Friskies", "Muito bom!", 15.2 , 26, store);
+        product2 = new Product("Friskies", "Muito bom!", 15.2, 26, store);
         product2.setId(2L);
-        product3 = new Product("Racao Peru", "UAU", 7.2 , 36, store);
+        product3 = new Product("Racao Peru", "UAU", 7.2, 36, store);
         product3.setId(3L);
 
         requestProducts = new RequestProducts(3, client.getCart(), product);
@@ -84,7 +85,7 @@ public class CartServiceTest {
         setRequestesProducts.add(requestProducts3);
 
         client.getCart().setProducts(setRequestesProducts);
-        
+
         Mockito.when(clientRepository.findByEmail("eva@ua.pt")).thenReturn(client);
         Mockito.when(cartRepository.findByClient(client)).thenReturn(client.getCart());
     }
@@ -92,7 +93,7 @@ public class CartServiceTest {
     @Test
     void testWhenValidEmailAndValidproductId_thenRequestProductsShouldBeFound() throws ResourceNotFoundException {
         RequestProducts fromDb = service.getProductAmout("eva@ua.pt", 1L).get();
-        
+
         assertThat(fromDb.getId()).isEqualTo(1L);
         assertThat(fromDb.getAmount()).isEqualTo(3);
         assertThat(fromDb.getCart().getId()).isEqualTo(1);
@@ -126,15 +127,15 @@ public class CartServiceTest {
         assertThrows(ResourceNotFoundException.class, () -> {
             service.getProductAmout("b", 20L);
         });
-        
+
         Mockito.verify(clientRepository, VerificationModeFactory.times(1)).findByEmail("b");
         Mockito.verify(cartRepository, VerificationModeFactory.times(0)).findByClient(any());
     }
 
     @Test
-    void testWhenValidEmail_thenReturnRequestsProducts() throws ResourceNotFoundException{
+    void testWhenValidEmail_thenReturnRequestsProducts() throws ResourceNotFoundException {
         List<RequestProducts> allRequestsProducts = service.getProducts("eva@ua.pt").get();
-        
+
         assertThat(allRequestsProducts).hasSize(3).extracting(RequestProducts::getId).contains(1L, 2L, 3L);
 
         Mockito.verify(clientRepository, VerificationModeFactory.times(1)).findByEmail("eva@ua.pt");
@@ -142,8 +143,8 @@ public class CartServiceTest {
     }
 
     @Test
-    void testWhenInvalidEmail_thenReturnEmpty() throws ResourceNotFoundException{
-        
+    void testWhenInvalidEmail_thenReturnEmpty() throws ResourceNotFoundException {
+
         assertThrows(ResourceNotFoundException.class, () -> {
             service.getProducts("b");
         });
@@ -153,11 +154,12 @@ public class CartServiceTest {
     }
 
     @Test
-    void testWhenPutProductAmountValidEmailValidproductId_thenReturnRequestProducts() throws ResourceNotFoundException, ConflictException {
+    void testWhenPutProductAmountValidEmailValidproductId_thenReturnRequestProducts()
+            throws ResourceNotFoundException, ConflictException {
         RequestProducts requestProducts4 = new RequestProducts(10, client.getCart(), product);
         requestProducts4.setId(1L);
         Mockito.when(requestProductsRepository.save(requestProducts)).thenReturn(requestProducts4);
-        
+
         RequestProducts fromDb = service.putProductAmout("eva@ua.pt", 1, 10).get();
 
         assertThat(fromDb.getId()).isEqualTo(1);
@@ -169,10 +171,11 @@ public class CartServiceTest {
         Mockito.verify(cartRepository, VerificationModeFactory.times(1)).findByClient(client);
         Mockito.verify(requestProductsRepository, VerificationModeFactory.times(1)).save(requestProducts);
     }
-    
+
     @Test
-    void testWhenPostProductAmountValidEmailValidproductId_thenReturnRequestProducts() throws ResourceNotFoundException, ConflictException {
-        Product product1 = new Product("Racao Frango", "HIHI", 18.4 , 5, store);
+    void testWhenPostProductAmountValidEmailValidproductId_thenReturnRequestProducts()
+            throws ResourceNotFoundException, ConflictException {
+        Product product1 = new Product("Racao Frango", "HIHI", 18.4, 5, store);
         product1.setId(20L);
 
         Mockito.when(productRepository.findById(20L)).thenReturn(product1);
@@ -195,11 +198,12 @@ public class CartServiceTest {
     }
 
     @Test
-    void testWhenDeleteProductAmountValidEmailValidproductId_thenReturnRequestProducts() throws ResourceNotFoundException, ConflictException {
+    void testWhenDeleteProductAmountValidEmailValidproductId_thenReturnRequestProducts()
+            throws ResourceNotFoundException, ConflictException {
         RequestProducts fromDb = service.putProductAmout("eva@ua.pt", 1, 0).get();
 
         assertThat(fromDb.getId()).isEqualTo(1);
-        assertThat(fromDb.getAmount()).isEqualTo(0);
+        assertThat(fromDb.getAmount()).isZero();
         assertThat(fromDb.getCart().getId()).isEqualTo(1);
         assertThat(fromDb.getProduct().getId()).isEqualTo(1);
 
@@ -208,7 +212,8 @@ public class CartServiceTest {
     }
 
     @Test
-    void testWhenProductAmountInvalidEmailValidproductId_thenReturnRequestProducts() throws ResourceNotFoundException, ConflictException {
+    void testWhenProductAmountInvalidEmailValidproductId_thenReturnRequestProducts()
+            throws ResourceNotFoundException, ConflictException {
         assertThrows(ResourceNotFoundException.class, () -> {
             service.putProductAmout("b", 1, 10);
         });
@@ -217,7 +222,8 @@ public class CartServiceTest {
     }
 
     @Test
-    void testWhenProductAmountValidEmailInvalidproductId_thenReturnRequestProducts() throws ResourceNotFoundException, ConflictException {
+    void testWhenProductAmountValidEmailInvalidproductId_thenReturnRequestProducts()
+            throws ResourceNotFoundException, ConflictException {
         assertThrows(ResourceNotFoundException.class, () -> {
             service.putProductAmout("eva@ua.pt", 100, 10);
         });
@@ -227,7 +233,8 @@ public class CartServiceTest {
     }
 
     @Test
-    void testWhenProductAmountInvalidEmailInvalidproductId_thenReturnRequestProducts() throws ResourceNotFoundException, ConflictException {
+    void testWhenProductAmountInvalidEmailInvalidproductId_thenReturnRequestProducts()
+            throws ResourceNotFoundException, ConflictException {
         assertThrows(ResourceNotFoundException.class, () -> {
             service.putProductAmout("b", 100, 10);
         });

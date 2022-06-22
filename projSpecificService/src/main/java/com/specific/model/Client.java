@@ -1,7 +1,5 @@
 package com.specific.model;
 
-import lombok.Data;
-
 import javax.persistence.Column;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -18,8 +16,7 @@ public class Client extends User {
     @Column(name = "address", nullable = true)
     private String address;
 
-    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL, fetch =
-    FetchType.LAZY)
+    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private Cart cart;
 
@@ -33,7 +30,7 @@ public class Client extends User {
         super(email);
     }
 
-    public Client(){
+    public Client() {
         this.cart = new Cart(this);
     }
 

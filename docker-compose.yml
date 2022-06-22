@@ -86,19 +86,19 @@ services:
             timeout: 10s
             retries: 2
 
-    specific-frontend:
-      build:
-        context: ./projSpecificWeb
-        dockerfile: ./Dockerfile
-      ports: 
-        - '4201:4201'
+    # specific-frontend:
+    #   build:
+    #     context: ./projSpecificWeb
+    #     dockerfile: ./Dockerfile
+    #   ports: 
+    #     - '4201:4201'
 
-    engine-frontend:
-        build:
-          context: ./projEngineWeb
-          dockerfile: ./Dockerfile
-        ports: 
-          - '4200:4200'
+    # engine-frontend:
+    #     build:
+    #       context: ./projEngineWeb
+    #       dockerfile: ./Dockerfile
+    #     ports: 
+    #       - '4200:4200'
     
 volumes:
    datafiles:
