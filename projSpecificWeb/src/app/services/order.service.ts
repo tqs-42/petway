@@ -4,6 +4,7 @@ import { Order } from './../interfaces/Order';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
+import { ProductInfo } from './../interfaces/ProductInfo';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -25,11 +26,19 @@ export class OrderService {
   }
 
   getAll() {
-    return this.http.get<Order[]>(environment.baseAPIPath + '/order/')
+    return this.http.get<Order[]>(environment.baseAPIPath + '/requestEvents/' + localStorage.getItem('userEmail'))
   }
 
   getOrdersByUser(userid: string) {
     return this.http.get<Order[]>(environment.baseAPIPath + '/ordersUser/?user=' + userid)
+  }
+
+  getProductsInfo(orderid: string) {
+    return this.http.get<ProductInfo[]>(environment.baseAPIPath + '/requestEvents/products/' + orderid)
+  }
+
+  getOrdersById(reqId: number) {
+    return this.http.get<Order>(environment.baseAPIPath + '/requestEvents/id/' + reqId)
   }
 
   getDetails(id: number) {

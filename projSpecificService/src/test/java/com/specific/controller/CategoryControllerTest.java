@@ -1,17 +1,19 @@
 package com.specific.controller;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import com.specific.config.JwtRequestFilter;
 import com.specific.config.WebSecurityConfig;
-import com.specific.controller.CategoryController;
 import com.specific.model.Category;
-import com.specific.model.Product;
 import com.specific.service.CategoryService;
 
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
@@ -25,13 +27,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.context.annotation.FilterType;
 //import io.restassured.module.mockmvc.RestAssuredMockMvc;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import io.restassured.http.ContentType;
-
-import static org.hamcrest.Matchers.*;
 
 @WebMvcTest(value = CategoryController.class, excludeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = WebSecurityConfig.class)})
 @AutoConfigureMockMvc(addFilters = false)

@@ -1,9 +1,9 @@
 import { Product } from './Product';
 export interface Order {
   id: number
-  price: number
-  states: { datetime: string, state: { id: number, name: string } }[]
-  items: { price: number, amount: number, product: Product }[]
-}
+  requestId: number
+  status: string  
+  eventDate: string  
 
-//NAO ESTA A SER USADO
+  // items: { price: number, amount: number, product: Product }[]
+}

@@ -38,6 +38,10 @@ public class User {
         this.fullname = fullname2;
     }
 
+    public User(@Email String email) {
+        this.email = email;
+    }
+
     public User() {
     }
 

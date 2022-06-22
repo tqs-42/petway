@@ -29,6 +29,10 @@ public class Client extends User {
         this.cart = new Cart(this);
     }
 
+    public Client(String email) {
+        super(email);
+    }
+
     public Client(){
         this.cart = new Cart(this);
     }
