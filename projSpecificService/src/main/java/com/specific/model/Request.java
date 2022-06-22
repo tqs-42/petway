@@ -11,8 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Data
 @Entity
 @Table(name = "REQUEST")
 public class Request {
@@ -28,6 +28,7 @@ public class Request {
     private String destinyAddress;
 
     @OneToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "cartId")
     private Cart cart;
 
@@ -37,10 +38,10 @@ public class Request {
         this.cart = cart;
     }
 
-    public Request(){
+    public Request() {
 
     }
-    
+
     public long getId() {
         return id;
     }
@@ -68,5 +69,5 @@ public class Request {
     public void setCart(Cart cart) {
         this.cart = cart;
     }
-    
+
 }

@@ -1,47 +1,44 @@
 package com.specific.controller;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-import com.specific.model.Cart;
+import com.specific.exception.ConflictException;
+import com.specific.exception.ResourceNotFoundException;
+import com.specific.model.RequestProducts;
 import com.specific.service.CartService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/api/specific")
+@RequestMapping("/carts")
 public class CartController {
     @Autowired
     private CartService service;
 
-    @PostMapping("/addCart")
-    public Cart addCart(@RequestBody Cart cart) {
-        return service.saveCart(cart);
+    @GetMapping("/user/{email}/product/{productId}")
+    public ResponseEntity<RequestProducts> getProductAmout(@Valid @PathVariable String email, @Valid @PathVariable Long productId)  throws ResourceNotFoundException {
+        RequestProducts requestProducts = service.getProductAmout(email, productId).orElseThrow(() -> new ResourceNotFoundException("clientEmail " + email + ", productID " + productId + ", NOT FOUND."));
+        return ResponseEntity.ok().body(requestProducts);
     }
 
-    @PostMapping("/addCarts")
-    public List<Cart> addCarts(@RequestBody List<Cart> carts) {
-        return service.saveCarts(carts);
+    
+    @PutMapping("/user/{email}/product/{productId}/amount/{amount}")
+    public ResponseEntity<RequestProducts> putProductAmout(@Valid @PathVariable String email, @Valid @PathVariable Long productId, @Valid @PathVariable int amount) throws ResourceNotFoundException, ConflictException {
+        Optional<RequestProducts>  requestProductsOptional = service.putProductAmout(email, productId, amount);
+        RequestProducts requestProducts = requestProductsOptional.orElseThrow(() -> new ResourceNotFoundException("clientEmail " + email + ", productID " + productId + ", NOT FOUND."));
+        requestProducts = requestProductsOptional.orElseThrow(() -> new ConflictException("[ERROR] The products in the cart must be from the same store!"));
+        return ResponseEntity.ok().body(requestProducts);
     }
-
-    @GetMapping("/carts")
-    public List<Cart> findAllCarts() {
-        return service.getCarts();
-    }
-
-    @GetMapping("/cartById/{id}")
-    public Cart findCartById(@PathVariable int id) {
-        return service.getCartById(id);
-    }
-
-    @PutMapping("/updateCart")
-    public Cart updateCart(@RequestBody Cart cart) {
-        return service.updateCart(cart);
-    }
-
-    @DeleteMapping("/deleteCart/{id}")
-    public String deleteCart(@PathVariable int id) {
-        return service.deleteCart(id);
+ 
+    @GetMapping("/user/{email}/products")
+    public ResponseEntity<List<RequestProducts>> getProducts(@Valid @PathVariable String email) throws ResourceNotFoundException {
+        List<RequestProducts> requestsProducts = service.getProducts(email).orElseThrow(() -> new ResourceNotFoundException("clientEmail " + email + ", NOT FOUND."));
+        return ResponseEntity.ok().body(requestsProducts);
     }
 }

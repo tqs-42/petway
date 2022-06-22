@@ -4,6 +4,8 @@ import { Observable } from 'rxjs/internal/Observable';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import { Category } from './../interfaces/Category';
+import { AuthenticationService } from './authentication.service';
+import { Store } from '../interfaces/Store';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -14,36 +16,28 @@ const httpOptions = {
 })
 export class CategoryService {
 
-  private baseUrl = "http://localhost:8080/category";
-
-  constructor(private http: HttpClient, private userService:UserService) {
+  constructor(private authService: AuthenticationService,private http: HttpClient, private userService:UserService) {
     let email = localStorage.getItem('userEmail');
-    if (email != null) {
-      this.http.get<any>(environment.baseAPIPath + '/user/userByEmail/' + email).subscribe(
-        (res) => {
-          console.log(res)
-          if (res.hasOwnProperty('cart')) {
-            this.userService.setClient(res);
-          } else if (res.hasOwnProperty('store')) {
-            this.userService.setManager(res);
-          }
-        }
-      );
+    let dtype = localStorage.getItem('dtype');
+    let loja = localStorage.getItem('store');
+    let userFullName = localStorage.getItem('userFullName');
+    if (email != null && dtype != null && dtype === "Client" && userFullName != null) {
+      this.userService.setClient({ "email": email, fullname: userFullName})
+    } else if (email != null && dtype != null && dtype === "Manager" && loja != null && userFullName != null) {
+          this.userService.setManager({ "email": email, store: this.forceCast<Store>(loja), fullname: userFullName })
     }
   }
 
-  getCategory(id: number): Observable<Category> {
-    const url = this.baseUrl + '/' + id;
-    return this.http.get<Category>(url);
+  forceCast<Store>(input: any): Store {
+    return input;
   }
 
-
   getAll() {
-    return this.http.get<Category[]>(this.baseUrl + '/categories')
+    return this.http.get<Category[]>(environment.baseAPIPath + "/categories")
   }
 
 
   createCategory(name: string) {
-    this.http.post<Category>(this.baseUrl + "/add-category", { "name": name, "isActive": true }, httpOptions).subscribe(response => console.log(response))
+    this.http.post<Category>(environment.baseAPIPath  + "/categories/add", { "name": name, "isActive": true }, httpOptions).subscribe(response => console.log(response))
   }
 }

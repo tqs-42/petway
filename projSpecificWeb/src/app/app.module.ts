@@ -1,4 +1,3 @@
-import { AuthInterceptor } from './auth-interceptor';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -13,9 +12,6 @@ import { AppStaffComponent } from './staff/app-staff/app-staff.component';
 import { DashboardComponent } from './staff/dashboard/dashboard.component';
 import { ProductsComponent } from './staff/products/products.component';
 import { CategoriesComponent } from './staff/categories/categories.component';
-import { UsersOrdersComponent } from './staff/users-orders/users-orders.component';
-import { UsersAccountsComponent } from './staff/users-accounts/users-accounts.component';
-import { StaffAccountsComponent } from './staff/staff-accounts/staff-accounts.component';
 import { SingleComponent } from './client/single/single.component';
 import { ViewCartComponent } from './client/view-cart/view-cart.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -26,9 +22,9 @@ import { NewProductComponent } from './staff/new-product/new-product.component';
 import { ProductComponent } from './components/client/product/product.component';
 import { AddProductComponent } from './components/client/addproduct/addproduct.component';
 import { ShowProductComponent } from './staff/show-product/show-product.component';
-import { NewStaffComponent } from './staff/new-staff/new-staff.component';
-import { OrderDetailStaffComponent } from './staff/order-detail-staff/order-detail-staff.component';
-import { OrdersByUsersComponent } from './staff/orders-by-users/orders-by-users.component';
+import { JwtInterceptor } from './services/jwt.interceptor';
+import { Router } from '@angular/router';
+import { AuthenticationService } from './services/authentication.service';
 
 @NgModule({
   declarations: [
@@ -40,9 +36,6 @@ import { OrdersByUsersComponent } from './staff/orders-by-users/orders-by-users.
     DashboardComponent,
     ProductsComponent,
     CategoriesComponent,
-    UsersOrdersComponent,
-    UsersAccountsComponent,
-    StaffAccountsComponent,
     ProductsClient,
     SingleComponent,
     ViewCartComponent,
@@ -53,18 +46,20 @@ import { OrdersByUsersComponent } from './staff/orders-by-users/orders-by-users.
     ProductComponent,
     AddProductComponent,
     ShowProductComponent,
-    NewStaffComponent,
-    OrderDetailStaffComponent,
-    OrdersByUsersComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
   ],
-  providers: [ { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true } ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+}

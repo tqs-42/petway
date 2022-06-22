@@ -25,35 +25,21 @@ public class ProductService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public Product saveProduct(Map<String, String> data) {
-        String storeManager = data.get("storeManager");
-
+    public Product saveProduct(Map<String, String> data) throws ConflictException {
         String name = data.get("name");
         String description = data.get("description");
         String image = data.get("image");
-        String category_name = data.get("category");
         Double price = Double.parseDouble(data.get("price"));
         int stock = Integer.parseInt(data.get("stock"));
-        String store_id = data.get("store");
-
-        Category category = categoryRepository.findByName(category_name);
-        System.out.println("category: " + category);
-        System.out.println("Idstorev: " + store_id);
-        System.out.println("Ids: " + Long.parseLong(store_id));
-        Store store = storeRepository.findById(Long.parseLong(store_id));
-        System.out.println(store);
-
+        Store store = storeRepository.findById(Long.parseLong(data.get("store")));
+        Category category = categoryRepository.findById(Long.parseLong(data.get("category")));
         Product product = new Product(name, description, image, price, stock, category, store);
 
+        if (productRepository.findByName(product.getName()) != null) {
+            throw new ConflictException("Product already exists");
+        }
+
         return productRepository.saveAndFlush(product);
-    }
-
-    public Store getStoreIdByManager(String manager) {
-        return storeRepository.getStoreByManagers(manager);
-    }
-
-    public List<Product> saveProducts(List<Product> products) {
-        return productRepository.saveAll(products);
     }
 
     public List<Product> getProducts() {
@@ -61,23 +47,6 @@ public class ProductService {
     }
 
     public Product getProductById(long id) {
-        return productRepository.findById(id).orElse(null);
-    }
-
-    public String deleteProduct(long id) {
-        productRepository.deleteById(id);
-        return "product removed !! " + id;
-    }
-
-    public Product updateProduct(Product product) {
-        Product existingProduct = productRepository.findById(product.getId()).orElse(null);
-        existingProduct.setDescription(product.getDescription());
-        existingProduct.setName(product.getName());
-        existingProduct.setImage(product.getImage());
-        existingProduct.setPrice(product.getPrice());
-        existingProduct.setStore(product.getStore());
-        existingProduct.setCategories(product.getCategories());
-        existingProduct.setRequests(product.getRequests());
-        return productRepository.save(existingProduct);
+        return productRepository.findById(id);
     }
 }

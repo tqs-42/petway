@@ -2,6 +2,8 @@ package com.specific.model;
 
 import lombok.Data;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -10,9 +12,10 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Data
 @Entity
 @Table(name = "USER")
 public class User {
@@ -29,10 +32,14 @@ public class User {
     @Column(name = "fullname", nullable = false)
     private String fullname;
 
-    public User(@Email String email, @Size(min = 8) String password, String fullname) {
+    public User(@Email String email, @Size(min = 8) String password, String fullname2) {
         this.email = email;
         this.password = password;
-        this.fullname = fullname;
+        this.fullname = fullname2;
+    }
+
+    public User(@Email String email) {
+        this.email = email;
     }
 
     public User() {
@@ -66,5 +73,5 @@ public class User {
     public String toString() {
         return "User [email=" + email + ", fullname=" + fullname + ", password=" + password + "]";
     }
-    
+
 }

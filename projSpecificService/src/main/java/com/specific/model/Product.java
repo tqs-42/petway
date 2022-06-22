@@ -4,24 +4,17 @@ import lombok.Data;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Data
 @Entity
 @Table(name = "PRODUCT")
 public class Product {
@@ -42,49 +35,56 @@ public class Product {
     @Column(name = "price", nullable = false)
     private Double price;
 
+    @Column(name = "stock", nullable = true)
+    private int stock;
+
     @ManyToOne
     @JoinColumn(name = "storeId", nullable = false)
     private Store store;
 
-    @ManyToMany(mappedBy = "products")
-    Set<Category> categories;
+    @ManyToOne
+    @JoinColumn(name = "categoryId", nullable = false)
+    private Category category;
 
-    @OneToMany(mappedBy="product")
+    @OneToMany(mappedBy = "product")
+    @JsonIgnore
     Set<RequestProducts> requests;
 
-    
-    @Column(name = "stock", nullable = true)
-    private int stock;
-
-    public Product(String name, String description, String image, Double price, Store store, Set<Category> categories,
-            Set<RequestProducts> requests, int stock) {
-        this.name = name;
-        this.description = description;
-        this.image = image;
-        this.price = price;
-        this.store = store;
-        this.categories = categories;
-        this.requests = requests;
-        this.stock = stock;
-    }
-
-    public Product(String name, String description, String image, Double price, int stock, Category category, Store store) {
+    public Product(String name, String description, String image, Double price, int stock, Category category,
+            Store store) {
         this.name = name;
         this.description = description;
         this.image = image;
         this.price = price;
         this.stock = stock;
-        this.categories = new HashSet<>();
-        this.categories.add(category);
+        this.category = category;
+        this.store = store;
+        this.requests = new HashSet<>();
+    }
+
+    public Product(String name, String description, Double price, int stock, Store store) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.stock = stock;
         this.store = store;
     }
 
-    public Product(){
+    public Product(String name, Category category) {
+        this.name = name;
+        this.category = category;
+    }
 
+    public Product() {
+        this.requests = new HashSet<>();
     }
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -127,12 +127,12 @@ public class Product {
         this.store = store;
     }
 
-    public Set<Category> getCategories() {
-        return categories;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Set<RequestProducts> getRequests() {
@@ -143,13 +143,19 @@ public class Product {
         this.requests = requests;
     }
 
-    @Override
-    public String toString() {
-        return "Product [categories="  + ", description=" + description + ", id=" + id + ", image=" + image
-                + ", name=" + name + ", price=" + price + ", requests="  + ", stock=" + stock + ", store="
-                + store + "]";
+    public int getStock() {
+        return this.stock;
     }
 
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
 
+    @Override
+    public String toString() {
+        return "Product [categories=" + category + ", description=" + description + ", id=" + id + ", image=" + image
+                + ", name=" + name + ", price=" + price + ", requests=" + ", stock=" + stock + ", store="
+                + store + "]";
+    }
 
 }

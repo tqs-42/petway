@@ -5,18 +5,15 @@ import lombok.Data;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Data
 @Entity
 @Table(name = "CATEGORY")
 public class Category {
@@ -28,9 +25,15 @@ public class Category {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(name = "product_category", joinColumns = @JoinColumn(name = "categoryId"), inverseJoinColumns = @JoinColumn(name = "productId"))
+    @OneToMany(mappedBy = "category")
+    @JsonIgnore
     Set<Product> products;
+
+    public Category(long id, String name) {
+        this.id = id;
+        this.name = name;
+        this.products = new HashSet<Product>();
+    }
 
     public Category(String name) {
         this.name = name;
@@ -38,18 +41,22 @@ public class Category {
     }
 
     public Category() {
-
+        this.products = new HashSet<Product>();
     }
 
     public long getId() {
         return id;
     }
 
-    public String getCategory() {
-        return name;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setCategory(String name) {
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 

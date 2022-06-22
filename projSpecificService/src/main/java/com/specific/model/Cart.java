@@ -2,8 +2,8 @@ package com.specific.model;
 
 import lombok.Data;
 
+import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-@Data
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "CART")
 public class Cart {
@@ -29,7 +30,8 @@ public class Cart {
     @JoinColumn(name = "email")
     private Client client;
 
-    @OneToMany(mappedBy="cart")
+    @OneToMany(mappedBy = "cart")
+    @JsonIgnore
     Set<RequestProducts> products;
 
     @OneToOne(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -41,12 +43,21 @@ public class Cart {
         this.request = request;
     }
 
-    public Cart(){
-        
+    public Cart(Client client) {
+        this.client = client;
+        products = new HashSet<>();
+    }
+
+    public Cart() {
+        products = new HashSet<>();
     }
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public Client getClient() {
@@ -71,6 +82,11 @@ public class Cart {
 
     public void setRequest(Request request) {
         this.request = request;
+    }
+
+    @Override
+    public String toString() {
+        return "Cart [client=" + client + ", id=" + id + "]";
     }
 
 }

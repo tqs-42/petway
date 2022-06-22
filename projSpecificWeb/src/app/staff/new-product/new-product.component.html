@@ -10,6 +10,10 @@
   <div class="col-md-12 mt-5">
     <div class="col-4 middle">
       <div class="form-group">
+        <p>Store: <strong>{{ userService.manager?.store?.name}}</strong></p>
+      </div>
+
+      <div class="form-group">
         <label for="username">Category</label>
         <select class="form-control" type="number" name="category" [(ngModel)]="product.category">
           <option *ngFor="let category of categories" [value]="category.id">
@@ -37,15 +41,10 @@
         <input class="form-control" type="number" step="1" id="stock" [(ngModel)]="product.stock" placeholder="stock">
       </div>
 
-      <div class="form-group">
-        <label for="store">Store</label>
-        <input class="form-control" type="number" id="store" [(ngModel)]="product.store" placeholder="store">
-      </div>
-
-      <div class="form-group">
-        <label for="imagem">Choose an image:</label>
-        <input type="file" id="imagem" name="avatar" accept="image/png, image/jpg, image/jpeg"
-          [(ngModel)]="product.image">
+      <div [formGroup]="myForm">
+        <label for="file">File</label>
+        <input formControlName="file" id="file" type="file" class="form-control"
+          accept="image/png, image/jpg, image/jpeg" (change)="onFileChange($event)" [(ngModel)]="product.image">
       </div>
 
       <button type="submit" class="btn btn-primary" (click)="createProduct()">Submit</button>

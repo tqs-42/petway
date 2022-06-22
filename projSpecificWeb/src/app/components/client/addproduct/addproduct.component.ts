@@ -18,6 +18,7 @@ export class AddProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.cartService.getOne(this.productId!).subscribe(item => item ? this.amount = item.amount : null)
+    this.cartService.getAll();
   }
 
 }

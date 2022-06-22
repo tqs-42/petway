@@ -11,7 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Data
 @Entity
 @Table(name = "REQUEST_PRODUCTS")
 public class RequestProducts {
@@ -45,6 +44,10 @@ public class RequestProducts {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public int getAmount() {
         return amount;
     }
@@ -67,6 +70,11 @@ public class RequestProducts {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    @Override
+    public String toString() {
+        return "RequestProducts [amount=" + amount + ", id=" + id + "]";
     }  
 
     

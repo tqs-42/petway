@@ -4,6 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ViewChild } from '@angular/core';
+import { CartService } from 'src/app/services/cart.service';
+import { RequestProducts } from 'src/app/interfaces/RequestProducts';
 
 @Component({
   selector: 'app-app',
@@ -25,10 +27,28 @@ export class AppComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthenticationService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private cartService: CartService
   ) {}
 
+  items: RequestProducts[] = []
+  total: number = 0
+  storeName: string = ""
+
+  updateItems = () => this.cartService.getAll().subscribe(items =>
+    {
+      this.items = items
+      this.items.forEach(element => {
+        this.total += + (element.amount * element.product.price)
+        this.storeName = element.product.store.name
+      });
+    }
+    )
+
   ngOnInit(): void {
+    this.updateItems()
+
+
     this.registerForm = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
       address: [null, [Validators.required]],
@@ -83,18 +103,32 @@ export class AppComponent implements OnInit {
     } else {
       this.authService.login(this.loginForm).subscribe(
         (res) => {
-          if (res.hasOwnProperty('cart')) {
-            this.userService.setClient(res);
+          console.log(res);
+          localStorage.setItem('user',JSON.stringify(res));
+
+          if (res['role']["authority"] == 'Client') {
             localStorage.setItem('userEmail',res['email']);
+            localStorage.setItem('dtype','Client');
+            this.authService.getUserFullName(res['email']).subscribe(name =>{
+              this.userService.setClient({ "email": res['email'], fullname: name["fullname"] })
+              localStorage.setItem('userFullName', name["fullname"]);
+            })
             this.loginModalClose.nativeElement.click();
             this.router.navigate(['/']);
             this.showMsgRegister = false;
             this.showErrorLogin = false;
             this.loginForm.reset();
             this.registerForm.reset();
-          } else if (res.hasOwnProperty('store')) {
-            this.userService.setManager(res);
+          } else if ((res['role']["authority"] == 'Manager')) {
             localStorage.setItem('userEmail',res['email']);
+            localStorage.setItem('dtype','Manager');
+            this.authService.getStoreFromManager(res['email']).subscribe(loja =>{
+              this.authService.getUserFullName(res['email']).subscribe(name =>{
+                this.userService.setManager({ "email": res['email'], store: loja, fullname: name["fullname"] })
+                localStorage.setItem('userFullName', name["fullname"]);
+              })
+              localStorage.setItem('store', loja);
+            })
             this.loginModalClose.nativeElement.click();
             this.router.navigate(['/system/dashboard']);
             this.showMsgRegister = false;
@@ -103,13 +137,20 @@ export class AppComponent implements OnInit {
             this.loginForm.reset();
           }else{
             this.showErrorLogin = true;
+            console.log("error")
           }
         },
         () => {
           this.showErrorLogin = true;
+          console.log("error")
+
           this.messageLogin = 'Error. Wrong credentials!';
         }
       );
     }
+  }
+
+  checkout(): void {
+
   }
 }

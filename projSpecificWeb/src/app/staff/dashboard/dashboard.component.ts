@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
   product_count: number = 0
   order_count: number = 0
 
-  constructor(private UserService:UserService, private productService: ProductService, private orderService: OrderService) { }
+  constructor(public userService:UserService, private productService: ProductService, private orderService: OrderService) { }
 
   ngOnInit(): void {
     // this.UserService.getAllStaff().subscribe(users => {

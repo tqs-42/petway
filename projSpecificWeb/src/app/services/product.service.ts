@@ -5,6 +5,8 @@ import { environment } from './../../environments/environment';
 import { Product } from './../interfaces/Product';
 import { Category } from '../interfaces/Category';
 import { UserService } from './user.service';
+import { AuthenticationService } from './authentication.service';
+import { Store } from '../interfaces/Store';
 
 
 const httpOptions = {
@@ -16,27 +18,24 @@ const httpOptions = {
 })
 export class ProductService {
 
-  private baseUrl = "http://localhost:8080/product";
-
-  constructor(private http: HttpClient, private userService:UserService) {
+  constructor(private authService: AuthenticationService,private http: HttpClient, private userService:UserService) {
     let email = localStorage.getItem('userEmail');
-    if (email != null) {
-      this.http.get<any>(environment.baseAPIPath + '/user/userByEmail/' + email).subscribe(
-        (res) => {
-          console.log(res)
-          if (res.hasOwnProperty('cart')) {
-            this.userService.setClient(res);
-          } else if (res.hasOwnProperty('store')) {
-            this.userService.setManager(res);
-          }
-        }
-      );
+    let dtype = localStorage.getItem('dtype');
+    let loja = localStorage.getItem('store');
+    let userFullName = localStorage.getItem('userFullName');
+    if (email != null && dtype != null && dtype === "Client" && userFullName != null) {
+      this.userService.setClient({ "email": email, fullname: userFullName})
+    } else if (email != null && dtype != null && dtype === "Manager" && loja != null && userFullName != null) {
+          this.userService.setManager({ "email": email, store: this.forceCast<Store>(loja), fullname: userFullName })
     }
   }
 
+  forceCast<Store>(input: any): Store {
+    return input;
+  }
+
   getProducts(): Observable<Product[]> {
-    const url = this.baseUrl;
-    return this.http.get<Product[]>(url);
+    return this.http.get<Product[]>(environment.baseAPIPath + "/products");
   }
 
   getAllSorting(sort:string){
@@ -48,25 +47,15 @@ export class ProductService {
   }
 
   getOne(id: number) {
-    return this.http.get<Product>(environment.baseAPIPath + '/product/' + id)
+    return this.http.get<Product>(environment.baseAPIPath + '/products/' + id)
   }
 
   createProduct(category: string, name: string, description: string, price: number, store: number, stock: number, image: string) {
-
-    console.log("PARAMETROS PASSADOS --- ")
-    console.log(category)
-    console.log(name)
-    console.log(description)
-    console.log(price)
-    console.log(stock)
-    console.log(store)
-    console.log(image)
-
-    this.http.post<Product>(this.baseUrl + "/add-product", {  "category": category, "name": name, "description": description, "store": store, "stock": stock , "price": price, "image": image,"isActive": true}, httpOptions).subscribe(response => console.log("sou a resposta --- " + response))
+    this.http.post<Product>(environment.baseAPIPath + "/products/add", {  "category": category, "name": name, "description": description, "store": store, "stock": stock , "price": price, "image": image}, httpOptions).subscribe(response => console.log("sou a resposta --- " + response))
   }
 
   updateProduct(product:Product) {
-    this.http.put<Product>(this.baseUrl + "/"+ product.id, { "id": product.id, "name": product.name, "description": product.description, "price": product.price, "isActive": product.isActive, "category": product.category.id }, httpOptions).subscribe(response => console.log(response))
+    this.http.put<Product>(environment.baseAPIPath + "/products/"+ product.id, { "id": product.id, "name": product.name, "description": product.description, "price": product.price, "category": product.category.id }, httpOptions).subscribe(response => console.log(response))
   }
 
 }

@@ -9,7 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-@Data
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "CLIENT")
 public class Client extends User {
@@ -19,16 +20,21 @@ public class Client extends User {
 
     @OneToOne(mappedBy = "client", cascade = CascadeType.ALL, fetch =
     FetchType.LAZY)
+    @JsonIgnore
     private Cart cart;
 
     public Client(String email, String password, String fullname, String address) {
         super(email, password, fullname);
         this.address = address;
-        this.cart = new Cart();
+        this.cart = new Cart(this);
+    }
+
+    public Client(String email) {
+        super(email);
     }
 
     public Client(){
-        this.cart = new Cart();
+        this.cart = new Cart(this);
     }
 
     public String getAddress() {
@@ -37,6 +43,14 @@ public class Client extends User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     @Override

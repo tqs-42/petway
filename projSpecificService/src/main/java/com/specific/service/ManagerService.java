@@ -1,44 +1,43 @@
 package com.specific.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.List;
-
+import com.specific.exception.ResourceNotFoundException;
 import com.specific.model.Manager;
+import com.specific.model.Store;
 import com.specific.repository.ManagerRepository;
 
 @Service
 public class ManagerService {
+
     @Autowired
-    private ManagerRepository repository;
+    private PasswordEncoder passwordEncoder;
 
-    public Manager saveManager(Manager manager) {
-        return repository.save(manager);
+    @Autowired
+    private ManagerRepository managerRepository;
+
+    public Manager saveManager(Manager manager) throws Exception {
+        if (managerRepository.findByEmail(manager.getEmail()) == null) {
+            manager.setPassword(passwordEncoder.encode(manager.getPassword()));
+            managerRepository.saveAndFlush(manager);
+            return manager;
+
+        } else {
+            throw new Exception();
+        }
     }
 
-    public List<Manager> saveManagers(List<Manager> managers) {
-        return repository.saveAll(managers);
+    public Optional<Store> getStore(String email) throws ResourceNotFoundException {
+        Manager manager = managerRepository.findByEmail(email);
+        if (manager == null)
+            throw new ResourceNotFoundException("Not found");
+        Store store = manager.getStore();
+        if (store == null) throw new ResourceNotFoundException("Not found");
+        return Optional.of(store);
     }
 
-    public List<Manager> getManagers() {
-        return repository.findAll();
-    }
-
-    public Manager getManagerByEmail(String email) {
-        return repository.findByEmail(email);
-    }
-
-    public String deleteManager(String email) {
-        repository.deleteByEmail(email);
-        return "manager removed !! " + email;
-    }
-
-    public Manager updateManager(Manager manager) {
-        Manager existingManager = repository.findByEmail(manager.getEmail());
-        existingManager.setPassword(manager.getPassword());
-        existingManager.setFullname(manager.getFullname());
-        existingManager.setStore(manager.getStore());
-        return repository.save(existingManager);
-    }
 }

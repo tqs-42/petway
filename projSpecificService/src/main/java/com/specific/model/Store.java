@@ -1,21 +1,21 @@
 package com.specific.model;
 
-import lombok.Data;
-
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Data
 @Entity
 @Table(name = "STORE")
 public class Store {
@@ -33,31 +33,32 @@ public class Store {
     @Column(name = "active", nullable = true)
     private Boolean active;
 
-    @OneToMany(mappedBy = "store")
-    Set<Manager> managers;
+    @OneToOne(mappedBy = "store", cascade = CascadeType.ALL, fetch =
+    FetchType.LAZY)
+    @JsonIgnore
+    private Manager manager;
 
     @OneToMany(mappedBy = "store")
-    @JsonIgnore 
+    @JsonIgnore
     Set<Product> products;
 
-    
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Boolean isActive() {
+        return this.active;
+    }
 
     public Store(String name, String address, Boolean active) {
         this.name = name;
         this.address = address;
         this.active = active;
-    }
-
-    public Store(String name, String address, Boolean active, Set<Manager> managers) {
-        this.name = name;
-        this.address = address;
-        this.active = active;
-        this.managers = new HashSet<Manager>();
         this.products = new HashSet<>();
     }
 
-    public Store(){
-        
+    public Store() {
+        this.products = new HashSet<>();
     }
 
     public long getId() {
@@ -88,12 +89,12 @@ public class Store {
         this.active = active;
     }
 
-    public Set<Manager> getManagers() {
-        return managers;
+    public Manager getManager() {
+        return manager;
     }
 
-    public void setManagers(Set<Manager> managers) {
-        this.managers = managers;
+    public void setManager(Manager manager) {
+        this.manager = manager;
     }
 
     public Set<Product> getProducts() {
@@ -106,8 +107,7 @@ public class Store {
 
     @Override
     public String toString() {
-        return "Store [active=" + active + ", address=" + address + ", id=" + id + ", managers=" + ", name="
-                + name + ", products=" + "]";
+        return "Store [active=" + active + ", address=" + address + ", id=" + id + ", name=" + name + "]";
     }
 
     
