@@ -18,12 +18,17 @@ import com.engine.app.model.Review;
 import com.engine.app.model.Rider;
 import com.engine.app.model.Store;
 import com.engine.app.repository.DeliveryRepository;
+import com.engine.app.repository.EventRepository;
 
 @Service
 public class DeliveryService {
 
     @Autowired
     private DeliveryRepository deliveryRepository;
+
+    @Autowired
+    private EventRepository eventRepository;
+    
     
     public Delivery getDelivery(Long id) throws ResourceNotFoundException {
         Optional<Delivery> optional = deliveryRepository.findById(id);
@@ -52,7 +57,7 @@ public class DeliveryService {
     }
 
     public List<Delivery> getAllDeliveriesByStatus(DeliveryStatus status) {
-        return deliveryRepository.findByStatus(status);
+        return eventRepository.findByStatus(status);
     }
 
     public List<Delivery> getRiderDeliveries(Rider rider) {

@@ -14,4 +14,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     @Query("SELECT e FROM Event e WHERE e.delivery = delivery AND e.status = status")
     Event findByDeliveryAndStatus(Delivery delivery, DeliveryStatus status);
 
+    @Query("SELECT e.delivery FROM Event e WHERE e.status = status")
+    List<Delivery> findByStatus(DeliveryStatus status);
+
 }
