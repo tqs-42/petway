@@ -1,5 +1,6 @@
 package com.specific.service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,7 +27,7 @@ public class RequestEventsService {
         return requestEvents;
     }
 
-    public Map<String, Object> getProductsInfoByOrderId(long orderId) {
+    public List<Map<String, Object>> getProductsInfoByOrderId(long orderId) {
         return requestEventsRepository.getProductByOrderId(orderId);
     }
 

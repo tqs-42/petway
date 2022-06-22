@@ -1,7 +1,7 @@
-import { Category } from './Category';
-import { Store } from './Store';
 export interface ProductInfo {
   name: string
+  image: string
   price: number
-  store: Store
+  amount: number
+  product_id: number
 }

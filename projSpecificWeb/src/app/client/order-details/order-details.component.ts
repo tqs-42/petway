@@ -13,7 +13,8 @@ export class OrderDetailsComponent implements OnInit {
 
   orderId = this.route.snapshot.params['id']
   order: Order | null = null
-  product: ProductInfo | null = null
+  product: ProductInfo[] = []
+  total: number = 0
 
   constructor(private route: ActivatedRoute, private orderService: OrderService) { }
 
@@ -22,8 +23,11 @@ export class OrderDetailsComponent implements OnInit {
       this.order = order
     })
 
-    // this.orderService.getProductsInfo(this.orderId).subscribe(product => {
-    //   this.product = product;
-    // })
+    this.orderService.getProductsInfo(this.orderId).subscribe(product => {
+      this.product = product;
+      this.product.forEach(element => {
+        this.total += (element.price * element.amount);
+      });
+    })
   }
 }

@@ -1,5 +1,6 @@
 package com.specific.repository;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -18,7 +19,7 @@ public interface RequestEventsRepository extends JpaRepository<RequestEvents, Lo
     Set<RequestEvents> findRequestEventsByEmail(@Param("email") String email);
 
     @Query(value = "SELECT p.product_id, p.name, p.price, rp.amount FROM request_events as r JOIN request as req ON r.request_id = req.request_id JOIN cart as c ON req.cart_id = c.cart_id JOIN request_products as rp ON rp.cart_id = c.cart_id JOIN product as p ON p.product_id = rp.product_id WHERE r.request_id = :order_id", nativeQuery = true)
-    Map<String, Object> getProductByOrderId(@Param("order_id") long order_id);
+    List<Map<String, Object>> getProductByOrderId(@Param("order_id") long order_id);
 
     RequestEvents findRequestEventsByRequestId(long requestId);
 

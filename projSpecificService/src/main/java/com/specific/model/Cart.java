@@ -30,7 +30,7 @@ public class Cart {
     @JoinColumn(name = "email")
     private Client client;
 
-    @OneToMany(mappedBy="cart")
+    @OneToMany(mappedBy = "cart")
     @JsonIgnore
     Set<RequestProducts> products;
 
@@ -43,12 +43,12 @@ public class Cart {
         this.request = request;
     }
 
-    public Cart(Client client){
+    public Cart(Client client) {
         this.client = client;
         products = new HashSet<>();
     }
 
-    public Cart(){
+    public Cart() {
         products = new HashSet<>();
     }
 

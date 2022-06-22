@@ -1,51 +1,51 @@
-<div *ngIf="order"class="p-5 container-fluid container bg-light">
-    <div>
-        <h3>Order <i class="text-secondary">#{{ order.id }}</i> </h3>
+<div *ngIf="order" class="p-5 container-fluid container bg-light">
+  <div>
+    <h3>Order <i class="text-secondary">#{{ order.id }}</i> </h3>
 
-        <h5 class="mt-4">Updates</h5>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>State</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
+    <h5 class="mt-4">Updates</h5>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>State</th>
+          <th>Date</th>
+        </tr>
+      </thead>
 
-            <tbody>
-              <tr>
-                <td> {{ order.status }} </td>
-                <td> {{ order.eventDate }} </td>
-              </tr>
-            </tbody>
-        </table>
+      <tbody>
+        <tr>
+          <td> {{ order.status }} </td>
+          <td> {{ order.eventDate }} </td>
+        </tr>
+      </tbody>
+    </table>
 
-        <h5 class="mt-4">Details</h5>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Amount</th>
-                    <th>Price</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
+    <h5 class="mt-4">Details</h5>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
 
-            <tbody>
-                <!-- <tr *ngFor="let item of order.items">
-                    <td><a routerLink="/product/{{ item.product.id }}"> {{ item.product.name }} </a></td>
-                    <td> {{ item.amount }} </td>
-                    <td> {{ item.price }} € </td>
-                    <td> {{ item.amount*item.price | number: '.2-2' }} € </td>
-                </tr> -->
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <!-- <td> {{ order.price }} € </td> -->
-                </tr>
-            </tbody>
-        </table>
-    </div>
+      <tbody>
+        <tr *ngFor="let item of product">
+          <td><a routerLink="/product/{{ item.product_id }}"> {{ item.name }} </a></td>
+          <td> {{ item.amount }} </td>
+          <td> {{ item.price }} € </td>
+          <td> {{ item.amount*item.price | number: '.2-2' }} € </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td><strong>Final Price</strong></td>
+          <td> {{ total }} € </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 
@@ -80,7 +80,7 @@
       </tbody>
     </table> -->
 
-   <h5 class="mt-4">Rider Informations</h5>
+    <h5 class="mt-4">Rider Informations</h5>
     <div class="product d-flex flex">
       <img
         src="https://scontent.fopo3-1.fna.fbcdn.net/v/t31.18172-8/466704_107653992705066_871561892_o.jpg?_nc_cat=109&ccb=1-7&_nc_sid=de6eea&_nc_eui2=AeEn0TTqlHysYmywT8iO2yD0fvvcQTQaPa1--9xBNBo9rdpehr_lrjCjvv4bH1SGmFoCp-_jeFlgk4VnbHaJODYZ&_nc_ohc=yGZeVFA9LPcAX80zoZH&_nc_ht=scontent.fopo3-1.fna&oh=00_AT91pa4k3hM6teXPQeZDMrgqPELedGyQTlS4CVhLSHMgzw&oe=62D06C1A">
