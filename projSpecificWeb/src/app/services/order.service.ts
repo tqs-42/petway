@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 import { ProductInfo } from './../interfaces/ProductInfo';
+import { AuthenticationService } from './authentication.service';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -15,13 +16,18 @@ const httpOptions = {
 })
 export class OrderService {
 
-  constructor(private http: HttpClient, private userService:UserService, public cartService:CartService) {
+  constructor(private authService: AuthenticationService,private http: HttpClient, private userService:UserService, public cartService:CartService) {
     let email = localStorage.getItem('userEmail');
     let dtype = localStorage.getItem('dtype');
     if (email != null && dtype != null && dtype === "Client") {
       this.userService.setClient({ "email": email, fullname: ''})
     } else if (email != null && dtype != null && dtype === "Manager") {
-      this.userService.setManager({ "email": email, store: { id: 0, name: '', address : '', active: true}, fullname: '' })
+      this.authService.getStoreFromManager(email).subscribe(loja =>{
+        console.log(loja)
+        if (email != null) {
+          this.userService.setManager({ "email": email, store: loja, fullname: '' })
+        }
+      })
     }
   }
 

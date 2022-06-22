@@ -123,6 +123,7 @@ export class AppComponent implements OnInit {
             this.authService.getStoreFromManager(res['email']).subscribe(loja =>{
               console.log(loja)
               this.userService.setManager({ "email": res['email'], store: loja, fullname: '' })
+              localStorage.setItem('store', loja);
             })
             this.loginModalClose.nativeElement.click();
             this.router.navigate(['/system/dashboard']);

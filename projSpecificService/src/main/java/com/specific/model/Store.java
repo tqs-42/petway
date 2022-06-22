@@ -1,17 +1,15 @@
 package com.specific.model;
 
-import lombok.Data;
-
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -35,8 +33,9 @@ public class Store {
     @Column(name = "active", nullable = true)
     private Boolean active;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "email")
+    @OneToOne(mappedBy = "store", cascade = CascadeType.ALL, fetch =
+    FetchType.LAZY)
+    @JsonIgnore
     private Manager manager;
 
     @OneToMany(mappedBy = "store")
@@ -105,4 +104,11 @@ public class Store {
     public void setProducts(Set<Product> products) {
         this.products = products;
     }
+
+    @Override
+    public String toString() {
+        return "Store [active=" + active + ", address=" + address + ", id=" + id + ", name=" + name + "]";
+    }
+
+    
 }

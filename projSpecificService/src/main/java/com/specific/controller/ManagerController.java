@@ -1,5 +1,8 @@
 package com.specific.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +22,12 @@ public class ManagerController {
     private ManagerService service;
 
     @GetMapping("/user/{email}/store")
-    public ResponseEntity<Store> getStore(@Valid @PathVariable String email) throws ResourceNotFoundException {
+    public Map<String, String> getStore(@Valid @PathVariable String email) throws ResourceNotFoundException {
         Store store = service.getStore(email).orElseThrow(() -> new ResourceNotFoundException("managerEmail " + email + ", or store NOT FOUND."));
-        return ResponseEntity.ok().body(store);
+        Map<String, String> data = new HashMap<>();
+        data.put("id", String.valueOf(store.getId()));
+        data.put("name", store.getName());
+        data.put("address", store.getAddress());
+        return data;
     }
 }

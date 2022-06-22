@@ -5,6 +5,7 @@ import { environment } from './../../environments/environment';
 import { Product } from './../interfaces/Product';
 import { Category } from '../interfaces/Category';
 import { UserService } from './user.service';
+import { AuthenticationService } from './authentication.service';
 
 
 const httpOptions = {
@@ -16,13 +17,18 @@ const httpOptions = {
 })
 export class ProductService {
 
-  constructor(private http: HttpClient, private userService:UserService) {
+  constructor(private authService: AuthenticationService,private http: HttpClient, private userService:UserService) {
     let email = localStorage.getItem('userEmail');
     let dtype = localStorage.getItem('dtype');
     if (email != null && dtype != null && dtype === "Client") {
       this.userService.setClient({ "email": email, fullname: ''})
     } else if (email != null && dtype != null && dtype === "Manager") {
-      this.userService.setManager({ "email": email, store: { id: 0, name: '', address : '', active: true}, fullname: '' })
+      this.authService.getStoreFromManager(email).subscribe(loja =>{
+        console.log(loja)
+        if (email != null) {
+          this.userService.setManager({ "email": email, store: loja, fullname: '' })
+        }
+      })
     }
   }
 

@@ -26,11 +26,16 @@ export class AuthenticationService {
 
     let email = localStorage.getItem('userEmail');
     let dtype = localStorage.getItem('dtype');
+    let loja = localStorage.getItem('store');
     if (email != null && dtype != null && dtype === "Client") {
       this.userService.setClient({ "email": email, fullname: ''})
-    } else if (email != null && dtype != null && dtype === "Manager") {
-      this.userService.setManager({ "email": email, store: { id: 0, name: '', address : '', active: true}, fullname: '' })
+    } else if (email != null && dtype != null && dtype === "Manager" && loja != null) {
+          this.userService.setManager({ "email": email, store: this.forceCast<Store>(loja), fullname: '' })
     }
+  }
+
+  forceCast<Store>(input: any): Store {
+    return input;
   }
 
   public get userValue(): User {

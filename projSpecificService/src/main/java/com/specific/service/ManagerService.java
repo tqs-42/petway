@@ -7,11 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.specific.exception.ResourceNotFoundException;
-import com.specific.model.Client;
 import com.specific.model.Manager;
 import com.specific.model.Store;
 import com.specific.repository.ManagerRepository;
-import com.specific.repository.StoreRepository;
 
 @Service
 public class ManagerService {
@@ -21,9 +19,6 @@ public class ManagerService {
 
     @Autowired
     private ManagerRepository managerRepository;
-
-    @Autowired
-    private StoreRepository storeRepository;
 
     public Manager saveManager(Manager manager) throws Exception {
         if (managerRepository.findByEmail(manager.getEmail()) == null) {
@@ -40,7 +35,7 @@ public class ManagerService {
         Manager manager = managerRepository.findByEmail(email);
         if (manager == null)
             throw new ResourceNotFoundException("Not found");
-        Store store = storeRepository.findByManager(manager);
+        Store store = manager.getStore();
         if (store == null) throw new ResourceNotFoundException("Not found");
         return Optional.of(store);
     }
