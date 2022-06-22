@@ -16,17 +16,4 @@ public class ClientController {
 
     @Autowired
     private ClientService service;
-
-    @PostMapping("/add")
-    public ResponseEntity<Client> registerClient(@RequestBody Map<String, String> data) throws Exception {
-
-        String email = data.get("email");
-        String address = data.get("address");
-        String fullname = data.get("fullname");
-        String password = data.get("password");
-
-        Client client = service.saveClient(new Client(email, password, fullname, address));
-        return new ResponseEntity<>(client, HttpStatus.CREATED);
-
-    }
 }

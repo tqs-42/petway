@@ -7,10 +7,13 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,9 +35,9 @@ public class Store {
     @Column(name = "active", nullable = true)
     private Boolean active;
 
-    @OneToMany(mappedBy = "store")
-    @JsonIgnore
-    Set<Manager> managers;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "email")
+    private Manager manager;
 
     @OneToMany(mappedBy = "store")
     @JsonIgnore
@@ -52,12 +55,10 @@ public class Store {
         this.name = name;
         this.address = address;
         this.active = active;
-        this.managers = new HashSet<>();
         this.products = new HashSet<>();
     }
 
     public Store() {
-        this.managers = new HashSet<>();
         this.products = new HashSet<>();
     }
 
@@ -89,12 +90,12 @@ public class Store {
         this.active = active;
     }
 
-    public Set<Manager> getManagers() {
-        return managers;
+    public Manager getManager() {
+        return manager;
     }
 
-    public void setManagers(Set<Manager> managers) {
-        this.managers = managers;
+    public void setManager(Manager manager) {
+        this.manager = manager;
     }
 
     public Set<Product> getProducts() {
@@ -104,11 +105,4 @@ public class Store {
     public void setProducts(Set<Product> products) {
         this.products = products;
     }
-
-    @Override
-    public String toString() {
-        return "Store [active=" + active + ", address=" + address + ", id=" + id + ", managers=" + ", name="
-                + name + ", products=" + "]";
-    }
-
 }

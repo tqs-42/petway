@@ -56,6 +56,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/login","/registerClient","/registerManager").permitAll()
 				.antMatchers("/carts/**").hasAuthority("Client")
 				.antMatchers("/categories/**").hasAuthority("Manager")
+				.antMatchers("/products/**").hasAnyAuthority("Manager", "Client")
+				.antMatchers("/requestEvents/**").hasAuthority("Client")
+				.antMatchers("/manageres/**").permitAll()
 				// .antMatchers("/orders/**").hasAuthority("Rider")
 				// .antMatchers("/stores/**").hasAuthority("Rider")
 				// all other requests need to be authenticated

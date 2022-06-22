@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
     private router: Router,
     private cartService: CartService
   ) {}
-  
+
   items: RequestProducts[] = []
   total: number = 0
   storeName: string = ""
@@ -42,12 +42,12 @@ export class AppComponent implements OnInit {
         this.total += + (element.amount * element.product.price)
         this.storeName = element.product.store.name
       });
-    } 
+    }
     )
 
   ngOnInit(): void {
     this.updateItems()
-    
+
 
     this.registerForm = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
@@ -60,7 +60,7 @@ export class AppComponent implements OnInit {
     this.loginForm = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required, Validators.minLength(8)]],
-    }); 
+    });
   }
 
   register(): void {
@@ -103,15 +103,12 @@ export class AppComponent implements OnInit {
     } else {
       this.authService.login(this.loginForm).subscribe(
         (res) => {
-          console.log(this.loginForm);
           console.log(res);
-          console.log(res["role"]["authority"])
-
-
           localStorage.setItem('user',JSON.stringify(res));
 
           if (res['role']["authority"] == 'Client') {
             this.userService.setClient(res);
+            console.log(this.userService.client);
             localStorage.setItem('userEmail',res['email']);
             localStorage.setItem('dtype','Client');
             this.loginModalClose.nativeElement.click();
@@ -121,9 +118,12 @@ export class AppComponent implements OnInit {
             this.loginForm.reset();
             this.registerForm.reset();
           } else if ((res['role']["authority"] == 'Manager')) {
-            this.userService.setManager(res);
             localStorage.setItem('userEmail',res['email']);
             localStorage.setItem('dtype','Manager');
+            this.authService.getStoreFromManager(res['email']).subscribe(loja =>{
+              console.log(loja)
+              this.userService.setManager({ "email": res['email'], store: loja, fullname: '' })
+            })
             this.loginModalClose.nativeElement.click();
             this.router.navigate(['/system/dashboard']);
             this.showMsgRegister = false;

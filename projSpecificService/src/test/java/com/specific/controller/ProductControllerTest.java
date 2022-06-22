@@ -7,16 +7,21 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import com.specific.config.JwtRequestFilter;
+import com.specific.config.WebSecurityConfig;
 import com.specific.exception.ConflictException;
 import com.specific.model.Product;
 import com.specific.service.ProductService;
 
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.context.annotation.FilterType;
 
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
@@ -27,7 +32,8 @@ import io.restassured.http.ContentType;
 
 import static org.hamcrest.Matchers.*;
 
-@WebMvcTest(ProductController.class)
+@WebMvcTest(value = ProductController.class, excludeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = WebSecurityConfig.class)})
+@AutoConfigureMockMvc(addFilters = false)
 class ProductControllerTest {
 
     @Autowired
@@ -35,6 +41,9 @@ class ProductControllerTest {
 
     @MockBean
     private ProductService productService;
+
+    @MockBean
+    private JwtRequestFilter jwtRequestFilter;
 
     @BeforeEach
     void setUp() {

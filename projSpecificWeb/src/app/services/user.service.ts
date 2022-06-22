@@ -29,10 +29,11 @@ export class UserService {
     this.manager = manager;
   }
 
-  logout() {  
+  logout() {
     this.client = null;
     this.manager = null;
     localStorage.removeItem('userEmail');
+    localStorage.removeItem('dtype');
     this.router.navigate(['/']);
   }
 

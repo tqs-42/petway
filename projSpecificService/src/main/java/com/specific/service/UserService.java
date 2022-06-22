@@ -10,21 +10,4 @@ import com.specific.repository.UserRepository;
 public class UserService {
     @Autowired
     private UserRepository repository;
-
-    public User loginUser(String email, String password) throws ConflictException {
-        User user = repository.findByEmail(email);
-        if (user == null) {
-            throw new ConflictException("User not found");
-        }
-
-        if (!password.equals(user.getPassword())) {
-            throw new ConflictException("Wrong password");
-        }
-
-        return user;
-    }
-
-    public User getUserByEmail(String email) {
-        return repository.findByEmail(email);
-    }
 }

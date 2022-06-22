@@ -20,7 +20,7 @@ export class ProductService {
     let email = localStorage.getItem('userEmail');
     let dtype = localStorage.getItem('dtype');
     if (email != null && dtype != null && dtype === "Client") {
-      this.userService.setClient({ "email": email, address: '', fullname: ''})
+      this.userService.setClient({ "email": email, fullname: ''})
     } else if (email != null && dtype != null && dtype === "Manager") {
       this.userService.setManager({ "email": email, store: { id: 0, name: '', address : '', active: true}, fullname: '' })
     }

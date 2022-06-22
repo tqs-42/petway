@@ -5,6 +5,11 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from './../../environments/environment';
 import { User } from '../interfaces/User';
 import { UserService } from './user.service';
+import { Store } from '../interfaces/Store';
+
+const httpOptions = {
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
+};
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +27,7 @@ export class AuthenticationService {
     let email = localStorage.getItem('userEmail');
     let dtype = localStorage.getItem('dtype');
     if (email != null && dtype != null && dtype === "Client") {
-      this.userService.setClient({ "email": email, address: '', fullname: ''})
+      this.userService.setClient({ "email": email, fullname: ''})
     } else if (email != null && dtype != null && dtype === "Manager") {
       this.userService.setManager({ "email": email, store: { id: 0, name: '', address : '', active: true}, fullname: '' })
     }
@@ -40,6 +45,10 @@ export class AuthenticationService {
     console.log(password);
 
     return this.http.post<any>(environment.baseAPIPath + '/login', { email, password });
+  }
+
+  getStoreFromManager(managerEmail: String) : Observable<any> {
+    return this.http.get<Store>(environment.baseAPIPath + "/manageres/user/" + managerEmail +"/store", httpOptions);
   }
 
   register(form: FormGroup) {
