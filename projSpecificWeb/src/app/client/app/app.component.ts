@@ -93,6 +93,7 @@ export class AppComponent implements OnInit {
           if (res['role']["authority"] == 'Client') {
             this.userService.setClient(res);
             localStorage.setItem('userEmail',res['email']);
+            localStorage.setItem('dtype','Client');
             this.loginModalClose.nativeElement.click();
             this.router.navigate(['/']);
             this.showMsgRegister = false;
@@ -102,6 +103,7 @@ export class AppComponent implements OnInit {
           } else if ((res['role']["authority"] == 'Manager')) {
             this.userService.setManager(res);
             localStorage.setItem('userEmail',res['email']);
+            localStorage.setItem('dtype','Manager');
             this.loginModalClose.nativeElement.click();
             this.router.navigate(['/system/dashboard']);
             this.showMsgRegister = false;

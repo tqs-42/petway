@@ -15,17 +15,12 @@ const httpOptions = {
 export class CategoryService {
 
   constructor(private http: HttpClient, private userService:UserService) {
-    let email = localStorage.getItem('email');
-    if (email != null) {
-      this.http.get<any>(environment.baseAPIPath + '/users/byEmail/' + email).subscribe(
-        (res) => {
-          if (res.hasOwnProperty('address')) {
-            this.userService.setClient(res);
-          } else if (res.hasOwnProperty('store')) {
-            this.userService.setManager(res);
-          }
-        }
-      );
+    let email = localStorage.getItem('userEmail');
+    let dtype = localStorage.getItem('dtype');
+    if (email != null && dtype != null && dtype === "Client") {
+      this.userService.setClient({ "email": email, address: '', fullname: ''})
+    } else if (email != null && dtype != null && dtype === "Manager") {
+      this.userService.setManager({ "email": email, store: { id: 0, name: '', address : '', active: true}, fullname: '' })
     }
   }
 
