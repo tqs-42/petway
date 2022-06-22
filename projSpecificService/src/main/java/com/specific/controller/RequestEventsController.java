@@ -1,6 +1,7 @@
 package com.specific.controller;
 
 import java.util.Set;
+import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +12,6 @@ import com.specific.model.RequestEvents;
 import com.specific.model.RequestProducts;
 import com.specific.service.CartService;
 import com.specific.service.RequestEventsService;
-
-
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -39,15 +38,14 @@ public class RequestEventsController {
             return ResponseEntity.badRequest().body(null);
         }
     }
-    
+
     @GetMapping("/products/{orderId}")
-    public ResponseEntity<String> getProductsInfoInRequestEvent(@Valid @PathVariable long orderId) {
+    public ResponseEntity<Map<String, Object>> getProductsInfoInRequestEvent(@Valid @PathVariable long orderId) {
         try {
             return ResponseEntity.ok(service.getProductsInfoByOrderId(orderId));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(null);
         }
     }
-
 
 }

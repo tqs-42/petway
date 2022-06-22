@@ -1,5 +1,6 @@
 package com.specific.service;
 
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +26,8 @@ public class RequestEventsService {
         return requestEvents;
     }
 
-    public String getProductsInfoByOrderId(long orderId) {
-        System.out.println("antes");
-        System.out.println("order id: " + orderId);
-        System.out.println(requestEventsRepository.getProductByOrderId(orderId));
+    public Map<String, Object> getProductsInfoByOrderId(long orderId) {
         return requestEventsRepository.getProductByOrderId(orderId);
     }
 
 }
-
-
-

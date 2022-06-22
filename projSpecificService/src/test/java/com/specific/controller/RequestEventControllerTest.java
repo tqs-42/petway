@@ -26,7 +26,7 @@ import io.restassured.module.mockmvc.RestAssuredMockMvc;
 
 @WebMvcTest(CategoryController.class)
 public class RequestEventControllerTest {
-    
+
     @Autowired
     private MockMvc mvc;
 
@@ -40,22 +40,21 @@ public class RequestEventControllerTest {
 
     @Test
     void whenGetRequestEvents_thenReturnRequestEventsByUser() throws Exception {
-        
-        // Request request = new Request(1, "Rua de Cima em Baixo, n34, Aveiro", new Cart(new Client("diana@ua.pt")));
+
+        // Request request = new Request(1, "Rua de Cima em Baixo, n34, Aveiro", new
+        // Cart(new Client("diana@ua.pt")));
 
         // List<RequestEvents> ret = new ArrayList<>();
-        // RequestEvents requestEvents1 = new RequestEvents(1, RequestStatus.DELIVERED, new Date(2022, 6, 12));
+        // RequestEvents requestEvents1 = new RequestEvents(1, RequestStatus.DELIVERED,
+        // new Date(2022, 6, 12));
         // ret.add(requestEvents1);
 
-        // when(requestEventsService.getAllRequestEvents("diana@ua.pt")).thenReturn((Set<RequestEvents>) ret);
+        // when(requestEventsService.getAllRequestEvents("diana@ua.pt")).thenReturn((Set<RequestEvents>)
+        // ret);
 
         // RestAssuredMockMvc.given().contentType(ContentType.JSON)
-            // .when().get("/requestEvents/diana@ua.pt").then().assertThat().statusCode(200).and()
-            // .body("", equalTo(""));
-
-
-
-
-
+        // .when().get("/requestEvents/diana@ua.pt").then().assertThat().statusCode(200).and()
+        // .body("", equalTo(""));
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.specific.repository;
 
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,10 +17,8 @@ public interface RequestEventsRepository extends JpaRepository<RequestEvents, Lo
     @Query(value = "SELECT * FROM request_events as r JOIN request as req ON r.request_id = req.request_id JOIN cart as c ON req.cart_id = c.cart_id WHERE c.email = :email", nativeQuery = true)
     Set<RequestEvents> findRequestEventsByEmail(@Param("email") String email);
 
-    
-    @Modifying
-    @Query(value = "SELECT p.product_id, p.description, p.image, p.name, p.price, p.stock, p.category_id, p.store_id FROM request_events as r JOIN request as req ON r.request_id = req.request_id JOIN cart as c ON req.cart_id = c.cart_id JOIN request_products as rp ON rp.cart_id = c.cart_id JOIN product as p ON p.product_id = rp.product_id WHERE r.request_id = :order_id;", nativeQuery = true)
-    String getProductByOrderId(@Param("order_id") long order_id);
+    @Query(value = "SELECT p.product_id, p.name, p.price, rp.amount FROM request_events as r JOIN request as req ON r.request_id = req.request_id JOIN cart as c ON req.cart_id = c.cart_id JOIN request_products as rp ON rp.cart_id = c.cart_id JOIN product as p ON p.product_id = rp.product_id WHERE r.request_id = :order_id", nativeQuery = true)
+    Map<String, Object> getProductByOrderId(@Param("order_id") long order_id);
 
     RequestEvents findRequestEventsByRequestId(long requestId);
 
