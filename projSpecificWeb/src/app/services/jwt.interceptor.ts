@@ -9,14 +9,15 @@ import { UserService } from './user.service';
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
 
+  private url: string = 'http://localhost:6868';
   constructor(private authenticationService : AuthenticationService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    
+
     // add auth header with jwt if user is logged in and request is to the api url
     const user = this.authenticationService.userValue;
     const isLoggedIn = user && user.token;
-    const isApiUrl = request.url.startsWith(environment.baseAPIPath);
+    const isApiUrl = request.url.startsWith(this.url);
 
     if (isLoggedIn && isApiUrl) {
       request = request.clone({

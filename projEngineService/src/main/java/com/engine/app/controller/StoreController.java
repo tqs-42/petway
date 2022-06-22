@@ -22,7 +22,7 @@ import com.engine.app.service.StoreService;
 
 @RestController
 @RequestMapping("/stores")
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200","http://localhost:19006"})
 public class StoreController {
 
     @Autowired

@@ -16,6 +16,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class OrderService {
+  private url: string = 'http://localhost:6868';
 
   constructor(private authService: AuthenticationService,private http: HttpClient, private userService:UserService, public cartService:CartService) {
     let email = localStorage.getItem('userEmail');
@@ -34,34 +35,34 @@ export class OrderService {
   }
 
   getAll() {
-    return this.http.get<Order[]>(environment.baseAPIPath + '/requestEvents/' + localStorage.getItem('userEmail'))
+    return this.http.get<Order[]>(this.url + '/requestEvents/' + localStorage.getItem('userEmail'))
   }
 
   getOrdersByUser(userid: string) {
-    return this.http.get<Order[]>(environment.baseAPIPath + '/ordersUser/?user=' + userid)
+    return this.http.get<Order[]>(this.url + '/ordersUser/?user=' + userid)
   }
 
   getProductsInfo(orderid: string) {
-    return this.http.get<ProductInfo[]>(environment.baseAPIPath + '/requestEvents/products/' + orderid)
+    return this.http.get<ProductInfo[]>(this.url + '/requestEvents/products/' + orderid)
   }
 
   getOrdersById(reqId: number) {
-    return this.http.get<Order>(environment.baseAPIPath + '/requestEvents/id/' + reqId)
+    return this.http.get<Order>(this.url + '/requestEvents/id/' + reqId)
   }
 
   getDetails(id: number) {
-    return this.http.get<Order>(environment.baseAPIPath + '/order/' + id)
+    return this.http.get<Order>(this.url + '/order/' + id)
   }
 
   create() {
-    return this.http.post<Order>(environment.baseAPIPath + '/order/', {})
+    return this.http.post<Order>(this.url + '/order/', {})
   }
 
   changeState(order:Order) {
-    this.http.put<Order>(environment.baseAPIPath + "/order/changestate/"+ order.id, httpOptions).subscribe(response => console.log(response))
+    this.http.put<Order>(this.url + "/order/changestate/"+ order.id, httpOptions).subscribe(response => console.log(response))
   }
 
   cancelOrder(order: Order) {
-    this.http.delete<Order>(environment.baseAPIPath + "/order/changestate/"+ order.id, httpOptions).subscribe(response => console.log(response))
+    this.http.delete<Order>(this.url + "/order/changestate/"+ order.id, httpOptions).subscribe(response => console.log(response))
   }
 }

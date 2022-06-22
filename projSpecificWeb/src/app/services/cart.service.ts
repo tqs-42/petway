@@ -12,12 +12,13 @@ const httpOptions = {
 export class CartService {
 
   totalElements: number = 0
+  private url: string = 'http://localhost:6868';
 
   constructor(private http: HttpClient) { }
 
   getAll() {
     let email = localStorage.getItem('userEmail');
-    let result = this.http.get<RequestProducts[]>(environment.baseAPIPath + '/carts/user/' + email + '/products')
+    let result = this.http.get<RequestProducts[]>(this.url + '/carts/user/' + email + '/products')
 
     result.subscribe(items => this.totalElements = items.reduce((acc, item) => acc += item.amount, 0))
 
@@ -26,15 +27,15 @@ export class CartService {
 
   getOne(id: number) {
     let email = localStorage.getItem('userEmail');
-    return this.http.get<RequestProducts>(environment.baseAPIPath + '/carts/user/'+ email +'/product/' + id)
+    return this.http.get<RequestProducts>(this.url + '/carts/user/'+ email +'/product/' + id)
   }
 
   add(product: number, amount: number) {
     let email = localStorage.getItem('userEmail');
-    return this.http.put<RequestProducts>(environment.baseAPIPath + '/carts/user/' + email + '/product/' + product + '/amount/' + amount, httpOptions)
+    return this.http.put<RequestProducts>(this.url + '/carts/user/' + email + '/product/' + product + '/amount/' + amount, httpOptions)
   }
 
   delete(product: number) {
-    return this.http.post<CartProduct>(environment.baseAPIPath + '/cart/', { product, amount: 0 })
+    return this.http.post<CartProduct>(this.url + '/cart/', { product, amount: 0 })
   }
 }

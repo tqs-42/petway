@@ -18,6 +18,7 @@ export class AuthenticationService {
 
   private userSubject: BehaviorSubject<User>;
   public user: Observable<User>;
+  private url: string = 'http://localhost:6868';
 
   constructor(private userService: UserService, private http: HttpClient) {
 
@@ -50,7 +51,7 @@ export class AuthenticationService {
     console.log(email);
     console.log(password);
 
-    return this.http.post<any>(environment.baseAPIPath + '/login', { email, password });
+    return this.http.post<any>(this.url + '/login', { email, password });
   }
 
   getStoreFromManager(managerEmail: String) : Observable<any> {
@@ -58,7 +59,7 @@ export class AuthenticationService {
   }
 
   getUserFullName(email: String) : Observable<any> {
-    return this.http.get<String>(environment.baseAPIPath + "/users/user/" + email +"/fullname", httpOptions);
+    return this.http.get<String>(this.url + "/users/user/" + email +"/fullname", httpOptions);
   }
 
   register(form: FormGroup) {
@@ -72,7 +73,7 @@ export class AuthenticationService {
 
     console.log(data);
 
-    return this.http.post(environment.baseAPIPath + '/registerClient', data);
+    return this.http.post(this.url + '/registerClient', data);
 
   }
 
