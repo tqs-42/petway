@@ -17,10 +17,6 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '11'
-      - name: Build Generic Service
-        run: docker-compose build engine-service
-      - name: Start Generic Service on Docker
-        run: docker-compose up -d engine-service
       - name: Run tests with Maven
         run: |
           cd projEngineService
