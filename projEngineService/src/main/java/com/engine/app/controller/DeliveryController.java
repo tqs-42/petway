@@ -38,7 +38,7 @@ import com.engine.app.service.StoreService;
 
 @RestController
 @RequestMapping("/deliveries")
-@CrossOrigin(origins = {"http://localhost:4200","http://localhost:19006"})
+@CrossOrigin(origins = {"http://localhost:4200","http://localhost:19006","http://localhost:6868", "http://0.0.0.0:6869"})
 public class DeliveryController {
 
     @Autowired
@@ -67,12 +67,16 @@ public class DeliveryController {
 
     @PostMapping("/delivery")
     public ResponseEntity<Delivery> createDelivery(@RequestBody Map<String, String> data) throws Exception {
-        Store store = storeService.getStore(Long.valueOf(data.get("id")));
+        System.out.println("received delivery");
+        Store store = storeService.getStore(data.get("store"));
         if (store == null) {
             return ResponseEntity.badRequest().body(null);
         }
-        Delivery delivery = deliveryService.createDelivery(store);
+        System.out.println("store");
+        System.out.println(store.getName());
+        Delivery delivery = deliveryService.createDelivery(store, data.get("address"));
         eventService.createEvent(delivery, DeliveryStatus.PENDING);
+        System.out.println("okkkkkkkkkkkkkkkkkkkkk");
         return ResponseEntity.ok(delivery);
     }
 
@@ -136,8 +140,8 @@ public class DeliveryController {
     }
 
     @GetMapping("/storeDeliveries")
-    public ResponseEntity<List<Delivery>> getStoreDeliveries(@RequestParam() Long id) throws NumberFormatException, ResourceNotFoundException {
-        Store store = storeService.getStore(id);
+    public ResponseEntity<List<Delivery>> getStoreDeliveries(@RequestParam() String name) throws NumberFormatException, ResourceNotFoundException {
+        Store store = storeService.getStore(name);
         if (store == null) {
             return ResponseEntity.badRequest().body(null);
         }

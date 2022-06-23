@@ -12,7 +12,7 @@ import com.specific.exception.ResourceNotFoundException;
 import com.specific.service.RequestProductsService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4201")
+@CrossOrigin(origins =  {"http://localhost:4201", "http://0.0.0.0:6868"})
 @RequestMapping("/requestesProducts")
 public class RequestProductsController {
     @Autowired

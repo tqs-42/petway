@@ -5,8 +5,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -85,7 +85,7 @@ class DeliveryControllerTests {
     @Test
     void testGetValidDelivery_thenStatus200() throws Exception {
 
-        Delivery delivery = new Delivery(1L, null, null, new Store(1L, "Petlandia", 40.232323, -12.313231));
+        Delivery delivery = new Delivery(1L, null, null, new Store(1L, "Petlandia", "Avenida Lourenço Peixinho"),"Rua da Pega n13");
 
         when(deliveryService.getDelivery(anyLong())).thenReturn(delivery);
 
@@ -99,8 +99,7 @@ class DeliveryControllerTests {
             .andExpect(jsonPath("$.review", is(delivery.getReview())))
             .andExpect(jsonPath("$.store.id", is(delivery.getStore().getId().intValue())))
             .andExpect(jsonPath("$.store.name", is(delivery.getStore().getName())))
-            .andExpect(jsonPath("$.store.latitude", is(delivery.getStore().getLatitude())))
-            .andExpect(jsonPath("$.store.longitude", is(delivery.getStore().getLongitude())));
+            .andExpect(jsonPath("$.store.address", is(delivery.getStore().getAddress())));
 
         verify(deliveryService, times(1)).getDelivery(anyLong());
 
@@ -125,14 +124,14 @@ class DeliveryControllerTests {
     @Test
     void testCreateValidDelivery_thenStatus200() throws Exception {
 
-        Store store = new Store(1L, "Petlandia", 40.232323, -12.313231);
-        Delivery delivery = new Delivery(1L, null, null, store);
+        Store store = new Store(1L, "Petlandia", "Avenida Lourenço Peixinho");
+        Delivery delivery = new Delivery(1L, null, null, store, "Rua da Pega n13");
 
         JSONObject payload = new JSONObject();
         payload.put("id", "1");
 
-        when(storeService.getStore(anyLong())).thenReturn(store);
-        when(deliveryService.createDelivery(any())).thenReturn(delivery);
+        when(storeService.getStore(anyString())).thenReturn(store);
+        when(deliveryService.createDelivery(any(),anyString())).thenReturn(delivery);
         when(eventService.createEvent(any(), any())).thenReturn(new Event(delivery, DeliveryStatus.PENDING));
 
         mvc.perform(post("/deliveries/delivery")
@@ -146,11 +145,10 @@ class DeliveryControllerTests {
             .andExpect(jsonPath("$.review", is(delivery.getReview())))
             .andExpect(jsonPath("$.store.id", is(delivery.getStore().getId().intValue())))
             .andExpect(jsonPath("$.store.name", is(delivery.getStore().getName())))
-            .andExpect(jsonPath("$.store.latitude", is(delivery.getStore().getLatitude())))
-            .andExpect(jsonPath("$.store.longitude", is(delivery.getStore().getLongitude())));
+            .andExpect(jsonPath("$.store.address", is(delivery.getStore().getAddress())));
 
-        verify(storeService, times(1)).getStore(anyLong());
-        verify(deliveryService, times(1)).createDelivery(any());
+        verify(storeService, times(1)).getStore(anyString());
+        verify(deliveryService, times(1)).createDelivery(any(),anyString());
         verify(eventService, times(1)).createEvent(any(), any());
 
     }
@@ -161,7 +159,7 @@ class DeliveryControllerTests {
         JSONObject payload = new JSONObject();
         payload.put("id", "1");
 
-        when(storeService.getStore(anyLong())).thenReturn(null);
+        when(storeService.getStore(anyString())).thenReturn(null);
 
         mvc.perform(post("/deliveries/delivery")
             .contentType(MediaType.APPLICATION_JSON)
@@ -170,15 +168,15 @@ class DeliveryControllerTests {
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isBadRequest());
 
-        verify(storeService, times(1)).getStore(anyLong());
+        verify(storeService, times(1)).getStore(anyString());
 
     }
 
     @Test
     void testSetDeliveryValidRider_thenStatus200() throws Exception {
 
-        Store store = new Store(1L, "Petlandia", 40.232323, -12.313231);
-        Delivery delivery = new Delivery(1L, null, null, store);
+        Store store = new Store(1L, "Petlandia", "Avenida Lourenço Peixinho");
+        Delivery delivery = new Delivery(1L, null, null, store, "Rua da Pega n13");
         Rider rider = new Rider("chicodatina@gmail.com", "Rua da Concertina", "Chico da Tina");
 
         JSONObject payload = new JSONObject();
@@ -223,8 +221,8 @@ class DeliveryControllerTests {
     @Test
     void testSetDeliveryInvalidRider_thenStatus400() throws Exception {
 
-        Store store = new Store(1L, "Petlandia", 40.232323, -12.313231);
-        Delivery delivery = new Delivery(1L, null, null, store);
+        Store store = new Store(1L, "Petlandia", "Avenida Lourenço Peixinho");
+        Delivery delivery = new Delivery(1L, null, null, store,"Rua da Pega n13");
 
         JSONObject payload = new JSONObject();
         payload.put("delivery", "1");
@@ -247,8 +245,8 @@ class DeliveryControllerTests {
     @Test
     void testSetDeliveryValidReview_thenStatus200() throws Exception {
 
-        Store store = new Store(1L, "Petlandia", 40.232323, -12.313231);
-        Delivery delivery = new Delivery(1L, null, null, store);
+        Store store = new Store(1L, "Petlandia", "Avenida Lourenço Peixinho");
+        Delivery delivery = new Delivery(1L, null, null, store,"Rua da Pega n13");
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         Review review = new Review(delivery, 4, timestamp);
 
@@ -275,8 +273,8 @@ class DeliveryControllerTests {
     @Test
     void testSetDeliveryInvalidReview_thenStatus400() throws Exception {
 
-        Store store = new Store(1L, "Petlandia", 40.232323, -12.313231);
-        Delivery delivery = new Delivery(1L, null, null, store);
+        Store store = new Store(1L, "Petlandia", "Avenida Lourenço Peixinho");
+        Delivery delivery = new Delivery(1L, null, null, store,"Rua da Pega n13");
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         Review review = new Review(delivery, 41212, timestamp);
 
@@ -304,8 +302,8 @@ class DeliveryControllerTests {
     void testGetDeliveries_thenStatus200() throws Exception {
 
         ArrayList<Delivery> deliveries = new ArrayList<>();
-        deliveries.add(new Delivery(1L, null, null, new Store(1L, "Petlandia", 40.232323, -12.313231)));
-        deliveries.add(new Delivery(2L, null, null, new Store(2L, "Petlandia", 40.232323, -12.313231)));
+        deliveries.add(new Delivery(1L, null, null, new Store(1L, "Petlandia", "Avenida Lourenço Peixinho"),"Rua da Pega n13"));
+        deliveries.add(new Delivery(2L, null, null, new Store(2L, "Petlandia", "Avenida Lourenço Peixinho"),"Rua da Pega n13"));
 
         when(deliveryService.getAllDeliveries()).thenReturn(deliveries);
 
@@ -318,15 +316,13 @@ class DeliveryControllerTests {
             .andExpect(jsonPath("$[0].review", is(deliveries.get(0).getReview())))
             .andExpect(jsonPath("$[0].store.id", is(deliveries.get(0).getStore().getId().intValue())))
             .andExpect(jsonPath("$[0].store.name", is(deliveries.get(0).getStore().getName())))
-            .andExpect(jsonPath("$[0].store.latitude", is(deliveries.get(0).getStore().getLatitude())))
-            .andExpect(jsonPath("$[0].store.longitude", is(deliveries.get(0).getStore().getLongitude())))
+            .andExpect(jsonPath("$[0].store.address", is(deliveries.get(0).getStore().getAddress())))
             .andExpect(jsonPath("$[1].id", is(deliveries.get(1).getId().intValue())))
             .andExpect(jsonPath("$[1].rider", is(deliveries.get(1).getRider())))
             .andExpect(jsonPath("$[1].review", is(deliveries.get(1).getReview())))
             .andExpect(jsonPath("$[1].store.id", is(deliveries.get(1).getStore().getId().intValue())))
             .andExpect(jsonPath("$[1].store.name", is(deliveries.get(1).getStore().getName())))
-            .andExpect(jsonPath("$[1].store.latitude", is(deliveries.get(1).getStore().getLatitude())))
-            .andExpect(jsonPath("$[1].store.longitude", is(deliveries.get(1).getStore().getLongitude())));
+            .andExpect(jsonPath("$[1].store.address", is(deliveries.get(1).getStore().getAddress())));
 
         verify(deliveryService, times(1)).getAllDeliveries();
 
@@ -336,8 +332,8 @@ class DeliveryControllerTests {
     void testGetDeliveriesByStatus_thenStatus200() throws Exception {
 
         ArrayList<Delivery> deliveries = new ArrayList<>();
-        deliveries.add(new Delivery(1L, null, null, new Store(1L, "Petlandia", 40.232323, -12.313231)));
-        deliveries.add(new Delivery(2L, null, null, new Store(2L, "Petlandia", 40.232323, -12.313231)));
+        deliveries.add(new Delivery(1L, null, null, new Store(1L, "Petlandia", "Avenida Lourenço Peixinho"),"Rua da Pega n13"));
+        deliveries.add(new Delivery(2L, null, null, new Store(2L, "Petlandia", "Avenida Lourenço Peixinho"),"Rua da Pega n13"));
 
         when(deliveryService.getAllDeliveriesByStatus(any())).thenReturn(deliveries);
 
@@ -351,15 +347,13 @@ class DeliveryControllerTests {
             .andExpect(jsonPath("$[0].review", is(deliveries.get(0).getReview())))
             .andExpect(jsonPath("$[0].store.id", is(deliveries.get(0).getStore().getId().intValue())))
             .andExpect(jsonPath("$[0].store.name", is(deliveries.get(0).getStore().getName())))
-            .andExpect(jsonPath("$[0].store.latitude", is(deliveries.get(0).getStore().getLatitude())))
-            .andExpect(jsonPath("$[0].store.longitude", is(deliveries.get(0).getStore().getLongitude())))
+            .andExpect(jsonPath("$[0].store.address", is(deliveries.get(0).getStore().getAddress())))
             .andExpect(jsonPath("$[1].id", is(deliveries.get(1).getId().intValue())))
             .andExpect(jsonPath("$[1].rider", is(deliveries.get(1).getRider())))
             .andExpect(jsonPath("$[1].review", is(deliveries.get(1).getReview())))
             .andExpect(jsonPath("$[1].store.id", is(deliveries.get(1).getStore().getId().intValue())))
             .andExpect(jsonPath("$[1].store.name", is(deliveries.get(1).getStore().getName())))
-            .andExpect(jsonPath("$[1].store.latitude", is(deliveries.get(1).getStore().getLatitude())))
-            .andExpect(jsonPath("$[1].store.longitude", is(deliveries.get(1).getStore().getLongitude())));
+            .andExpect(jsonPath("$[1].store.address", is(deliveries.get(1).getStore().getAddress())));
 
         verify(deliveryService, times(1)).getAllDeliveriesByStatus(any());
 
@@ -383,8 +377,8 @@ class DeliveryControllerTests {
         Rider rider = new Rider("chicodatina@gmail.com", "Rua da Concertina", "Chico da Tina");
 
         ArrayList<Delivery> deliveries = new ArrayList<>();
-        deliveries.add(new Delivery(1L, null, null, new Store(1L, "Petlandia", 40.232323, -12.313231)));
-        deliveries.add(new Delivery(2L, null, null, new Store(2L, "Petlandia", 40.232323, -12.313231)));
+        deliveries.add(new Delivery(1L, null, null, new Store(1L, "Petlandia", "Avenida Lourenço Peixinho"),"Rua da Pega n13"));
+        deliveries.add(new Delivery(2L, null, null, new Store(2L, "Petlandia", "Avenida Lourenço Peixinho"),"Rua da Pega n13"));
 
         when(riderService.getRiderByEmail(any())).thenReturn(rider);
         when(deliveryService.getRiderDeliveries(any())).thenReturn(deliveries);
@@ -399,15 +393,13 @@ class DeliveryControllerTests {
             .andExpect(jsonPath("$[0].review", is(deliveries.get(0).getReview())))
             .andExpect(jsonPath("$[0].store.id", is(deliveries.get(0).getStore().getId().intValue())))
             .andExpect(jsonPath("$[0].store.name", is(deliveries.get(0).getStore().getName())))
-            .andExpect(jsonPath("$[0].store.latitude", is(deliveries.get(0).getStore().getLatitude())))
-            .andExpect(jsonPath("$[0].store.longitude", is(deliveries.get(0).getStore().getLongitude())))
+            .andExpect(jsonPath("$[0].store.address", is(deliveries.get(0).getStore().getAddress())))
             .andExpect(jsonPath("$[1].id", is(deliveries.get(1).getId().intValue())))
             .andExpect(jsonPath("$[1].rider", is(deliveries.get(1).getRider())))
             .andExpect(jsonPath("$[1].review", is(deliveries.get(1).getReview())))
             .andExpect(jsonPath("$[1].store.id", is(deliveries.get(1).getStore().getId().intValue())))
             .andExpect(jsonPath("$[1].store.name", is(deliveries.get(1).getStore().getName())))
-            .andExpect(jsonPath("$[1].store.latitude", is(deliveries.get(1).getStore().getLatitude())))
-            .andExpect(jsonPath("$[1].store.longitude", is(deliveries.get(1).getStore().getLongitude())));
+            .andExpect(jsonPath("$[1].store.address", is(deliveries.get(1).getStore().getAddress())));
 
         verify(riderService, times(1)).getRiderByEmail(any());
         verify(deliveryService, times(1)).getRiderDeliveries(any());
@@ -432,11 +424,11 @@ class DeliveryControllerTests {
     @Test
     void testGetStoreDeliveries_thenStatus200() throws Exception {
 
-        Store store = new Store(1L, "Petlandia", 40.232323, -12.313231);
+        Store store = new Store(1L, "Petlandia", "Avenida Lourenço Peixinho");
 
         ArrayList<Delivery> deliveries = new ArrayList<>();
-        deliveries.add(new Delivery(1L, null, null, new Store(1L, "Petlandia", 40.232323, -12.313231)));
-        deliveries.add(new Delivery(2L, null, null, new Store(2L, "Petlandia", 40.232323, -12.313231)));
+        deliveries.add(new Delivery(1L, null, null, new Store(1L, "Petlandia", "Avenida Lourenço Peixinho"),"Rua da Pega n13"));
+        deliveries.add(new Delivery(2L, null, null, new Store(2L, "Petlandia", "Avenida Lourenço Peixinho"),"Rua da Pega n13"));
 
         when(storeService.getStore(any())).thenReturn(store);
         when(deliveryService.getStoreDeliveries(any())).thenReturn(deliveries);
@@ -451,15 +443,13 @@ class DeliveryControllerTests {
             .andExpect(jsonPath("$[0].review", is(deliveries.get(0).getReview())))
             .andExpect(jsonPath("$[0].store.id", is(deliveries.get(0).getStore().getId().intValue())))
             .andExpect(jsonPath("$[0].store.name", is(deliveries.get(0).getStore().getName())))
-            .andExpect(jsonPath("$[0].store.latitude", is(deliveries.get(0).getStore().getLatitude())))
-            .andExpect(jsonPath("$[0].store.longitude", is(deliveries.get(0).getStore().getLongitude())))
+            .andExpect(jsonPath("$[0].store.address", is(deliveries.get(0).getStore().getAddress())))
             .andExpect(jsonPath("$[1].id", is(deliveries.get(1).getId().intValue())))
             .andExpect(jsonPath("$[1].rider", is(deliveries.get(1).getRider())))
             .andExpect(jsonPath("$[1].review", is(deliveries.get(1).getReview())))
             .andExpect(jsonPath("$[1].store.id", is(deliveries.get(1).getStore().getId().intValue())))
             .andExpect(jsonPath("$[1].store.name", is(deliveries.get(1).getStore().getName())))
-            .andExpect(jsonPath("$[1].store.latitude", is(deliveries.get(1).getStore().getLatitude())))
-            .andExpect(jsonPath("$[1].store.longitude", is(deliveries.get(1).getStore().getLongitude())));
+            .andExpect(jsonPath("$[1].store.address", is(deliveries.get(1).getStore().getAddress())));
 
         verify(storeService, times(1)).getStore(any());
         verify(deliveryService, times(1)).getStoreDeliveries(any());

@@ -48,6 +48,12 @@ public class RequestEvents {
         System.out.println("dps de estado");
     }
 
+    public RequestEvents(Request request, RequestStatus status) {
+        this.request = request;
+        this.status = status;
+        this.eventDate = new Date(System.currentTimeMillis());
+    }
+
     public long getId() {
         return id;
     }

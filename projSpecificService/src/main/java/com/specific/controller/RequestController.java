@@ -12,7 +12,7 @@ import com.specific.model.Request;
 import com.specific.service.RequestService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4201")
+@CrossOrigin(origins =  {"http://localhost:4201", "http://0.0.0.0:6868"})
 @RequestMapping("/requestes")
 public class RequestController {
     @Autowired

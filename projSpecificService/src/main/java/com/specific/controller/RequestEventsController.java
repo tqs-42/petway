@@ -14,7 +14,7 @@ import com.specific.model.RequestEvents;
 import com.specific.service.RequestEventsService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4201")
+@CrossOrigin(origins =  {"http://localhost:4201", "http://0.0.0.0:6868"})
 @RequestMapping("/requestEvents")
 public class RequestEventsController {
 
@@ -54,6 +54,20 @@ public class RequestEventsController {
         RequestEvents requestEvents;
         try {
             requestEvents = service.addRequestEvents(data.get("userEmail"));
+        } catch (ConflictException e) {
+            return ResponseEntity.badRequest().body(null);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        return ResponseEntity.ok(requestEvents);
+    }
+
+    @PostMapping("/addEvent")
+    public ResponseEntity<RequestEvents> addRequestEventsWithStatus(@RequestBody Map<String, String> data) throws ResourceNotFoundException, ConflictException {
+        System.out.println("--------------EVENTS----------------------");
+        RequestEvents requestEvents;
+        try {
+            requestEvents = service.addRequestEventsWithStatus(data.get("id"),data.get("status"));
         } catch (ConflictException e) {
             return ResponseEntity.badRequest().body(null);
         } catch (ResourceNotFoundException e) {

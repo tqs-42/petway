@@ -35,8 +35,8 @@ public class DeliveryService {
         else throw new ResourceNotFoundException("Delivery doesn't exist");
     }
 
-    public Delivery createDelivery(Store store) throws ConflictException {
-        Delivery delivery = new Delivery(null,null,store);
+    public Delivery createDelivery(Store store, String address) throws ConflictException {
+        Delivery delivery = new Delivery(null,null,store,address);
         deliveryRepository.save(delivery);
         return delivery;
     }

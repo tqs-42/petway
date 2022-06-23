@@ -154,6 +154,6 @@ export class AppComponent implements OnInit {
 
   checkout(): void {
     this.requestService.addRequest();
-    this.requestService.deleteRequestProducts();
+    //this.requestService.deleteRequestProducts();
   }
 }

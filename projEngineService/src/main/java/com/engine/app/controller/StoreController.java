@@ -22,7 +22,7 @@ import com.engine.app.service.StoreService;
 
 @RestController
 @RequestMapping("/stores")
-@CrossOrigin(origins = {"http://localhost:4200","http://localhost:19006"})
+@CrossOrigin(origins = {"http://localhost:4200","http://localhost:19006","http://localhost:6868", "http://0.0.0.0:6869"})
 public class StoreController {
 
     @Autowired
@@ -32,7 +32,7 @@ public class StoreController {
     public ResponseEntity<Store> addStore(@RequestBody Map<String, String> data) throws Exception {
         Store store;
         try {
-            store = storeService.addStore(data.get("name"), Double.parseDouble(data.get("latitude")), Double.parseDouble(data.get("longitude")));
+            store = storeService.addStore(data.get("name"), data.get("address"));
         } catch (ConflictException e) {
             return ResponseEntity.badRequest().body(null);
         }
@@ -50,10 +50,10 @@ public class StoreController {
     }
 
     @GetMapping("/store")
-    public ResponseEntity<Store> getStore(@RequestParam String id) throws Exception {
+    public ResponseEntity<Store> getStore(@RequestParam String name) throws Exception {
         Store store;
         try {
-            store = storeService.getStore(Long.valueOf(id));
+            store = storeService.getStore(name);
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.badRequest().body(null);
         }

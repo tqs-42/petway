@@ -2,6 +2,7 @@ package com.specific.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import com.specific.model.Client;
 import com.specific.model.Product;
 import com.specific.model.Request;
 import com.specific.model.RequestEvents;
+import com.specific.model.RequestStatus;
 import com.specific.repository.ClientRepository;
 import com.specific.repository.RequestEventsRepository;
 import com.specific.repository.RequestRepository;
@@ -44,7 +46,8 @@ public class RequestEventsService {
         return requestEventsRepository.getProductByOrderId(orderId);
     }
 
-    public RequestEvents addRequestEvents(String userEmail) throws ResourceNotFoundException, ConflictException {
+    public RequestEvents addRequestEvents(String userEmail)
+            throws ResourceNotFoundException, ConflictException {
         Client client = clientRepository.findByEmail(userEmail);
         System.out.println(client);
         if (client == null) {
@@ -55,16 +58,37 @@ public class RequestEventsService {
             if (cart == null) {
                 throw new ResourceNotFoundException("Cart not found!");
             } else {
+
+
+
                 Request request = requestRepository.findByCart(cart);
-                System.out.println(request);
                 if (request == null) {
                     throw new ResourceNotFoundException("Request not found!");
                 } else {
                     RequestEvents requestEvents = new RequestEvents(request);
                     requestEventsRepository.save(requestEvents);
                     return requestEvents;
+
                 }
             }
+        }
+    }
+
+    public RequestEvents addRequestEventsWithStatus(String id, String status)
+            throws ResourceNotFoundException, ConflictException {
+
+        System.out.println("SERVICE AddrequestsEvents!");
+        System.out.println(id);
+        System.out.println(status);
+        System.out.println(RequestStatus.getEnum(status));
+
+        Optional<Request> request = requestRepository.findById(Long.parseLong(id));
+        if (request.isEmpty()) {
+            throw new ResourceNotFoundException("Request not found!");
+        } else {
+            RequestEvents requestEvents = new RequestEvents(request.get(), RequestStatus.valueOf(status));
+            requestEventsRepository.save(requestEvents);
+            return requestEvents;
         }
     }
 
