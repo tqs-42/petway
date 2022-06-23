@@ -10,7 +10,8 @@ import com.specific.model.Client;
 import com.specific.service.ClientService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4201")
+@CrossOrigin(origins = {"http://192.168.160.234:4201", "http://localhost:4201"})
+
 @RequestMapping("/clients")
 public class ClientController {
 

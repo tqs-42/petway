@@ -14,7 +14,8 @@ import com.specific.model.Product;
 import com.specific.service.ProductService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4201")
+@CrossOrigin(origins = {"http://192.168.160.234:4201", "http://localhost:4201"})
+
 @RequestMapping("/products")
 public class ProductController {
     @Autowired

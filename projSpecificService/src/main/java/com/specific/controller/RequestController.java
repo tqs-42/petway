@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import com.specific.service.RequestService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4201")
+@CrossOrigin(origins = {"http://192.168.160.234:4201", "http://localhost:4201"})
+
 @RequestMapping("/requestes")
 public class RequestController {
     @Autowired

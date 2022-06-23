@@ -28,7 +28,7 @@ import com.specific.service.StoreService;
 
 @RequestMapping
 @RestController
-@CrossOrigin("http://localhost:4201")
+@CrossOrigin(origins = {"http://192.168.160.234:4201", "http://localhost:4201"})
 public class JwtAuthenticationController {
 
     @Autowired
