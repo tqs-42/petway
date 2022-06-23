@@ -25,10 +25,9 @@ import com.specific.service.ClientService;
 import com.specific.service.ManagerService;
 import com.specific.service.StoreService;
 
-
 @RequestMapping
 @RestController
-@CrossOrigin(origins = {"http://192.168.160.234:4201", "http://localhost:4201"})
+@CrossOrigin(origins = { "http://192.168.160.234:4201", "http://localhost:4201" })
 public class JwtAuthenticationController {
 
     @Autowired
@@ -43,22 +42,22 @@ public class JwtAuthenticationController {
     @Autowired
     private StoreService storeService;
 
-
-
     Logger logger = LoggerFactory.getLogger(JwtAuthenticationController.class);
 
     @PostMapping("/login")
-    public ResponseEntity<JwtResponse> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws InvalidCredentialsException, UsernameNotFoundException {
+    public ResponseEntity<JwtResponse> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)
+            throws InvalidCredentialsException, UsernameNotFoundException {
 
         return ResponseEntity.ok(userDetailsService.generateTokenLogin(authenticationRequest));
 
     }
 
     @PostMapping("/registerClient")
-    public ResponseEntity<Client> registerClient(@RequestBody Map<String,String> data) throws Exception {
+    public ResponseEntity<Client> registerClient(@RequestBody Map<String, String> data) throws ConflictException {
         Client client;
         try {
-            client = clientService.saveClient(new Client(data.get("email"), data.get("password"), data.get("fullname"), data.get("address")));
+            client = clientService.saveClient(
+                    new Client(data.get("email"), data.get("password"), data.get("fullname"), data.get("address")));
         } catch (ConflictException e) {
             return ResponseEntity.badRequest().body(null);
         }
@@ -66,16 +65,17 @@ public class JwtAuthenticationController {
     }
 
     @PostMapping("/registerManager")
-    public ResponseEntity<Manager> registerManager(@RequestBody Map<String,String> data) throws Exception {
+    public ResponseEntity<Manager> registerManager(@RequestBody Map<String, String> data) throws ConflictException  {
         Store store;
         try {
             store = storeService.saveStore(new Store(data.get("name"), data.get("address"), true));
-        } catch(ConflictException e) {
+        } catch (ConflictException e) {
             return ResponseEntity.badRequest().body(null);
         }
         Manager manager;
         try {
-            manager = managerService.saveManager(new Manager(data.get("email"), data.get("password"), data.get("fullname"), store));
+            manager = managerService
+                    .saveManager(new Manager(data.get("email"), data.get("password"), data.get("fullname"), store));
         } catch (ConflictException e) {
             return ResponseEntity.badRequest().body(null);
         }

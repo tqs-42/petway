@@ -117,7 +117,7 @@ class ProductTemplateIT {
     }
 
     @Test
-    public void testWhenGetById_thenOKRequest() {
+    void testWhenGetById_thenOKRequest() {
         String sameNameProduct = "{\"name\": \"AnotherCity\", \"description\": \"Outra descricao\", \"image\": \"imagem\", \"price\": 2.5, \"stock\": 55, \"store\":1, \"category\":1}";
 
         RestAssured.given()
