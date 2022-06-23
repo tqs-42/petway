@@ -23,7 +23,7 @@ services:
 
     specific-service:
         depends_on:
-            specific-database:
+            - specific-database
         build: ./projSpecificService
         restart: on-failure
         ports:
