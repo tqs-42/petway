@@ -1,0 +1,10 @@
+-------------------------------------------------------------------------------
+Test set: com.specific.repository.CartRepositoryTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 25.627 s <<< FAILURE! - in com.specific.repository.CartRepositoryTest
+testCreateCategoryAndFindByClient_thenReturn  Time elapsed: 0.176 s  <<< ERROR!
+org.springframework.dao.IncorrectResultSizeDataAccessException: query did not return a unique result: 2; nested exception is javax.persistence.NonUniqueResultException: query did not return a unique result: 2
+	at com.specific.repository.CartRepositoryTest.testCreateCategoryAndFindByClient_thenReturn(CartRepositoryTest.java:56)
+Caused by: javax.persistence.NonUniqueResultException: query did not return a unique result: 2
+	at com.specific.repository.CartRepositoryTest.testCreateCategoryAndFindByClient_thenReturn(CartRepositoryTest.java:56)
+

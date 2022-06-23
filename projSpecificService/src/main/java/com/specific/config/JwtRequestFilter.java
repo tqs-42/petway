@@ -22,7 +22,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
-	private static final Logger logger = LoggerFactory.getLogger(JwtRequestFilter.class);
+	private static final Logger loggerl = LoggerFactory.getLogger(JwtRequestFilter.class);
 
 	@Autowired
 	private JwtUserDetailsService jwtUserDetailsService;
@@ -44,9 +44,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			try {
 				email = jwtTokenUtil.getEmailFromToken(jwtToken);
 			} catch (IllegalArgumentException e) {
-				logger.error("Unable to get JWT Token");
+				loggerl.error("Unable to get JWT Token");
 			} catch (ExpiredJwtException e) {
-				logger.error("JWT Token has expired");
+				loggerl.error("JWT Token has expired");
 			}
 		}
 
@@ -56,7 +56,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 			Boolean b = jwtTokenUtil.validateToken(jwtToken, userDetails);
 
-			if (b) {
+			if (Boolean.TRUE.equals(b)) {
 				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 						userDetails, null, userDetails.getAuthorities());
 				usernamePasswordAuthenticationToken

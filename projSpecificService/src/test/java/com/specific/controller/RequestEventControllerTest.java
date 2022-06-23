@@ -4,6 +4,7 @@ import static org.mockito.Mockito.when;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -21,13 +22,17 @@ import com.specific.config.JwtRequestFilter;
 import com.specific.config.WebSecurityConfig;
 import com.specific.model.Cart;
 import com.specific.model.Client;
+import com.specific.model.Product;
 import com.specific.model.Request;
 import com.specific.model.RequestEvents;
+import com.specific.model.RequestProducts;
 import com.specific.model.RequestStatus;
 import com.specific.service.RequestEventsService;
 
 import io.restassured.http.ContentType;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
+
+import static org.hamcrest.Matchers.*;
 
 @WebMvcTest(value = RequestEventsController.class, excludeFilters = {
         @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = WebSecurityConfig.class) })
@@ -49,22 +54,33 @@ class RequestEventControllerTest {
     }
 
     @Test
+    void whenGetRequestEvent_thenReturnRequestEventsByID() throws Exception {
+
+        Request request = new Request(1, "Rua de Cima em Baixo, n34, Aveiro", new Cart(new Client("diana@ua.pt")));
+
+        RequestEvents requestEvents = new RequestEvents(1, RequestStatus.DELIVERED,
+                new Date(2022, 6, 12));
+
+        when(requestEventsService.getRequestEvents(1)).thenReturn(requestEvents);
+
+        RestAssuredMockMvc.given().contentType(ContentType.JSON)
+                .when().get("/requestEvents/id/1").then().assertThat().statusCode(200);
+    }
+
+    @Test
     void whenGetRequestEvents_thenReturnRequestEventsByUser() throws Exception {
 
-        // Request request = new Request(1, "Rua de Cima em Baixo, n34, Aveiro", new
-        // Cart(new Client("diana@ua.pt")));
+        Request request = new Request(1, "Rua de Cima em Baixo, n34, Aveiro", new Cart(new Client("diana@ua.pt")));
 
-        // List<RequestEvents> ret = new ArrayList<>();
-        // RequestEvents requestEvents1 = new RequestEvents(1, RequestStatus.DELIVERED,
-        // new Date(2022, 6, 12));
-        // ret.add(requestEvents1);
+        Set<RequestEvents> ret = new HashSet<>();
+        RequestEvents requestEvents1 = new RequestEvents(1, RequestStatus.DELIVERED,
+                new Date(2022, 6, 12));
+        ret.add(requestEvents1);
 
-        // when(requestEventsService.getAllRequestEvents("diana@ua.pt")).thenReturn((Set<RequestEvents>)
-        // ret);
+        when(requestEventsService.getAllRequestEvents("diana@ua.pt")).thenReturn((Set<RequestEvents>) ret);
 
-        // RestAssuredMockMvc.given().contentType(ContentType.JSON)
-        // .when().get("/requestEvents/diana@ua.pt").then().assertThat().statusCode(200).and()
-        // .body("", equalTo(""));
+        RestAssuredMockMvc.given().contentType(ContentType.JSON)
+                .when().get("/requestEvents/diana@ua.pt").then().assertThat().statusCode(200);
     }
 
 }
