@@ -13,9 +13,12 @@ const httpOptions = {
 })
 export class RidersService {
 
+
+  private url: string = 'http://192.168.160.234:6869';
+
   constructor(private http: HttpClient) { }
 
   getActiveRiders(): Observable<any> {
-    return this.http.get<any>(environment.baseURL + "riders/activeRiders", httpOptions);
+    return this.http.get<any>(this.url + "/riders/activeRiders", httpOptions);
   }
 }

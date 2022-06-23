@@ -12,9 +12,12 @@ const httpOptions = {
 })
 export class StoresService {
 
+
+  private url: string = 'http://192.168.160.234:6869';
+
   constructor(private http: HttpClient) { }
 
   getAllStores(): Observable<any> {
-    return this.http.get<any>(environment.baseURL + "stores/get-all-stores", httpOptions);
+    return this.http.get<any>(this.url + "/stores/get-all-stores", httpOptions);
   }
 }

@@ -12,6 +12,8 @@ import { Person } from '../classes/Person';
 })
 export class AuthenticationService {
 
+  private url: string = 'http://192.168.160.234:6869/';
+
   private userSubject: BehaviorSubject<Person>;
   public user: Observable<Person>;
 
@@ -29,7 +31,7 @@ export class AuthenticationService {
     let email = form.value.email;
     let password = form.value.password;
 
-    return this.http.post(environment.baseURL + 'login', { email, password });
+    return this.http.post(this.url + 'login', { email, password });
 
   }
 
@@ -42,6 +44,6 @@ export class AuthenticationService {
 
     let data = { fullname, address, email, password }
 
-    return this.http.post(environment.baseURL + "register", data);
+    return this.http.post(this.url + "register", data);
   }
 }

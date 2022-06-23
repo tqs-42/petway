@@ -38,7 +38,7 @@ import com.engine.app.service.StoreService;
 
 @RestController
 @RequestMapping("/deliveries")
-@CrossOrigin(origins = {"http://localhost:4200","http://localhost:19006"})
+@CrossOrigin(origins = {"http://localhost:4200","http://192.168.160.234:4200"})
 public class DeliveryController {
 
     @Autowired
