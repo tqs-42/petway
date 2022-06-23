@@ -135,5 +135,5 @@
     // driver.findElement(By.id("stock")).click();
     // driver.findElement(By.id("stock")).sendKeys("10");
     // driver.findElement(By.cssSelector(".btn-primary")).click();
-  }
-}
+//   }
+// }
