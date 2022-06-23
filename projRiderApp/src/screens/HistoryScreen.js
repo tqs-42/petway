@@ -1,33 +1,69 @@
 
 
 
-import React from 'react';
+
+import React, { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet, StatusBar } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
+import Deliveries from '../components/Deliveries';
 
-const closedDeliveries = [
-  {
-    id: 1,
-    color: "blue",
-    text: "Request n2"
-  },
-  {
-    id: 2,
-    color: "yellow",
-    text: "Request n11"
-  },
-];
 
-const HistoryScreen = () => {
+const HistoryScreen = ({ navigation }) => {
+
+  const [deliveries, setDeliveries] = useState(null);
+  const [error, setError] = useState(false);
+
+  // fetch data from the API
+  useFocusEffect(
+    React.useCallback(() => {
+
+      async function getRiderInfo() {
+        let data = await AsyncStorage.getItem("user")
+        data = JSON.parse(data)
+        fetchData(data.email,data.token)
+      }
+
+      getRiderInfo()
+
+      async function fetchData(email,token) {
+
+        fetch(
+          `http://localhost:6869/deliveries/riderDeliveries?email=${email}`,
+          {
+            headers: { 
+                       'Access-Control-Allow-Origin': '*',
+                       'Authorization' : 'Bearer ' + token,
+                      }
+          }
+        )
+          .then(response => response.json())
+          .then(data => {
+            console.log("my deliveries", data)
+            setDeliveries(data)
+          })
+          .catch((reason) => {
+            setError(true)
+          })
+      }
+
+    }, [])
+  );
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Closed Deliveries</Text>
-      {closedDeliveries.map((prop, key) => {
-        return (
-          <Text style={{backgroundColor : prop.color}}>{prop.text}</Text>
-        );
-      })}
-    </View>
+      <Text style={styles.title}>Your Deliveries</Text>
+      {
+        deliveries == null ?
+
+          <Text>You have no deliveries</Text>
+
+          :
+
+          <Deliveries deliveries={deliveries} navigation={navigation}/>
+
+        }
+    </View >
 
   );
 };

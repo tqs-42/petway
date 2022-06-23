@@ -8,6 +8,7 @@ import com.engine.app.model.Delivery;
 import com.engine.app.model.DeliveryStatus;
 import com.engine.app.model.Event;
 import com.engine.app.repository.EventRepository;
+import com.engine.app.exception.ResourceNotFoundException;
 
 @Service
 public class EventService {
@@ -16,12 +17,17 @@ public class EventService {
     private EventRepository eventRepository;
 
     public Event createEvent(Delivery delivery, DeliveryStatus status) throws ConflictException {
-        if (eventRepository.findByDeliveryAndStatus(delivery,status) != null) {
-            throw new ConflictException("Event already exists");
-        } else {
-            Event event = new Event(delivery, status);
-            eventRepository.save(event);
+        Event event = new Event(delivery, status);
+        eventRepository.save(event);
+        return event;
+    }
+
+    public Event getDeliveryEvent(Delivery delivery) throws ResourceNotFoundException {
+        Event event = eventRepository.findTop1ByDeliveryOrderByTimestampDesc(delivery);
+        if (event != null) {
             return event;
+        } else {
+            throw new ResourceNotFoundException("Event doesn't exist");
         }
     }
     

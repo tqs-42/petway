@@ -51,5 +51,13 @@ public class Rider extends Person {
         this.isActive = isActive;
     }
 
+    public List<Delivery> getDeliveries() {
+        return deliveries;
+    }
+
+    public void setDeliveries(List<Delivery> deliveries) {
+        this.deliveries = deliveries;
+    }
+
     
 }

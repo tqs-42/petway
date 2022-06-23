@@ -62,14 +62,13 @@ class StoreControllerTests {
     @Test
     void testCreateValidStore_thenStatus200() throws Exception {
 
-        Store store = new Store(1L, "Petlandia", 40.232323, -12.313231);
+        Store store = new Store(1L, "Petlandia", "Avenida Lourenço Peixinho n18");
 
         JSONObject payload = new JSONObject();
         payload.put("name", "Petlandia");
-        payload.put("latitude", 40.232323);
-        payload.put("longitude", -12.313231);
+        payload.put("address","Avenida Lourenço Peixinho n18");
 
-        when(storeService.addStore(anyString(),anyDouble(),anyDouble())).thenReturn(store);
+        when(storeService.addStore(anyString(),anyString())).thenReturn(store);
 
         mvc.perform(post("/stores/store")
             .contentType(MediaType.APPLICATION_JSON)
@@ -79,10 +78,9 @@ class StoreControllerTests {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.id", is(store.getId().intValue())))
             .andExpect(jsonPath("$.name", is(store.getName())))
-            .andExpect(jsonPath("$.latitude", is(store.getLatitude())))
-            .andExpect(jsonPath("$.longitude", is(store.getLongitude())));
+            .andExpect(jsonPath("$.address", is(store.getAddress())));
 
-        verify(storeService, times(1)).addStore(anyString(),anyDouble(),anyDouble());
+        verify(storeService, times(1)).addStore(anyString(),anyString());
 
     }
 
@@ -91,10 +89,9 @@ class StoreControllerTests {
 
         JSONObject payload = new JSONObject();
         payload.put("name", "Petlandia");
-        payload.put("latitude", 40.232323);
-        payload.put("longitude", -12.313231);
+        payload.put("address","Avenida Lourenço Peixinho n18");
 
-        when(storeService.addStore(anyString(),anyDouble(),anyDouble())).thenThrow(ConflictException.class);
+        when(storeService.addStore(anyString(),anyString())).thenThrow(ConflictException.class);
 
         mvc.perform(post("/stores/store")
             .contentType(MediaType.APPLICATION_JSON)
@@ -103,7 +100,7 @@ class StoreControllerTests {
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isBadRequest());
 
-        verify(storeService, times(1)).addStore(anyString(),anyDouble(),anyDouble());
+        verify(storeService, times(1)).addStore(anyString(),anyString());
 
     }
 
@@ -142,7 +139,7 @@ class StoreControllerTests {
     @Test
     void testGetValidStore_thenStatus200() throws Exception {
 
-        Store store = new Store(1L, "Petlandia", 40.232323, -12.313231);
+        Store store = new Store(1L, "Petlandia", "Avenida Lourenço Peixinho n18");
 
         when(storeService.getStore(anyLong())).thenReturn(store);
 
@@ -153,8 +150,7 @@ class StoreControllerTests {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.id", is(1)))
             .andExpect(jsonPath("$.name", is(store.getName())))
-            .andExpect(jsonPath("$.latitude", is(store.getLatitude())))
-            .andExpect(jsonPath("$.longitude", is(store.getLongitude())));
+            .andExpect(jsonPath("$.address", is(store.getAddress())));
 
         verify(storeService, times(1)).getStore(anyLong());
 
@@ -179,8 +175,8 @@ class StoreControllerTests {
     void testGetAllStores_thenStatus200() throws Exception {
 
         ArrayList<Store> stores = new ArrayList<>();
-        stores.add(new Store(1L, "Petlandia", 40.232323, -12.313231));
-        stores.add(new Store(2L, "Perritoworld", 43.286348, 32.12172));
+        stores.add(new Store(1L, "Petlandia", "Avenida Lourenço Peixinho n18"));
+        stores.add(new Store(2L, "Perritoworld", "Rua do Pescador n1"));
 
         when(storeService.getAllStores()).thenReturn(stores);
 
@@ -190,12 +186,10 @@ class StoreControllerTests {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$[0].id", is(stores.get(0).getId().intValue())))
             .andExpect(jsonPath("$[0].name", is(stores.get(0).getName())))
-            .andExpect(jsonPath("$[0].latitude", is(stores.get(0).getLatitude())))
-            .andExpect(jsonPath("$[0].longitude", is(stores.get(0).getLongitude())))
+            .andExpect(jsonPath("$[0].address", is(stores.get(0).getAddress())))
             .andExpect(jsonPath("$[1].id", is(stores.get(1).getId().intValue())))
             .andExpect(jsonPath("$[1].name", is(stores.get(1).getName())))
-            .andExpect(jsonPath("$[1].latitude", is(stores.get(1).getLatitude())))
-            .andExpect(jsonPath("$[1].longitude", is(stores.get(1).getLongitude())))
+            .andExpect(jsonPath("$[1].address", is(stores.get(1).getAddress())))
             .andExpect(jsonPath("$.length()", is(stores.size())));
 
         verify(storeService, times(1)).getAllStores();

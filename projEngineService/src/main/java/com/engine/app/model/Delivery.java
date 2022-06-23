@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "deliveries")
@@ -32,6 +33,7 @@ public class Delivery {
 
     @OneToOne
     @JoinColumn(name = "review", nullable = true)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Review review;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -61,6 +63,14 @@ public class Delivery {
     }
 
     public Delivery() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Review getReview() {
@@ -95,12 +105,6 @@ public class Delivery {
         this.events = events;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    
 
 }

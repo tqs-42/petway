@@ -1,5 +1,6 @@
 package com.engine.app.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ import com.engine.app.exception.ConflictException;
 import com.engine.app.exception.ResourceNotFoundException;
 import com.engine.app.model.Delivery;
 import com.engine.app.model.DeliveryStatus;
+import com.engine.app.model.Event;
 import com.engine.app.model.Review;
 import com.engine.app.model.Rider;
 import com.engine.app.model.Store;
@@ -56,7 +58,16 @@ public class DeliveryService {
     }
 
     public List<Delivery> getAllDeliveriesByStatus(DeliveryStatus status) {
-        return eventRepository.findByStatus(status);
+        List<Delivery> deliveries = new ArrayList<>();
+        System.out.println("get all deliveries");
+        List<Event> events = eventRepository.findByStatus(status);
+        System.out.println(events);
+        for (Event e : events) {
+            if (eventRepository.findTop1ByDeliveryOrderByTimestampDesc(e.getDelivery()) == e)
+                deliveries.add(e.getDelivery());
+        }
+        System.out.println(deliveries);
+        return deliveries;
     }
 
     public List<Delivery> getRiderDeliveries(Rider rider) {
