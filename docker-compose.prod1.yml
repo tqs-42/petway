@@ -22,8 +22,7 @@ services:
 
     engine-service:
       depends_on:
-        engine-database:
-          condition: service_healthy
+        engine-database
       build: ./projEngineService
       restart: always
       ports:
