@@ -1,10 +1,10 @@
-com/specific/repository/RequestProductsRepository.class
 com/specific/service/CartService.class
+com/specific/repository/RequestProductsRepository.class
 com/specific/repository/ProductRepository.class
 com/specific/ProjSpecificServiceApplication.class
 com/specific/controller/RequestController.class
-com/specific/model/RequestProducts.class
 com/specific/model/RequestStatus.class
+com/specific/model/RequestProducts.class
 com/specific/controller/ClientController.class
 com/specific/repository/StoreRepository.class
 com/specific/model/Request.class
@@ -13,8 +13,8 @@ com/specific/controller/ProductController.class
 com/specific/model/Cart.class
 com/specific/repository/CartRepository.class
 com/specific/controller/CartController.class
-com/specific/repository/CategoryRepository.class
 com/specific/service/ProductService.class
+com/specific/repository/CategoryRepository.class
 com/specific/controller/StoreController.class
 com/specific/service/RequestProductsService.class
 com/specific/service/RequestService.class
