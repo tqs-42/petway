@@ -4,93 +4,37 @@
 
 <div class="content-wrapper">
 
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Orders</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <section class="content">
 
-        <div class="container-fluid">
-
-            <div class="row">
-                <div class="col-md-3">
-                    <app-info-box [icon]="'fas fa-tag'" [title]="'Total orders'"
-                        [description]="'500'"></app-info-box>
-                </div>
-                <div class="col-md-3">
-                    <app-info-box [icon]="'fas fa-heart'"
-                        [title]="'Total of orders'" [description]="'520'"></app-info-box>
-                </div>
-                <div class="col-md-3">
-                    <app-info-box [icon]="'fas fa-cloud-download-alt'"
-                        [title]="'New users'" [description]="'25'"></app-info-box>
-                </div>
-                <div class="col-md-3">
-                    <app-info-box [icon]="'fas fa-comment'" [title]="'Total of money spent'"
-                        [description]="'70,000$'"></app-info-box>
-                </div>
-            </div>
-        </div>
-
-        <app-bar-chart></app-bar-chart>
-
-
         <h1>Orders</h1>
-        <table>
-            <tr>
-                <th>Company</th>
-                <th>Contact</th>
-                <th>Country</th>
-            </tr>
-            <tr>
-                <td routerLink="/riders/1">John Doe</td>
-                <td>Maria Anders</td>
-                <td>Germany</td>
-            </tr>
-            <tr>
-                <td>Centro comercial Moctezuma</td>
-                <td>Francisco Chang</td>
-                <td>Mexico</td>
-            </tr>
-            <tr>
-                <td>Ernst Handel</td>
-                <td>Roland Mendel</td>
-                <td>Austria</td>
-            </tr>
-            <tr>
-                <td>Island Trading</td>
-                <td>Helen Bennett</td>
-                <td>UK</td>
-            </tr>
-            <tr>
-                <td>Laughing Bacchus Winecellars</td>
-                <td>Yoshi Tannamuri</td>
-                <td>Canada</td>
-            </tr>
-            <tr>
-                <td>Magazzini Alimentari Riuniti</td>
-                <td>Giovanni Rovelli</td>
-                <td>Italy</td>
-            </tr>
-        </table>
-
-        <p>ideias para pie chart: distribuição de ordens em tempo do dia - manhã, tarde e noite / distribuição por stores / distribuição por categoria de produto</p>
-
-        <p>ideias para line chart: temporal com cada ponto a marcar uma order (com um preço no Y)? ou se não usamos uma box chart, com as vendas em cada dia e isso</p>
-
-        <p>aqui pode ter uma table com todas as orders, estado, estafeta, store, cliente, etc...</p>
-
-        <div class="row" id="cache">
-
-            <!-- <table [dataSource]="table"></table> -->
-
-        </div>
+                <table class="table align-items-center table-flush">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Store name</th>
+                      <th scope="col">Store address</th>
+                      <th scope="col">Destiny address</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let delivery of orders">
+                      <th scope="row">
+                        <a class="media-body">
+                          <button class="mb-0 text-sm" routerLink="/orders/{{delivery.id}}">{{delivery.id}}</button>
+                        </a>
+                      </th>
+                      <td>
+                        {{delivery.store.name}}
+                      </td>
+                      <td>
+                        {{delivery.store.address}}
+                      </td>
+                      <td>
+                        {{delivery.address}}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
 
     </section>
 

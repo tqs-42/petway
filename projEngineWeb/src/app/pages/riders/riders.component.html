@@ -8,7 +8,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Riders</h1>
+          <h1 class="m-0">Global Statistics</h1>
         </div>
       </div>
     </div>
@@ -19,77 +19,45 @@
     <div class="container-fluid">
 
       <div class="row">
-        <div class="col-md-3">
-          <app-info-box [icon]="'fas fa-tag'" [title]="'Total riders'" [description]="'72'"></app-info-box>
-        </div>
-        <div class="col-md-3">
-          <app-info-box [icon]="'fas fa-heart'" [title]="'Active riders'" [description]="'45'"></app-info-box>
-        </div>
-        <div class="col-md-3">
-          <app-info-box [icon]="'fas fa-cloud-download-alt'" [title]="'Completed rides'" [description]="'1600'">
+        <div class="col-md-6">
+          <app-info-box [icon]="'fas fa-tag'" [title]="'Total riders'" [description]="totalRiders.toString()">
           </app-info-box>
         </div>
-        <div class="col-md-3">
-          <app-info-box [icon]="'fas fa-comment'" [title]="'Active rides'" [description]="'34'"></app-info-box>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-3">
-          <app-info-box [icon]="'fas fa-tag'" [title]="'Cancelled rides'" [description]="'120'"></app-info-box>
-        </div>
-        <div class="col-md-3">
-          <app-info-box [icon]="'fas fa-heart'" [title]="'Riders revenue'" [description]="'24,000$'"></app-info-box>
-        </div>
-        <div class="col-md-3">
-          <app-info-box [icon]="'fas fa-cloud-download-alt'" [title]="'Products sold'" [description]="'2000'">
+        <div class="col-md-6">
+          <app-info-box [icon]="'fas fa-heart'" [title]="'Active riders'" [description]="activeRiders.toString()">
           </app-info-box>
         </div>
-        <div class="col-md-3">
-          <app-info-box [icon]="'fas fa-comment'" [title]="'No. of vehicle types'" [description]="'4'"></app-info-box>
-        </div>
       </div>
-    </div>
 
-    <p>ideias para pie chart: tipo de veiculos usados</p>
-
-    <p>charts: distancia percorrida, orders feitas e isso</p>
-
-    <p>aqui pode ter uma table com todos os riders, clicamos e vamos para a pagina com as suas orders, reviews, etc...
-    </p>
-
-    <h1>Active Riders</h1>
-    <table class="table align-items-center table-flush">
-      <thead class="thead-light">
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Email</th>
-          <th scope="col">Address</th>
-          <th scope="col">Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let rider of riders">
-          <th scope="row">
-            <div class="media-body">
-              <span class="mb-0 text-sm">{{rider.fullname}}</span>
-            </div>
-          </th>
-          <td>
-            {{rider.email}}
-          </td>
-          <td>
-            {{rider.address}}
-          </td>
-          <td>
-            {{rider.isActive}}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="row" id="cache">
-
-      <!-- <table [dataSource]="table"></table> -->
-
+      <h1>Riders</h1>
+      <table class="table align-items-center table-flush">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Address</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let rider of riders">
+            <th scope="row">
+              <a class="media-body">
+                <button class="mb-0 text-sm" routerLink="/riders/{{rider.email}}">{{rider.fullname}}</button>
+              </a>
+            </th>
+            <td>
+              {{rider.email}}
+            </td>
+            <td>
+              {{rider.address}}
+            </td>
+            <td>
+              {{rider.isActive}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
   </section>

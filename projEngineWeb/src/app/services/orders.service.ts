@@ -7,14 +7,16 @@ const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
+
 @Injectable({
   providedIn: 'root'
 })
-export class StoresService {
+export class OrdersService {
 
   constructor(private http: HttpClient) { }
 
-  getAllStores(): Observable<any> {
-    return this.http.get<any>(environment.baseURL + "stores/stores", httpOptions);
+  getOrders(): Observable<any> {
+    return this.http.get<any>(environment.baseURL + "deliveries/deliveries", httpOptions);
   }
+
 }

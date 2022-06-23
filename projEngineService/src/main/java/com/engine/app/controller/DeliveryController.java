@@ -160,6 +160,7 @@ public class DeliveryController {
             map.put("id",d.getId());
             map.put("store_name",d.getStore().getName());
             map.put("store_address",d.getStore().getAddress());
+            map.put("destiny_address",d.getAddress());
             deliveries.add(map);
         }
         System.out.println("porto");
@@ -179,6 +180,7 @@ public class DeliveryController {
             map.put("id",d.getId());
             map.put("store_name",d.getStore().getName());
             map.put("store_address",d.getStore().getAddress());
+            map.put("destiny_address",d.getAddress());
             deliveries.add(map);
         }
         return ResponseEntity.ok(deliveries);

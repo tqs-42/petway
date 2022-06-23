@@ -39,7 +39,7 @@ const routes: Routes = [
   {
     path: 'riders', children: [
       { path: '', component: RidersComponent },
-      { path: ':id', component: RiderComponent }
+      { path: ':email', component: RiderComponent }
     ]
   },
 

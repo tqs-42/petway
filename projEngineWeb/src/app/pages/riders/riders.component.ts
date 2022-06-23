@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { RidersService } from 'src/app/services/Riders/riders.service';
 import { Rider } from 'src/models/Rider';
 
@@ -10,20 +11,31 @@ import { Rider } from 'src/models/Rider';
 export class RidersComponent implements OnInit {
 
   riders: Rider[] = [];
+  totalRiders : number = 0;
+  activeRiders : number = 0;
 
-  constructor(private riderService: RidersService) { }
+  constructor(private riderService: RidersService, private router : Router) { }
 
   ngOnInit(): void {
-    this.getActiveRiders();
+    this.getRiders();
   }
 
-  getActiveRiders() {
+  getRiders() {
     this.riderService.getActiveRiders().subscribe(
       data => {
         this.riders = data;
+        this.totalRiders = this.riders.length;
+        for (let rider of this.riders) {
+          if (rider.isActive === true) this.activeRiders += 1;
+        }
       }
     )
 
   }
+
+  goToRider(email : string) {
+    this.router.navigate(["rider/"+email]);
+  }
+
 
 }
