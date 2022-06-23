@@ -1,11 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.specific.integration.ProductTemplateIT
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 29.233 s <<< FAILURE! - in com.specific.integration.ProductTemplateIT
-testAddProduct_thenCode200  Time elapsed: 1.288 s  <<< FAILURE!
-java.lang.AssertionError: 
-1 expectation failed.
-Expected status code <200> but was <400>.
-
-	at com.specific.integration.ProductTemplateIT.testAddProduct_thenCode200(ProductTemplateIT.java:108)
-
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 29.752 s - in com.specific.integration.ProductTemplateIT
