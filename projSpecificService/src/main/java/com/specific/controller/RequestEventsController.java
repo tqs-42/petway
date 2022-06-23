@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.specific.exception.ConflictException;
+import com.specific.exception.ResourceNotFoundException;
 import com.specific.model.RequestEvents;
 import com.specific.service.RequestEventsService;
 
@@ -44,6 +46,20 @@ public class RequestEventsController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(null);
         }
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<RequestEvents> addRequest(@RequestBody Map<String, String> data) throws ResourceNotFoundException, ConflictException {
+        System.out.println("--------------EVENTS----------------------");
+        RequestEvents requestEvents;
+        try {
+            requestEvents = service.addRequestEvents(data.get("userEmail"));
+        } catch (ConflictException e) {
+            return ResponseEntity.badRequest().body(null);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        return ResponseEntity.ok(requestEvents);
     }
 
 }

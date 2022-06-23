@@ -4,6 +4,8 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "request_events")
@@ -21,22 +25,27 @@ public class RequestEvents {
     @Column(name = "request_event_id", nullable = false)
     private long id;
 
-    @Column(name = "request_id", nullable = false)
-    private long requestId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinColumn(name = "requestId")
+    private Request request;
 
     @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.ORDINAL)
     private RequestStatus status;
 
     @Column(name = "event_date", nullable = false)
     private Date eventDate;
 
-    public RequestEvents(long requestId, RequestStatus status, Date eventDate) {
-        this.requestId = requestId;
-        this.status = status;
-        this.eventDate = eventDate;
+    public RequestEvents() {
     }
 
-    public RequestEvents() {
+    public RequestEvents(Request request) {
+        this.request = request;
+        this.eventDate = new Date(System.currentTimeMillis());
+        System.out.println("Vou agr estado");
+        this.status = RequestStatus.PENDING;
+        System.out.println("dps de estado");
     }
 
     public long getId() {
@@ -45,14 +54,6 @@ public class RequestEvents {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getRequestId() {
-        return requestId;
-    }
-
-    public void setRequestId(long requestId) {
-        this.requestId = requestId;
     }
 
     public RequestStatus getStatus() {

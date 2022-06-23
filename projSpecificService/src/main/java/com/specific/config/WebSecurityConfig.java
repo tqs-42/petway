@@ -54,12 +54,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// dont authenticate this particular request
 				.authorizeRequests()
 				.antMatchers("/login","/registerClient","/registerManager").permitAll()
-				.antMatchers("/carts/**").hasAuthority("Client")
-				.antMatchers("/categories/**").hasAuthority("Manager")
-				.antMatchers("/products/**").hasAnyAuthority("Manager", "Client")
+				.antMatchers("/carts/**").permitAll()
+				.antMatchers("/categories/**").permitAll()
+				.antMatchers("/products/**").permitAll()
 				.antMatchers("/users/**").permitAll()
-				.antMatchers("/requestEvents/**").hasAuthority("Client")
+				.antMatchers("/requestEvents/**").permitAll()
+				.antMatchers("/requestes/**").permitAll()
 				.antMatchers("/managers/**").permitAll()
+				.antMatchers("/requestesProducts/**").permitAll()
 				// .antMatchers("/orders/**").hasAuthority("Rider")
 				// .antMatchers("/stores/**").hasAuthority("Rider")
 				// all other requests need to be authenticated
