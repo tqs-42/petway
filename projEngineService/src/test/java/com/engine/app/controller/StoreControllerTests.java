@@ -62,19 +62,11 @@ class StoreControllerTests {
     @Test
     void testCreateValidStore_thenStatus200() throws Exception {
 
-<<<<<<< HEAD
-        Store store = new Store(1L, "Petlandia", "Avenida Lourenço Peixinho n18");
-
-        JSONObject payload = new JSONObject();
-        payload.put("name", "Petlandia");
-        payload.put("address","Avenida Lourenço Peixinho n18");
-=======
         Store store = new Store(1L, "Petlandia", "Avenida Lourenço Peixinho n15");
 
         JSONObject payload = new JSONObject();
         payload.put("name", "Petlandia");
         payload.put("address", "Avenida Lourenço Peixinho n15");
->>>>>>> 320026fcf8651a1b872487133b560c32ab5d9790
 
         when(storeService.addStore(anyString(),anyString())).thenReturn(store);
 
@@ -97,11 +89,7 @@ class StoreControllerTests {
 
         JSONObject payload = new JSONObject();
         payload.put("name", "Petlandia");
-<<<<<<< HEAD
-        payload.put("address","Avenida Lourenço Peixinho n18");
-=======
         payload.put("address", "Avenida Lourenço Peixinho n15");
->>>>>>> 320026fcf8651a1b872487133b560c32ab5d9790
 
         when(storeService.addStore(anyString(),anyString())).thenThrow(ConflictException.class);
 
@@ -151,11 +139,7 @@ class StoreControllerTests {
     @Test
     void testGetValidStore_thenStatus200() throws Exception {
 
-<<<<<<< HEAD
-        Store store = new Store(1L, "Petlandia", "Avenida Lourenço Peixinho n18");
-=======
         Store store = new Store(1L, "Petlandia", "Avenida Lourenço Peixinho n15");
->>>>>>> 320026fcf8651a1b872487133b560c32ab5d9790
 
         when(storeService.getStore(anyString())).thenReturn(store);
 
@@ -191,13 +175,8 @@ class StoreControllerTests {
     void testGetAllStores_thenStatus200() throws Exception {
 
         ArrayList<Store> stores = new ArrayList<>();
-<<<<<<< HEAD
-        stores.add(new Store(1L, "Petlandia", "Avenida Lourenço Peixinho n18"));
-        stores.add(new Store(2L, "Perritoworld", "Rua do Pescador n1"));
-=======
         stores.add(new Store(1L, "Petlandia", "Avenida Lourenço Peixinho n15"));
         stores.add(new Store(2L, "Perritoworld", "Rua da Conceição"));
->>>>>>> 320026fcf8651a1b872487133b560c32ab5d9790
 
         when(storeService.getAllStores()).thenReturn(stores);
 

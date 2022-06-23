@@ -58,8 +58,7 @@ class RequestEventControllerTest {
 
         Request request = new Request(1, "Rua de Cima em Baixo, n34, Aveiro", new Cart(new Client("diana@ua.pt")));
 
-        RequestEvents requestEvents = new RequestEvents(1, RequestStatus.DELIVERED,
-                new Date(2022, 6, 12));
+        RequestEvents requestEvents = new RequestEvents(request, RequestStatus.DELIVERED);
 
         when(requestEventsService.getRequestEvents(1)).thenReturn(requestEvents);
 
@@ -73,8 +72,7 @@ class RequestEventControllerTest {
         Request request = new Request(1, "Rua de Cima em Baixo, n34, Aveiro", new Cart(new Client("diana@ua.pt")));
 
         Set<RequestEvents> ret = new HashSet<>();
-        RequestEvents requestEvents1 = new RequestEvents(1, RequestStatus.DELIVERED,
-                new Date(2022, 6, 12));
+        RequestEvents requestEvents1 = new RequestEvents(request, RequestStatus.DELIVERED);
         ret.add(requestEvents1);
 
         when(requestEventsService.getAllRequestEvents("diana@ua.pt")).thenReturn((Set<RequestEvents>) ret);

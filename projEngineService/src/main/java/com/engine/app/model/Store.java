@@ -41,11 +41,7 @@ public class Store {
         this.address = address;
     }
 
-<<<<<<< HEAD
     public Store(String name, String address) {
-=======
-    public Store(String name,String address) {
->>>>>>> 320026fcf8651a1b872487133b560c32ab5d9790
         this.name = name;
         this.address = address;
     }
@@ -61,17 +57,6 @@ public class Store {
         this.name = name;
     }
 
-<<<<<<< HEAD
-=======
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
->>>>>>> 320026fcf8651a1b872487133b560c32ab5d9790
     public List<Delivery> getDeliveries() {
         return deliveries;
     }

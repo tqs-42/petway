@@ -1,9 +1,6 @@
 package com.specific.model;
 
-<<<<<<< HEAD
-=======
 import javax.persistence.CascadeType;
->>>>>>> 320026fcf8651a1b872487133b560c32ab5d9790
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

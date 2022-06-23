@@ -8,15 +8,12 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-<<<<<<< HEAD
-=======
 import com.specific.exception.ConflictException;
 import com.specific.exception.ResourceNotFoundException;
 import com.specific.model.Cart;
 import com.specific.model.Client;
 import com.specific.model.Product;
 import com.specific.model.Request;
->>>>>>> 320026fcf8651a1b872487133b560c32ab5d9790
 import com.specific.model.RequestEvents;
 import com.specific.model.RequestStatus;
 import com.specific.repository.ClientRepository;
