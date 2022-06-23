@@ -23,7 +23,4 @@ public class CategoryDTO implements Serializable {
     @NotNull(message = "Name is mandatory")
     private String name;
 
-    @JsonIgnore
-    private Set<Product> products;
-
 }

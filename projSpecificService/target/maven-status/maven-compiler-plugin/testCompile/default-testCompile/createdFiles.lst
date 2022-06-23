@@ -1,1 +1,3 @@
+com/specific/service/ManagerServiceTest.class
 com/specific/repository/RequestEventRepositoryTest.class
+com/specific/controller/ManagerControllerTest.class
