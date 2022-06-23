@@ -44,22 +44,27 @@ public class Delivery {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
     private Store store;
 
+    @Column(name = "address")
+    private String address;
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     @JoinColumn(name = "event_id")
     private List<Event> events = new ArrayList<>();
 
-    public Delivery(Long id, Review review, Rider rider, Store store) {
+    public Delivery(Long id, Review review, Rider rider, Store store, String address) {
         this.id = id;
         this.review = review;
         this.rider = rider;
         this.store = store;
+        this.address = address;
     }
 
-    public Delivery(Review review, Rider rider, Store store) {
+    public Delivery(Review review, Rider rider, Store store, String address) {
         this.review = review;
         this.rider = rider;
         this.store = store;
+        this.address = address;
     }
 
     public Delivery() {
@@ -80,6 +85,15 @@ public class Delivery {
     public void setReview(Review review) {
         this.review = review;
     }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
 
     public Rider getRider() {
         return rider;
@@ -106,5 +120,7 @@ public class Delivery {
     }
 
     
+
+
 
 }

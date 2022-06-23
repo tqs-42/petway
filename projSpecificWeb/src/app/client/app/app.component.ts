@@ -6,6 +6,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ViewChild } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
 import { RequestProducts } from 'src/app/interfaces/RequestProducts';
+import { RequestService } from 'src/app/services/request.service';
 
 @Component({
   selector: 'app-app',
@@ -28,7 +29,8 @@ export class AppComponent implements OnInit {
     private authService: AuthenticationService,
     private userService: UserService,
     private router: Router,
-    private cartService: CartService
+    private cartService: CartService,
+    private requestService: RequestService
   ) {}
 
   items: RequestProducts[] = []
@@ -151,6 +153,7 @@ export class AppComponent implements OnInit {
   }
 
   checkout(): void {
-
+    this.requestService.addRequest();
+    //this.requestService.deleteRequestProducts();
   }
 }

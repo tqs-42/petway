@@ -1,5 +1,9 @@
 package com.specific.model;
 
+<<<<<<< HEAD
+=======
+import javax.persistence.CascadeType;
+>>>>>>> 320026fcf8651a1b872487133b560c32ab5d9790
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,7 +23,7 @@ public class Request {
     @Column(name = "requestId", nullable = false)
     private long id;
 
-    @Column(name = "riderId", nullable = false)
+    @Column(name = "riderId", nullable = true)
     private int riderId;
 
     @Column(name = "destinyAddress", nullable = false)
@@ -30,10 +34,18 @@ public class Request {
     @JoinColumn(name = "cartId")
     private Cart cart;
 
+    @OneToOne(mappedBy = "request", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private RequestEvents requestEvents;
+
     public Request(int riderId, String destinyAddress, Cart cart) {
         this.riderId = riderId;
         this.destinyAddress = destinyAddress;
         this.cart = cart;
+    }
+
+    public Request(String destinyString, Cart cart){
+        this.cart = cart;
+        this.destinyAddress = destinyString;
     }
 
     public Request() {
@@ -67,5 +79,13 @@ public class Request {
     public void setCart(Cart cart) {
         this.cart = cart;
     }
+
+    @Override
+    public String toString() {
+        return "Request [cart=" + cart + ", destinyAddress=" + destinyAddress + ", id=" + id + ", riderId=" + riderId
+                + "]";
+    }
+
+    
 
 }

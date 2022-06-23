@@ -39,9 +39,9 @@ public class StoreService {
         }
     }
 
-    public Store getStore(Long id) throws ResourceNotFoundException {
-        Optional<Store> optional = storeRepository.findById(id);
-        if (optional.isPresent()) return optional.get();
+    public Store getStore(String name) throws ResourceNotFoundException {
+        Store store = storeRepository.findByName(name);
+        if (store != null) return store;
         else throw new ResourceNotFoundException("Store doesn't exist");
     }
 

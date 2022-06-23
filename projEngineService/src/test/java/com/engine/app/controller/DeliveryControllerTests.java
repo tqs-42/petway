@@ -5,8 +5,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -85,7 +85,11 @@ class DeliveryControllerTests {
     @Test
     void testGetValidDelivery_thenStatus200() throws Exception {
 
+<<<<<<< HEAD
         Delivery delivery = new Delivery(1L, null, null, new Store(1L, "Petlandia", "Avenida Lourenço Peixinho n18"));
+=======
+        Delivery delivery = new Delivery(1L, null, null, new Store(1L, "Petlandia", "Avenida Lourenço Peixinho"),"Rua da Pega n13");
+>>>>>>> 320026fcf8651a1b872487133b560c32ab5d9790
 
         when(deliveryService.getDelivery(anyLong())).thenReturn(delivery);
 
@@ -124,14 +128,19 @@ class DeliveryControllerTests {
     @Test
     void testCreateValidDelivery_thenStatus200() throws Exception {
 
+<<<<<<< HEAD
         Store store = new Store(1L, "Petlandia", "Avenida Lourenço Peixinho n18");
         Delivery delivery = new Delivery(1L, null, null, store);
+=======
+        Store store = new Store(1L, "Petlandia", "Avenida Lourenço Peixinho");
+        Delivery delivery = new Delivery(1L, null, null, store, "Rua da Pega n13");
+>>>>>>> 320026fcf8651a1b872487133b560c32ab5d9790
 
         JSONObject payload = new JSONObject();
         payload.put("id", "1");
 
-        when(storeService.getStore(anyLong())).thenReturn(store);
-        when(deliveryService.createDelivery(any())).thenReturn(delivery);
+        when(storeService.getStore(anyString())).thenReturn(store);
+        when(deliveryService.createDelivery(any(),anyString())).thenReturn(delivery);
         when(eventService.createEvent(any(), any())).thenReturn(new Event(delivery, DeliveryStatus.PENDING));
 
         mvc.perform(post("/deliveries/delivery")
@@ -147,8 +156,8 @@ class DeliveryControllerTests {
             .andExpect(jsonPath("$.store.name", is(delivery.getStore().getName())))
             .andExpect(jsonPath("$.store.address", is(delivery.getStore().getAddress())));
 
-        verify(storeService, times(1)).getStore(anyLong());
-        verify(deliveryService, times(1)).createDelivery(any());
+        verify(storeService, times(1)).getStore(anyString());
+        verify(deliveryService, times(1)).createDelivery(any(),anyString());
         verify(eventService, times(1)).createEvent(any(), any());
 
     }
@@ -159,7 +168,7 @@ class DeliveryControllerTests {
         JSONObject payload = new JSONObject();
         payload.put("id", "1");
 
-        when(storeService.getStore(anyLong())).thenReturn(null);
+        when(storeService.getStore(anyString())).thenReturn(null);
 
         mvc.perform(post("/deliveries/delivery")
             .contentType(MediaType.APPLICATION_JSON)
@@ -168,15 +177,20 @@ class DeliveryControllerTests {
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isBadRequest());
 
-        verify(storeService, times(1)).getStore(anyLong());
+        verify(storeService, times(1)).getStore(anyString());
 
     }
 
     @Test
     void testSetDeliveryValidRider_thenStatus200() throws Exception {
 
+<<<<<<< HEAD
         Store store = new Store(1L, "Petlandia", "Avenida Lourenço Peixinho n18");
         Delivery delivery = new Delivery(1L, null, null, store);
+=======
+        Store store = new Store(1L, "Petlandia", "Avenida Lourenço Peixinho");
+        Delivery delivery = new Delivery(1L, null, null, store, "Rua da Pega n13");
+>>>>>>> 320026fcf8651a1b872487133b560c32ab5d9790
         Rider rider = new Rider("chicodatina@gmail.com", "Rua da Concertina", "Chico da Tina");
 
         JSONObject payload = new JSONObject();
@@ -221,8 +235,13 @@ class DeliveryControllerTests {
     @Test
     void testSetDeliveryInvalidRider_thenStatus400() throws Exception {
 
+<<<<<<< HEAD
         Store store = new Store(1L, "Petlandia", "Avenida Lourenço Peixinho n18");
         Delivery delivery = new Delivery(1L, null, null, store);
+=======
+        Store store = new Store(1L, "Petlandia", "Avenida Lourenço Peixinho");
+        Delivery delivery = new Delivery(1L, null, null, store,"Rua da Pega n13");
+>>>>>>> 320026fcf8651a1b872487133b560c32ab5d9790
 
         JSONObject payload = new JSONObject();
         payload.put("delivery", "1");
@@ -245,8 +264,13 @@ class DeliveryControllerTests {
     @Test
     void testSetDeliveryValidReview_thenStatus200() throws Exception {
 
+<<<<<<< HEAD
         Store store = new Store(1L, "Petlandia", "Avenida Lourenço Peixinho n18");
         Delivery delivery = new Delivery(1L, null, null, store);
+=======
+        Store store = new Store(1L, "Petlandia", "Avenida Lourenço Peixinho");
+        Delivery delivery = new Delivery(1L, null, null, store,"Rua da Pega n13");
+>>>>>>> 320026fcf8651a1b872487133b560c32ab5d9790
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         Review review = new Review(delivery, 4, timestamp);
 
@@ -273,8 +297,13 @@ class DeliveryControllerTests {
     @Test
     void testSetDeliveryInvalidReview_thenStatus400() throws Exception {
 
+<<<<<<< HEAD
         Store store = new Store(1L, "Petlandia", "Avenida Lourenço Peixinho n18");
         Delivery delivery = new Delivery(1L, null, null, store);
+=======
+        Store store = new Store(1L, "Petlandia", "Avenida Lourenço Peixinho");
+        Delivery delivery = new Delivery(1L, null, null, store,"Rua da Pega n13");
+>>>>>>> 320026fcf8651a1b872487133b560c32ab5d9790
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         Review review = new Review(delivery, 41212, timestamp);
 
@@ -302,8 +331,13 @@ class DeliveryControllerTests {
     void testGetDeliveries_thenStatus200() throws Exception {
 
         ArrayList<Delivery> deliveries = new ArrayList<>();
+<<<<<<< HEAD
         deliveries.add(new Delivery(1L, null, null, new Store(1L, "Petlandia", "Avenida Lourenço Peixinho n18")));
         deliveries.add(new Delivery(2L, null, null, new Store(2L, "Petlandia", "Avenida Lourenço Peixinho n18")));
+=======
+        deliveries.add(new Delivery(1L, null, null, new Store(1L, "Petlandia", "Avenida Lourenço Peixinho"),"Rua da Pega n13"));
+        deliveries.add(new Delivery(2L, null, null, new Store(2L, "Petlandia", "Avenida Lourenço Peixinho"),"Rua da Pega n13"));
+>>>>>>> 320026fcf8651a1b872487133b560c32ab5d9790
 
         when(deliveryService.getAllDeliveries()).thenReturn(deliveries);
 
@@ -332,8 +366,13 @@ class DeliveryControllerTests {
     void testGetDeliveriesByStatus_thenStatus200() throws Exception {
 
         ArrayList<Delivery> deliveries = new ArrayList<>();
+<<<<<<< HEAD
         deliveries.add(new Delivery(1L, null, null, new Store(1L, "Petlandia", "Avenida Lourenço Peixinho n18")));
         deliveries.add(new Delivery(2L, null, null, new Store(2L, "Petlandia", "Avenida Lourenço Peixinho n18")));
+=======
+        deliveries.add(new Delivery(1L, null, null, new Store(1L, "Petlandia", "Avenida Lourenço Peixinho"),"Rua da Pega n13"));
+        deliveries.add(new Delivery(2L, null, null, new Store(2L, "Petlandia", "Avenida Lourenço Peixinho"),"Rua da Pega n13"));
+>>>>>>> 320026fcf8651a1b872487133b560c32ab5d9790
 
         when(deliveryService.getAllDeliveriesByStatus(any())).thenReturn(deliveries);
 
@@ -377,8 +416,13 @@ class DeliveryControllerTests {
         Rider rider = new Rider("chicodatina@gmail.com", "Rua da Concertina", "Chico da Tina");
 
         ArrayList<Delivery> deliveries = new ArrayList<>();
+<<<<<<< HEAD
         deliveries.add(new Delivery(1L, null, null, new Store(1L, "Petlandia", "Avenida Lourenço Peixinho n18")));
         deliveries.add(new Delivery(2L, null, null, new Store(2L, "Petlandia", "Avenida Lourenço Peixinho n18")));
+=======
+        deliveries.add(new Delivery(1L, null, null, new Store(1L, "Petlandia", "Avenida Lourenço Peixinho"),"Rua da Pega n13"));
+        deliveries.add(new Delivery(2L, null, null, new Store(2L, "Petlandia", "Avenida Lourenço Peixinho"),"Rua da Pega n13"));
+>>>>>>> 320026fcf8651a1b872487133b560c32ab5d9790
 
         when(riderService.getRiderByEmail(any())).thenReturn(rider);
         when(deliveryService.getRiderDeliveries(any())).thenReturn(deliveries);
@@ -424,11 +468,19 @@ class DeliveryControllerTests {
     @Test
     void testGetStoreDeliveries_thenStatus200() throws Exception {
 
+<<<<<<< HEAD
         Store store = new Store(1L, "Petlandia", "Avenida Lourenço Peixinho n18");
 
         ArrayList<Delivery> deliveries = new ArrayList<>();
         deliveries.add(new Delivery(1L, null, null, new Store(1L, "Petlandia", "Avenida Lourenço Peixinho n18")));
         deliveries.add(new Delivery(2L, null, null, new Store(2L, "Petlandia", "Avenida Lourenço Peixinho n18")));
+=======
+        Store store = new Store(1L, "Petlandia", "Avenida Lourenço Peixinho");
+
+        ArrayList<Delivery> deliveries = new ArrayList<>();
+        deliveries.add(new Delivery(1L, null, null, new Store(1L, "Petlandia", "Avenida Lourenço Peixinho"),"Rua da Pega n13"));
+        deliveries.add(new Delivery(2L, null, null, new Store(2L, "Petlandia", "Avenida Lourenço Peixinho"),"Rua da Pega n13"));
+>>>>>>> 320026fcf8651a1b872487133b560c32ab5d9790
 
         when(storeService.getStore(any())).thenReturn(store);
         when(deliveryService.getStoreDeliveries(any())).thenReturn(deliveries);
@@ -442,7 +494,11 @@ class DeliveryControllerTests {
             .andExpect(jsonPath("$[0].rider", is(deliveries.get(0).getRider())))
             .andExpect(jsonPath("$[0].review", is(deliveries.get(0).getReview())))
             .andExpect(jsonPath("$[0].store.id", is(deliveries.get(0).getStore().getId().intValue())))
+<<<<<<< HEAD
             .andExpect(jsonPath("$[0].store.name", is(deliveries.get(0).getStore().getName())))            
+=======
+            .andExpect(jsonPath("$[0].store.name", is(deliveries.get(0).getStore().getName())))
+>>>>>>> 320026fcf8651a1b872487133b560c32ab5d9790
             .andExpect(jsonPath("$[0].store.address", is(deliveries.get(0).getStore().getAddress())))
             .andExpect(jsonPath("$[1].id", is(deliveries.get(1).getId().intValue())))
             .andExpect(jsonPath("$[1].rider", is(deliveries.get(1).getRider())))

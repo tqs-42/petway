@@ -8,12 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.specific.exception.ConflictException;
+import com.specific.exception.ResourceNotFoundException;
 import com.specific.model.RequestEvents;
 import com.specific.service.RequestEventsService;
 
 @RestController
+<<<<<<< HEAD
 @CrossOrigin(origins = {"http://192.168.160.234:4201", "http://localhost:4201"})
 
+=======
+@CrossOrigin(origins =  {"http://localhost:4201", "http://0.0.0.0:6868"})
+>>>>>>> 320026fcf8651a1b872487133b560c32ab5d9790
 @RequestMapping("/requestEvents")
 public class RequestEventsController {
 
@@ -45,6 +51,34 @@ public class RequestEventsController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(null);
         }
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<RequestEvents> addRequest(@RequestBody Map<String, String> data) throws ResourceNotFoundException, ConflictException {
+        System.out.println("--------------EVENTS----------------------");
+        RequestEvents requestEvents;
+        try {
+            requestEvents = service.addRequestEvents(data.get("userEmail"));
+        } catch (ConflictException e) {
+            return ResponseEntity.badRequest().body(null);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        return ResponseEntity.ok(requestEvents);
+    }
+
+    @PostMapping("/addEvent")
+    public ResponseEntity<RequestEvents> addRequestEventsWithStatus(@RequestBody Map<String, String> data) throws ResourceNotFoundException, ConflictException {
+        System.out.println("--------------EVENTS----------------------");
+        RequestEvents requestEvents;
+        try {
+            requestEvents = service.addRequestEventsWithStatus(data.get("id"),data.get("status"));
+        } catch (ConflictException e) {
+            return ResponseEntity.badRequest().body(null);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        return ResponseEntity.ok(requestEvents);
     }
 
 }

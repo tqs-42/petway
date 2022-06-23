@@ -22,7 +22,7 @@ import com.engine.app.service.StoreService;
 
 @RestController
 @RequestMapping("/stores")
-@CrossOrigin(origins = {"http://localhost:4200","http://localhost:19006"})
+@CrossOrigin(origins = {"http://localhost:4200","http://localhost:19006","http://localhost:6868", "http://0.0.0.0:6869"})
 public class StoreController {
 
     @Autowired
@@ -50,10 +50,10 @@ public class StoreController {
     }
 
     @GetMapping("/store")
-    public ResponseEntity<Store> getStore(@RequestParam String id) throws Exception {
+    public ResponseEntity<Store> getStore(@RequestParam String name) throws Exception {
         Store store;
         try {
-            store = storeService.getStore(Long.valueOf(id));
+            store = storeService.getStore(name);
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.badRequest().body(null);
         }

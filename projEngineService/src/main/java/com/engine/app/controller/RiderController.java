@@ -20,7 +20,7 @@ import com.engine.app.service.RiderService;
 
 @RestController
 @RequestMapping("/riders")
-@CrossOrigin(origins = {"http://localhost:4200","http://localhost:19006"})
+@CrossOrigin(origins = {"http://localhost:4200","http://localhost:19006","http://localhost:6868", "http://0.0.0.0:6869"})
 public class RiderController {
 
     @Autowired

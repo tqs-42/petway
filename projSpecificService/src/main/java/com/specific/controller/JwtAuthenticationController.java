@@ -27,7 +27,11 @@ import com.specific.service.StoreService;
 
 @RequestMapping
 @RestController
+<<<<<<< HEAD
 @CrossOrigin(origins = { "http://192.168.160.234:4201", "http://localhost:4201" })
+=======
+@CrossOrigin(origins =  {"http://localhost:4201", "http://0.0.0.0:6868"})
+>>>>>>> 320026fcf8651a1b872487133b560c32ab5d9790
 public class JwtAuthenticationController {
 
     @Autowired
@@ -61,6 +65,23 @@ public class JwtAuthenticationController {
         } catch (ConflictException e) {
             return ResponseEntity.badRequest().body(null);
         }
+
+        // Map<String,String> payload = new HashMap<>();
+        // payload.put("email", data.get("email"));
+        // payload.put("password", data.get("password"));
+
+
+        // RestTemplate template = new RestTemplate();
+        // HttpHeaders headers = new HttpHeaders();
+        // headers.setContentType(MediaType.APPLICATION_JSON);
+        // HttpEntity<String> entity = new HttpEntity<String>(payload.toString(),headers);
+
+        // ResponseEntity<String> response = template.exchange("http://localhost:6869/deliveries/delivery", HttpMethod.POST, entity, String.class);
+        // System.out.println("RESPOTAAAAAAAAAAAAAAAAA");
+        // System.out.println(response);
+
+
+
         return ResponseEntity.ok(client);
     }
 
