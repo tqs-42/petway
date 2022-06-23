@@ -32,7 +32,7 @@ public class StoreController {
     public ResponseEntity<Store> addStore(@RequestBody Map<String, String> data) throws Exception {
         Store store;
         try {
-            store = storeService.addStore(data.get("name"), Double.parseDouble(data.get("latitude")), Double.parseDouble(data.get("longitude")));
+            store = storeService.addStore(data.get("name"), data.get("address"));
         } catch (ConflictException e) {
             return ResponseEntity.badRequest().body(null);
         }

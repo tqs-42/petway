@@ -26,11 +26,8 @@ public class Store {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "latitude", nullable = false)
-    private Double latitude;
-
-    @Column(name = "longitude", nullable = false)
-    private Double longitude;
+    @Column(name = "address", nullable = false)
+    private String address;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
@@ -38,17 +35,15 @@ public class Store {
     @JoinColumn(name = "delivery_id")
     private List<Delivery> deliveries = new ArrayList<>();
 
-    public Store(Long id, String name, Double latitude, Double longitude) {
+    public Store(Long id, String name, String address) {
         this.id = id;
         this.name = name;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.address = address;
     }
 
-    public Store(String name, Double latitude, Double longitude) {
+    public Store(String name, String address) {
         this.name = name;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.address = address;
     }
 
     public Store() {
@@ -60,22 +55,6 @@ public class Store {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
     }
 
     public List<Delivery> getDeliveries() {
@@ -92,6 +71,14 @@ public class Store {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     
