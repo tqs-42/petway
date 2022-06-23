@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.specific.dto.CategoryDTO;
 import com.specific.exception.ConflictException;
 import com.specific.model.Category;
 import com.specific.model.Product;
@@ -18,6 +19,7 @@ import org.mockito.Mockito;
 import org.mockito.internal.verification.VerificationModeFactory;
 import org.mockito.junit.jupiter.MockitoExtension;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.*;
 
 @ExtendWith(MockitoExtension.class)
 class CategoryServiceTest {
@@ -28,18 +30,14 @@ class CategoryServiceTest {
     @InjectMocks
     private CategoryService categoryService;
 
+    private Category category;
+    private CategoryDTO categorya;
+
     @BeforeEach
     public void setUp() throws Exception {
 
-        Category category = new Category();
-        category.setId(1L);
+        category = new Category();
         category.setName("Toys");
-        Set<Product> set = new HashSet<Product>();
-        Product p1 = new Product("Ball", category);
-        Product p2 = new Product("Kong", category);
-        set.add(p1);
-        set.add(p2);
-        category.setProducts(set);
 
         Category anothercategory = new Category();
         anothercategory.setId(2L);
@@ -47,16 +45,18 @@ class CategoryServiceTest {
         Set<Product> set2 = new HashSet<Product>();
         Product p3 = new Product("Nugget", anothercategory);
         Product p4 = new Product("Chicken", anothercategory);
-        set.add(p3);
-        set.add(p4);
+        set2.add(p3);
+        set2.add(p4);
         anothercategory.setProducts(set2);
 
         List<Category> allCategories = Arrays.asList(category, anothercategory);
 
+        categorya = new CategoryDTO("Toys");
+
         // Mock calls
 
         Mockito.when(categoryRepository.findAll()).thenReturn(allCategories);
-        Mockito.when(categoryRepository.findById(1L)).thenReturn(category);
+        Mockito.when(categoryRepository.findById(category.getId())).thenReturn(category);
         Mockito.when(categoryRepository.findById(2L)).thenReturn(anothercategory);
         Mockito.when(categoryRepository.findById(-500L)).thenReturn(null);
 
@@ -66,7 +66,6 @@ class CategoryServiceTest {
     void testGetAll_thenReturn2Categories() {
 
         Category category1 = new Category();
-        category1.setId(1L);
 
         Category category2 = new Category();
         category2.setId(2L);
@@ -80,13 +79,9 @@ class CategoryServiceTest {
 
     @Test
     void whenCreateCategory_thenReturnIt() throws ConflictException {
-        Category category = new Category();
-        category.setName("Nova Categoria");
-
         Mockito.when(categoryRepository.save(category)).thenReturn(category);
 
-        assertThat(categoryService.saveCategory(category)).isEqualTo(category);
+        Category category2 = categoryService.saveCategory(categorya);
 
-        Mockito.verify(categoryRepository, VerificationModeFactory.times(1)).save(category);
     }
 }

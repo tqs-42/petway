@@ -3,6 +3,7 @@ com/specific/repository/RequestProductsRepository.class
 com/specific/repository/ProductRepository.class
 com/specific/ProjSpecificServiceApplication.class
 com/specific/controller/RequestController.class
+com/specific/dto/CategoryDTO.class
 com/specific/model/RequestStatus.class
 com/specific/model/RequestProducts.class
 com/specific/controller/ClientController.class

@@ -38,6 +38,7 @@
 /home/daniel/Desktop/petway/projSpecificService/src/main/java/com/specific/repository/RequestProductsRepository.java
 /home/daniel/Desktop/petway/projSpecificService/src/main/java/com/specific/controller/ClientController.java
 /home/daniel/Desktop/petway/projSpecificService/src/main/java/com/specific/repository/CartRepository.java
+/home/daniel/Desktop/petway/projSpecificService/src/main/java/com/specific/dto/CategoryDTO.java
 /home/daniel/Desktop/petway/projSpecificService/src/main/java/com/specific/exception/ConflictException.java
 /home/daniel/Desktop/petway/projSpecificService/src/main/java/com/specific/service/ManagerService.java
 /home/daniel/Desktop/petway/projSpecificService/src/main/java/com/specific/controller/JwtAuthenticationController.java
