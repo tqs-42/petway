@@ -44,7 +44,7 @@ public class ProductRepositoryTest {
     // Valid
 
     @Test
-    void testCreateProductAndFindById_thenReturn() {
+    void testCreateProductAndFindByName_thenReturn() {
 
         Product product = new Product();
         product.setName("Dog Food");
@@ -63,6 +63,31 @@ public class ProductRepositoryTest {
         entityManager.persistAndFlush(product);
 
         Product res = productRepository.findByName(product.getName());
+
+        assertThat(res).isEqualTo(product);
+
+    }
+
+    @Test
+    void testCreateProductAndFindById_thenReturn() {
+
+        Product product = new Product();
+        product.setName("Dog Food");
+        Category category = new Category();
+        category.setName("Categoria");
+        product.setCategory(category);
+        product.setImage("/path");
+        product.setPrice(15.0);
+        Store store = new Store();
+        store.setName("Loja");
+        store.setAddress("A minha morada");
+        product.setStore(store);
+
+        entityManager.persistAndFlush(category);
+        entityManager.persistAndFlush(store);
+        entityManager.persistAndFlush(product);
+
+        Product res = productRepository.findById(product.getId());
 
         assertThat(res).isEqualTo(product);
 
@@ -128,6 +153,12 @@ public class ProductRepositoryTest {
     void testNoProducts_thenReturnEmpty() {
         List<Product> allProducts = productRepository.findAll();
         assertThat(allProducts).isNotNull().isEmpty();
+    }
+
+    @Test
+    void testWhenFindById_thenReturnNull() {
+        Product res = productRepository.findById(-500L);
+        assertThat(res).isNull();
     }
 
 }

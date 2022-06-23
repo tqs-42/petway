@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-    
+
 	@Bean
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -49,16 +49,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		//We don't need CSRF for this example
+		// We don't need CSRF for this example
 		httpSecurity.cors().and().csrf().disable()
 				// dont authenticate this particular request
 				.authorizeRequests()
-				.antMatchers("/login","/registerClient","/registerManager").permitAll()
-				.antMatchers("/carts/**").hasAuthority("Client")
-				.antMatchers("/categories/**").hasAuthority("Manager")
-				.antMatchers("/products/**").hasAnyAuthority("Manager", "Client")
+				.antMatchers("/login", "/registerClient", "/registerManager").permitAll()
+				.antMatchers("/carts/**").permitAll()
+				.antMatchers("/categories/**").permitAll()
+				.antMatchers("/products/**").permitAll()
 				.antMatchers("/users/**").permitAll()
-				.antMatchers("/requestEvents/**").hasAuthority("Client")
+				.antMatchers("/requestEvents/**").permitAll()
 				.antMatchers("/managers/**").permitAll()
 				// .antMatchers("/orders/**").hasAuthority("Rider")
 				// .antMatchers("/stores/**").hasAuthority("Rider")
@@ -71,5 +71,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// Add a filter to validate the tokens with every request
 		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
-    
+
 }

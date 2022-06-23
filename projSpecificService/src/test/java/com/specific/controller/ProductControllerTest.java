@@ -32,7 +32,8 @@ import io.restassured.http.ContentType;
 
 import static org.hamcrest.Matchers.*;
 
-@WebMvcTest(value = ProductController.class, excludeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = WebSecurityConfig.class)})
+@WebMvcTest(value = ProductController.class, excludeFilters = {
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = WebSecurityConfig.class) })
 @AutoConfigureMockMvc(addFilters = false)
 class ProductControllerTest {
 
@@ -102,6 +103,21 @@ class ProductControllerTest {
 
     }
 
+    @Test
+    void whenGetById_then200() throws Exception {
+        Product product = new Product();
+        product.setName("O meu Produto");
+        product.setId(2L);
+
+        when(productService.getProductById(product.getId())).thenReturn(product);
+
+        RestAssuredMockMvc.given().contentType(ContentType.JSON)
+                .when().get("/products/" + product.getId()).then().assertThat().statusCode(200);
+
+        verify(productService, times(1)).getProductById(product.getId());
+
+    }
+
     // Invalid Tests
 
     @Test
@@ -130,6 +146,18 @@ class ProductControllerTest {
                 .when().post("/products/add").then().assertThat().statusCode(409);
 
         verify(productService, times(1)).saveProduct(Mockito.any());
+
+    }
+
+    @Test
+    void whenGetByIdDontExist_then400() throws Exception {
+
+        when(productService.getProductById(Mockito.anyLong())).thenReturn(null);
+
+        RestAssuredMockMvc.given().contentType(ContentType.JSON)
+                .when().get("/products/" + 2L).then().assertThat().statusCode(400);
+
+        verify(productService, times(1)).getProductById(2L);
 
     }
 

@@ -96,8 +96,6 @@ class ProductTemplateIT {
         this.category.setName("Categoria");
         this.store.setName("Loja");
         this.store.setAddress("A minha morada");
-        this.product = new Product("Produtinho", "description", "image", 15.0, 1, this.category, this.store);
-        this.product.setId(66L);
 
         RestAssured.given()
                 .contentType("application/json")
