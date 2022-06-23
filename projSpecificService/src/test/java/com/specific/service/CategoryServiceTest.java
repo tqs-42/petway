@@ -77,16 +77,4 @@ class CategoryServiceTest {
 
         assertThat(allCategories).hasSize(2).extracting(Category::getId).contains(category1.getId(), category2.getId());
     }
-
-    @Test
-    void whenCreateCategory_thenReturnIt() throws ConflictException {
-        Category category = new Category();
-        category.setName("Nova Categoria");
-
-        Mockito.when(categoryRepository.save(category)).thenReturn(category);
-
-        assertThat(categoryService.saveCategory(category)).isEqualTo(category);
-
-        Mockito.verify(categoryRepository, VerificationModeFactory.times(1)).save(category);
-    }
 }

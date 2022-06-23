@@ -3,8 +3,13 @@ com/specific/service/CartService.class
 com/specific/repository/ProductRepository.class
 com/specific/ProjSpecificServiceApplication.class
 com/specific/controller/RequestController.class
+<<<<<<< HEAD
 com/specific/config/CorsConfiguration.class
 com/specific/exception/InvalidCredentialsException.class
+=======
+com/specific/dto/CategoryDTO.class
+com/specific/model/RequestStatus.class
+>>>>>>> f0a456d76f2b02f802c8c3aa6ae2557b459c5691
 com/specific/model/RequestProducts.class
 com/specific/model/RequestStatus.class
 com/specific/controller/ClientController.class
