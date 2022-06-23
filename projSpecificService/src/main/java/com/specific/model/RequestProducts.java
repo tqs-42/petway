@@ -1,7 +1,5 @@
 package com.specific.model;
 
-import lombok.Data;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +22,7 @@ public class RequestProducts {
 
     @ManyToOne
     @JoinColumn(name = "cartId", nullable = false)
-    private Cart cart;  
+    private Cart cart;
 
     @ManyToOne
     @JoinColumn(name = "productId", nullable = false)
@@ -36,8 +34,8 @@ public class RequestProducts {
         this.product = product;
     }
 
-    public RequestProducts(){
-        
+    public RequestProducts() {
+
     }
 
     public long getId() {
@@ -75,7 +73,6 @@ public class RequestProducts {
     @Override
     public String toString() {
         return "RequestProducts [amount=" + amount + ", id=" + id + "]";
-    }  
+    }
 
-    
 }

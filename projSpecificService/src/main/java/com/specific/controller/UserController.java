@@ -20,9 +20,10 @@ public class UserController {
     private UserService service;
 
     @GetMapping("/user/{email}/fullname")
-    public Map<String,String> getFullName(@Valid @PathVariable String email) throws ResourceNotFoundException {
-        String userFullName = service.getFullName(email).orElseThrow(() -> new ResourceNotFoundException("managerEmail " + email + ", or store NOT FOUND."));
-        Map<String,String> data = new HashMap<>();
+    public Map<String, String> getFullName(@Valid @PathVariable String email) throws ResourceNotFoundException {
+        String userFullName = service.getFullName(email)
+                .orElseThrow(() -> new ResourceNotFoundException("managerEmail " + email + ", or store NOT FOUND."));
+        Map<String, String> data = new HashMap<>();
         data.put("fullname", userFullName);
         return data;
     }

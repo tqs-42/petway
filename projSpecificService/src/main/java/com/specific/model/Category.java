@@ -1,7 +1,5 @@
 package com.specific.model;
 
-import lombok.Data;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,16 +30,16 @@ public class Category {
     public Category(long id, String name) {
         this.id = id;
         this.name = name;
-        this.products = new HashSet<Product>();
+        this.products = new HashSet<>();
     }
 
     public Category(String name) {
         this.name = name;
-        this.products = new HashSet<Product>();
+        this.products = new HashSet<>();
     }
 
     public Category() {
-        this.products = new HashSet<Product>();
+        this.products = new HashSet<>();
     }
 
     public long getId() {

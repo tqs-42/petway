@@ -20,7 +20,7 @@ import com.specific.model.Category;
 @DataJpaTest
 @Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class CategoryRepositoryTest {
+class CategoryRepositoryTest {
 
     @Container
     public static MySQLContainer<?> container = new MySQLContainer<>("mysql:8.0").withUsername("admin")

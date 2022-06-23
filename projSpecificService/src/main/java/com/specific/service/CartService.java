@@ -21,6 +21,9 @@ import com.specific.repository.RequestProductsRepository;
 
 @Service
 public class CartService {
+
+    private static final String NOTFOUND = "Not found";
+
     @Autowired
     private CartRepository repository;
 
@@ -35,41 +38,51 @@ public class CartService {
 
     public Optional<RequestProducts> getProductAmout(String email, Long productId) throws ResourceNotFoundException {
         Client client = clientRepository.findByEmail(email);
-        if (client == null) throw new ResourceNotFoundException("Not found");
+        if (client == null)
+            throw new ResourceNotFoundException(NOTFOUND);
         Cart cart = repository.findByClient(client);
-        if (cart == null) throw new ResourceNotFoundException("Not found");
+        if (cart == null)
+            throw new ResourceNotFoundException(NOTFOUND);
         Set<RequestProducts> requestsProducts = cart.getProducts();
-        if (requestsProducts == null) throw new ResourceNotFoundException("Not found");
+        if (requestsProducts == null)
+            throw new ResourceNotFoundException(NOTFOUND);
         for (RequestProducts requestProducts : requestsProducts) {
-            Product requestProducts_product = requestProducts.getProduct();
-            if (requestProducts_product == null) throw new ResourceNotFoundException("Not found");
-            if (requestProducts_product.getId() == productId) {
+            Product requestProductsProduct = requestProducts.getProduct();
+            if (requestProductsProduct == null)
+                throw new ResourceNotFoundException(NOTFOUND);
+            if (requestProductsProduct.getId() == productId) {
                 return Optional.of(requestProducts);
             }
         }
-        throw new ResourceNotFoundException("Not found");
+        throw new ResourceNotFoundException(NOTFOUND);
     }
 
-    public Optional<RequestProducts> putProductAmout(String email, long productId, int amount) throws ResourceNotFoundException, ConflictException {
+    public Optional<RequestProducts> putProductAmout(String email, long productId, int amount)
+            throws ResourceNotFoundException, ConflictException {
         String storeName = "";
-        
-        Client client = clientRepository.findByEmail(email);
-        if (client == null) throw new ResourceNotFoundException("Not found");
-        
-        Cart cart = repository.findByClient(client);
-        if (cart == null) throw new ResourceNotFoundException("Not found");
-        
-        Set<RequestProducts> requestsProducts = cart.getProducts();
-        if (requestsProducts == null) throw new ResourceNotFoundException("Not found");
-        
-        for (RequestProducts requestProducts : requestsProducts) {
-            Product requestProducts_product = requestProducts.getProduct();
-            if (requestProducts_product == null) throw new ResourceNotFoundException("Not found");
 
-            storeName = requestProducts_product.getStore().getName();
-            if (storeName == null) throw new ResourceNotFoundException("Not found");
-            
-            if (requestProducts_product.getId() == productId) {
+        Client client = clientRepository.findByEmail(email);
+        if (client == null)
+            throw new ResourceNotFoundException(NOTFOUND);
+
+        Cart cart = repository.findByClient(client);
+        if (cart == null)
+            throw new ResourceNotFoundException(NOTFOUND);
+
+        Set<RequestProducts> requestsProducts = cart.getProducts();
+        if (requestsProducts == null)
+            throw new ResourceNotFoundException(NOTFOUND);
+
+        for (RequestProducts requestProducts : requestsProducts) {
+            Product requestProductsProduct = requestProducts.getProduct();
+            if (requestProductsProduct == null)
+                throw new ResourceNotFoundException(NOTFOUND);
+
+            storeName = requestProductsProduct.getStore().getName();
+            if (storeName == null)
+                throw new ResourceNotFoundException(NOTFOUND);
+
+            if (requestProductsProduct.getId() == productId) {
                 if (amount == 0) {
                     requestProductsRepository.deleteById(requestProducts.getId());
                     requestProducts.setAmount(0);
@@ -83,12 +96,15 @@ public class CartService {
         }
 
         Product product = productRepository.findById(productId);
-        if (product == null) throw new ResourceNotFoundException("Not found");
+        if (product == null)
+            throw new ResourceNotFoundException(NOTFOUND);
 
         if (amount != 0) {
-            String product_storeName = product.getStore().getName();
-            if (product_storeName == null) throw new ResourceNotFoundException("Not found");
-            if (!storeName.equals("") && !storeName.equals(product_storeName)) throw new ConflictException("[ERROR] The products in the cart must be from the same store!");
+            String productStoreName = product.getStore().getName();
+            if (productStoreName == null)
+                throw new ResourceNotFoundException(NOTFOUND);
+            if (!storeName.equals("") && !storeName.equals(productStoreName))
+                throw new ConflictException("[ERROR] The products in the cart must be from the same store!");
             return Optional.of(requestProductsRepository.save(new RequestProducts(amount, cart, product)));
         }
         return Optional.of(new RequestProducts(0, cart, product));
@@ -97,13 +113,13 @@ public class CartService {
     public Optional<List<RequestProducts>> getProducts(String email) throws ResourceNotFoundException {
         Client client = clientRepository.findByEmail(email);
         if (client == null)
-            throw new ResourceNotFoundException("Not found");
+            throw new ResourceNotFoundException(NOTFOUND);
         Cart cart = repository.findByClient(client);
         if (cart == null)
-            throw new ResourceNotFoundException("Not found");
+            throw new ResourceNotFoundException(NOTFOUND);
         Set<RequestProducts> requestsProducts = cart.getProducts();
         if (requestsProducts == null)
-            throw new ResourceNotFoundException("Not found");
+            throw new ResourceNotFoundException(NOTFOUND);
         return Optional.of(requestsProducts.stream().collect(Collectors.toList()));
     }
 

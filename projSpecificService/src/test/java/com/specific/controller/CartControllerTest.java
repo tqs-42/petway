@@ -28,9 +28,10 @@ import io.restassured.http.ContentType;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import static org.hamcrest.Matchers.*;
 
-@WebMvcTest(value = CartController.class, excludeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = WebSecurityConfig.class)})
+@WebMvcTest(value = CartController.class, excludeFilters = {
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = WebSecurityConfig.class) })
 @AutoConfigureMockMvc(addFilters = false)
-public class CartControllerTest {
+class CartControllerTest {
     @Autowired
     private MockMvc mvc;
 
@@ -60,7 +61,8 @@ public class CartControllerTest {
 
     // verificar mais campos
     @Test
-    void testWhenGetRequestProductsByValidEmailAndValidproductId_thenReturnRequestProducts() throws ResourceNotFoundException {
+    void testWhenGetRequestProductsByValidEmailAndValidproductId_thenReturnRequestProducts()
+            throws ResourceNotFoundException {
         when(service.getProductAmout("eva@ua.pt", 1L)).thenReturn(Optional.of(requestProducts));
 
         RestAssuredMockMvc.given().contentType(ContentType.JSON)
@@ -74,7 +76,8 @@ public class CartControllerTest {
     }
 
     @Test
-    void testWhenGetRequestProductsByInvalidEmailAndValidproductId_thenReturnStatus404() throws ResourceNotFoundException {
+    void testWhenGetRequestProductsByInvalidEmailAndValidproductId_thenReturnStatus404()
+            throws ResourceNotFoundException {
         when(service.getProductAmout("eva@ua.pt", 1L)).thenReturn(Optional.of(requestProducts));
 
         RestAssuredMockMvc.given()
@@ -88,7 +91,8 @@ public class CartControllerTest {
     }
 
     @Test
-    void testWhenGetRequestProductsByValidEmailAndInvalidproductId_thenReturnStatus404() throws ResourceNotFoundException {
+    void testWhenGetRequestProductsByValidEmailAndInvalidproductId_thenReturnStatus404()
+            throws ResourceNotFoundException {
         when(service.getProductAmout("eva@ua.pt", 1L)).thenReturn(Optional.of(requestProducts));
 
         RestAssuredMockMvc.given()
@@ -102,7 +106,8 @@ public class CartControllerTest {
     }
 
     @Test
-    void testWhenGetRequestProductsByInvalidEmailAndInvalidproductId_thenReturnStatus404() throws ResourceNotFoundException {
+    void testWhenGetRequestProductsByInvalidEmailAndInvalidproductId_thenReturnStatus404()
+            throws ResourceNotFoundException {
         when(service.getProductAmout("eva@ua.pt", 1L)).thenReturn(Optional.of(requestProducts));
 
         RestAssuredMockMvc.given()
@@ -155,48 +160,51 @@ public class CartControllerTest {
     }
 
     @Test
-    void testWhenPutRequestProductsByValidEmailValidproductId_thenReturnRequestProducts()  throws ResourceNotFoundException, ConflictException {
+    void testWhenPutRequestProductsByValidEmailValidproductId_thenReturnRequestProducts()
+            throws ResourceNotFoundException, ConflictException {
         when(service.putProductAmout("eva@ua.pt", 1L, 3)).thenReturn(Optional.of(requestProducts));
-      
-        RestAssuredMockMvc.given().contentType(ContentType.JSON)
-        .when().put("carts/user/eva@ua.pt/product/1/amount/3").then().statusCode(200)
-        .body("id", equalTo((int) requestProducts.getId()))
-        .body("amount", equalTo(3))
-        .body("cart.id", equalTo(1))
-        .body("product.id", equalTo(1));
 
-        
+        RestAssuredMockMvc.given().contentType(ContentType.JSON)
+                .when().put("carts/user/eva@ua.pt/product/1/amount/3").then().statusCode(200)
+                .body("id", equalTo((int) requestProducts.getId()))
+                .body("amount", equalTo(3))
+                .body("cart.id", equalTo(1))
+                .body("product.id", equalTo(1));
+
         verify(service, times(1)).putProductAmout("eva@ua.pt", 1L, 3);
     }
 
-    //FALTA TESTAR QUANDO DA O ConflictException
+    // FALTA TESTAR QUANDO DA O ConflictException
     @Test
-    void testWhenPutRequestProductsByInvalidEmailValidproductId_thenReturnStatus404()  throws ResourceNotFoundException, ConflictException {
+    void testWhenPutRequestProductsByInvalidEmailValidproductId_thenReturnStatus404()
+            throws ResourceNotFoundException, ConflictException {
         System.out.println("----------------AQUI---------------------------");
         when(service.putProductAmout("eva@ua.pt", 1L, 3)).thenReturn(Optional.of(requestProducts));
-      
+
         RestAssuredMockMvc.given().contentType(ContentType.JSON)
-        .when().put("carts/user/b/product/1/amount/3").then().statusCode(404);
+                .when().put("carts/user/b/product/1/amount/3").then().statusCode(404);
 
         verify(service, times(1)).putProductAmout("b", 1L, 3);
     }
 
     @Test
-    void testWhenPutRequestProductsByValidEmailInvalidproductId_thenReturnStatus404() throws ResourceNotFoundException, ConflictException {
+    void testWhenPutRequestProductsByValidEmailInvalidproductId_thenReturnStatus404()
+            throws ResourceNotFoundException, ConflictException {
         when(service.putProductAmout("eva@ua.pt", 1L, 3)).thenReturn(Optional.of(requestProducts));
-      
+
         RestAssuredMockMvc.given().contentType(ContentType.JSON)
-        .when().put("carts/user/eva@ua.pt/product/20/amount/3").then().statusCode(404);
+                .when().put("carts/user/eva@ua.pt/product/20/amount/3").then().statusCode(404);
 
         verify(service, times(1)).putProductAmout("eva@ua.pt", 20L, 3);
     }
 
     @Test
-    void testWhenPutRequestProductsByInvalidEmailInvalidproductId_thenReturnStatus404() throws ResourceNotFoundException, ConflictException {
+    void testWhenPutRequestProductsByInvalidEmailInvalidproductId_thenReturnStatus404()
+            throws ResourceNotFoundException, ConflictException {
         when(service.putProductAmout("eva@ua.pt", 1L, 3)).thenReturn(Optional.of(requestProducts));
-      
+
         RestAssuredMockMvc.given().contentType(ContentType.JSON)
-        .when().put("carts/user/b/product/20/amount/3").then().statusCode(404);
+                .when().put("carts/user/b/product/20/amount/3").then().statusCode(404);
 
         verify(service, times(1)).putProductAmout("b", 20L, 3);
     }

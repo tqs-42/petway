@@ -23,7 +23,8 @@ public class ManagerController {
 
     @GetMapping("/user/{email}/store")
     public Map<String, String> getStore(@Valid @PathVariable String email) throws ResourceNotFoundException {
-        Store store = service.getStore(email).orElseThrow(() -> new ResourceNotFoundException("managerEmail " + email + ", or store NOT FOUND."));
+        Store store = service.getStore(email)
+                .orElseThrow(() -> new ResourceNotFoundException("managerEmail " + email + ", or store NOT FOUND."));
         Map<String, String> data = new HashMap<>();
         data.put("id", String.valueOf(store.getId()));
         data.put("name", store.getName());

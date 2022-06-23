@@ -1,6 +1,5 @@
 package com.specific.controller;
 
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -36,259 +35,217 @@ import com.specific.service.JwtUserDetailsService;
 import com.specific.service.ManagerService;
 import com.specific.service.StoreService;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
-@WebMvcTest(value = JwtAuthenticationController.class, excludeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = WebSecurityConfig.class)})
+@WebMvcTest(value = JwtAuthenticationController.class, excludeFilters = {
+                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = WebSecurityConfig.class) })
 @AutoConfigureMockMvc(addFilters = false)
 class JwtAuthenticationControllerTest {
 
-    @Autowired
-    private MockMvc mvc;
-
-    @MockBean
-    private ClientService clientService;
-
-    @MockBean
-    private ManagerService managerService;
+        @Autowired
+        private MockMvc mvc;
+
+        @MockBean
+        private ClientService clientService;
+
+        @MockBean
+        private ManagerService managerService;
 
-    @MockBean
-    private JwtRequestFilter jwtRequest;
-
-    @MockBean
-    private StoreService storeService;
-
-    @MockBean
-    private JwtUserDetailsService userDetailsService;
-
-    @Test
-    void testRegisterClientWhenValid_thenStatus200() throws Exception {
+        @MockBean
+        private JwtRequestFilter jwtRequest;
+
+        @MockBean
+        private StoreService storeService;
+
+        @MockBean
+        private JwtUserDetailsService userDetailsService;
+
+        @Test
+        void testRegisterClientWhenValid_thenStatus200() throws Exception {
 
-        JSONObject payload = new JSONObject();
-        payload.put("email", "client123@ua.pt");
-        payload.put("address", "Rua da estrada");
-        payload.put("fullname", "John Smith");
-        payload.put("password", "password");
-
-        Client client = new Client("rider@ua.pt", "Rua da estrada", "John Smith", "password");
-
-        when(clientService.saveClient(any())).thenReturn(client);
-
-        mvc.perform(post("/registerClient")
-            .contentType(MediaType.APPLICATION_JSON)
-            .header("Authorization", "Bearer token")
-            .characterEncoding("UTF-8")
-            .content(String.valueOf(payload))
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.email", is(client.getEmail())))
-            .andExpect(jsonPath("$.address", is(client.getAddress())))
-            .andExpect(jsonPath("$.fullname", is(client.getFullname())));
-
-        verify(clientService, times(1)).saveClient(any());
+                JSONObject payload = new JSONObject();
+                payload.put("email", "client123@ua.pt");
+                payload.put("address", "Rua da estrada");
+                payload.put("fullname", "John Smith");
+                payload.put("password", "password");
+
+                Client client = new Client("rider@ua.pt", "Rua da estrada", "John Smith", "password");
+
+                when(clientService.saveClient(any())).thenReturn(client);
+
+                mvc.perform(post("/registerClient")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header("Authorization", "Bearer token")
+                                .characterEncoding("UTF-8")
+                                .content(String.valueOf(payload))
+                                .accept(MediaType.APPLICATION_JSON))
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.email", is(client.getEmail())))
+                                .andExpect(jsonPath("$.address", is(client.getAddress())))
+                                .andExpect(jsonPath("$.fullname", is(client.getFullname())));
+
+                verify(clientService, times(1)).saveClient(any());
 
-    }
-
-    @Test
-    void testRegisterClientWhenUserAlreadyExists_thenStatus400() throws Exception {
-
-        JSONObject payload = new JSONObject();
-        payload.put("email", "Client123@ua.pt");
-        payload.put("address", "Rua da estrada");
-        payload.put("fullname", "John Smith");
-        payload.put("password", "password");
-
-        when(clientService.saveClient(any())).thenThrow(ConflictException.class);
+        }
+
+        @Test
+        void testRegisterClientWhenUserAlreadyExists_thenStatus400() throws Exception {
+
+                JSONObject payload = new JSONObject();
+                payload.put("email", "Client123@ua.pt");
+                payload.put("address", "Rua da estrada");
+                payload.put("fullname", "John Smith");
+                payload.put("password", "password");
+
+                when(clientService.saveClient(any())).thenThrow(ConflictException.class);
 
-        mvc.perform(post("/registerClient")
-            .contentType(MediaType.APPLICATION_JSON)
-            .header("Authorization", "Bearer token")
-            .characterEncoding("UTF-8")
-            .content(String.valueOf(payload))
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isBadRequest());
+                mvc.perform(post("/registerClient")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header("Authorization", "Bearer token")
+                                .characterEncoding("UTF-8")
+                                .content(String.valueOf(payload))
+                                .accept(MediaType.APPLICATION_JSON))
+                                .andExpect(status().isBadRequest());
 
-        verify(clientService, times(1)).saveClient(any());
+                verify(clientService, times(1)).saveClient(any());
+
+        }
 
-    }
+        @Test
+        void testRegisterManagerWhenValid_thenStatus200() throws Exception {
 
-    @Test
-    void testRegisterManagerWhenValid_thenStatus200() throws Exception {
+                JSONObject payload = new JSONObject();
+                payload.put("email", "Manager123@ua.pt");
+                payload.put("fullname", "John Smith");
+                payload.put("password", "password");
+                payload.put("name", "Petlandia");
+                payload.put("address", "Rua da estrada");
+
+                Store store = new Store("Petlandia", "Rua da estrada", true);
+                Manager manager = new Manager("Manager@ua.pt", "password", "John Smith", store);
+
+                when(storeService.saveStore(any())).thenReturn(store);
+                when(managerService.saveManager(any())).thenReturn(manager);
 
-        JSONObject payload = new JSONObject();
-        payload.put("email", "Manager123@ua.pt");
-        payload.put("fullname", "John Smith");
-        payload.put("password", "password");
-        payload.put("name", "Petlandia");
-        payload.put("address", "Rua da estrada");
+                mvc.perform(post("/registerManager")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header("Authorization", "Bearer token")
+                                .characterEncoding("UTF-8")
+                                .content(String.valueOf(payload))
+                                .accept(MediaType.APPLICATION_JSON))
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.email", is(manager.getEmail())))
+                                .andExpect(jsonPath("$.fullname", is(manager.getFullname())))
+                                .andExpect(jsonPath("$.store.name", is(manager.getStore().getName())))
+                                .andExpect(jsonPath("$.store.address", is(manager.getStore().getAddress())))
+                                .andExpect(jsonPath("$.store.active", is(manager.getStore().getActive())));
+
+                verify(storeService, times(1)).saveStore(any());
+                verify(managerService, times(1)).saveManager(any());
+
+        }
 
-        Store store = new Store("Petlandia", "Rua da estrada", true);
-        Manager manager = new Manager("Manager@ua.pt", "password", "John Smith", store);
+        @Test
+        void testRegisterManagerWhenUserAlreadyExists_thenStatus400() throws Exception {
 
-        when(storeService.saveStore(any())).thenReturn(store);
-        when(managerService.saveManager(any())).thenReturn(manager);
+                JSONObject payload = new JSONObject();
+                payload.put("email", "Manager123@ua.pt");
+                payload.put("fullname", "John Smith");
+                payload.put("password", "password");
+                payload.put("name", "Petlandia");
+                payload.put("address", "Rua da estrada");
 
-        mvc.perform(post("/registerManager")
-            .contentType(MediaType.APPLICATION_JSON)
-            .header("Authorization", "Bearer token")
-            .characterEncoding("UTF-8")
-            .content(String.valueOf(payload))
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.email", is(manager.getEmail())))
-            .andExpect(jsonPath("$.fullname", is(manager.getFullname())))
-            .andExpect(jsonPath("$.store.name", is(manager.getStore().getName())))
-            .andExpect(jsonPath("$.store.address", is(manager.getStore().getAddress())))
-            .andExpect(jsonPath("$.store.active", is(manager.getStore().getActive())));
+                Store store = new Store("Petlandia", "Rua da estrada", true);
 
-        verify(storeService, times(1)).saveStore(any());
-        verify(managerService, times(1)).saveManager(any());
+                when(storeService.saveStore(any())).thenReturn(store);
+                when(managerService.saveManager(any())).thenThrow(ConflictException.class);
 
-    }
+                mvc.perform(post("/registerManager")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header("Authorization", "Bearer token")
+                                .characterEncoding("UTF-8")
+                                .content(String.valueOf(payload))
+                                .accept(MediaType.APPLICATION_JSON))
+                                .andExpect(status().isBadRequest());
 
-    @Test
-    void testRegisterManagerWhenUserAlreadyExists_thenStatus400() throws Exception {
+                verify(storeService, times(1)).saveStore(any());
+                verify(managerService, times(1)).saveManager(any());
 
-        JSONObject payload = new JSONObject();
-        payload.put("email", "Manager123@ua.pt");
-        payload.put("fullname", "John Smith");
-        payload.put("password", "password");
-        payload.put("name", "Petlandia");
-        payload.put("address", "Rua da estrada");
+        }
 
-        Store store = new Store("Petlandia", "Rua da estrada", true);
+        @Test
+        void testRegisterManagerWhenStoreAlreadyExists_thenStatus400() throws Exception {
 
-        when(storeService.saveStore(any())).thenReturn(store);
-        when(managerService.saveManager(any())).thenThrow(ConflictException.class);
+                JSONObject payload = new JSONObject();
+                payload.put("email", "Manager123@ua.pt");
+                payload.put("fullname", "John Smith");
+                payload.put("password", "password");
+                payload.put("name", "Petlandia");
+                payload.put("address", "Rua da estrada");
 
-        mvc.perform(post("/registerManager")
-            .contentType(MediaType.APPLICATION_JSON)
-            .header("Authorization", "Bearer token")
-            .characterEncoding("UTF-8")
-            .content(String.valueOf(payload))
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isBadRequest());
+                when(storeService.saveStore(any())).thenThrow(ConflictException.class);
 
-        verify(storeService, times(1)).saveStore(any());
-        verify(managerService, times(1)).saveManager(any());
+                mvc.perform(post("/registerManager")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header("Authorization", "Bearer token")
+                                .characterEncoding("UTF-8")
+                                .content(String.valueOf(payload))
+                                .accept(MediaType.APPLICATION_JSON))
+                                .andExpect(status().isBadRequest());
 
-    }
+                verify(storeService, times(1)).saveStore(any());
 
-    @Test
-    void testRegisterManagerWhenStoreAlreadyExists_thenStatus400() throws Exception {
+        }
 
-        JSONObject payload = new JSONObject();
-        payload.put("email", "Manager123@ua.pt");
-        payload.put("fullname", "John Smith");
-        payload.put("password", "password");
-        payload.put("name", "Petlandia");
-        payload.put("address", "Rua da estrada");
+        @ParameterizedTest
+        @CsvSource(value = { "Client:client123@ua.pt", "Manager:manager123@ua.pt",
+                        "Admin:admin123@ua.pt" }, delimiter = ':')
+        void testLoginValidUser_thenStatus200(String user, String email) throws Exception {
 
-        when(storeService.saveStore(any())).thenThrow(ConflictException.class);
+                JwtResponse expectedResponse = new JwtResponse("token123", new SimpleGrantedAuthority("Admin"),
+                                email);
 
-        mvc.perform(post("/registerManager")
-            .contentType(MediaType.APPLICATION_JSON)
-            .header("Authorization", "Bearer token")
-            .characterEncoding("UTF-8")
-            .content(String.valueOf(payload))
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isBadRequest());
+                JSONObject payload = new JSONObject();
+                payload.put("email", email);
+                payload.put("password", "password");
 
-            verify(storeService, times(1)).saveStore(any());
+                when(userDetailsService.generateTokenLogin(any(JwtRequest.class))).thenReturn(expectedResponse);
 
-    }
+                mvc.perform(post("/login")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .characterEncoding("UTF-8")
+                                .content(String.valueOf(payload))
+                                .accept(MediaType.APPLICATION_JSON))
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("token", is(expectedResponse.getToken())))
+                                .andExpect(jsonPath("['role']['authority']",
+                                                is(expectedResponse.getRole().getAuthority())))
+                                .andExpect(jsonPath("email", is(expectedResponse.getEmail())));
 
-    @Test
-    void testLoginValidClient_thenStatus200() throws Exception {
+                verify(userDetailsService, times(1)).generateTokenLogin(any(JwtRequest.class));
 
-        JwtResponse expectedResponse = new JwtResponse("token123", new SimpleGrantedAuthority("Client"), "client123@ua.pt");
+        }
 
-        JSONObject payload = new JSONObject();
-        payload.put("email", "client123@ua.pt");
-        payload.put("password", "password");
+        @Test
+        void testLoginInvalidCredentials_thenStatus401() throws Exception {
 
-        when(userDetailsService.generateTokenLogin(any(JwtRequest.class))).thenReturn(expectedResponse);
+                JSONObject payload = new JSONObject();
+                payload.put("email", "rider123@ua.pt");
+                payload.put("password", "password");
 
-        mvc.perform(post("/login")
-            .contentType(MediaType.APPLICATION_JSON)
-            .characterEncoding("UTF-8")
-            .content(String.valueOf(payload))
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("token", is(expectedResponse.getToken())))
-            .andExpect(jsonPath("['role']['authority']", is(expectedResponse.getRole().getAuthority())))
-            .andExpect(jsonPath("email", is(expectedResponse.getEmail())));
+                when(userDetailsService.generateTokenLogin(any(JwtRequest.class)))
+                                .thenThrow(InvalidCredentialsException.class);
 
-        verify(userDetailsService, times(1)).generateTokenLogin(any(JwtRequest.class));
+                mvc.perform(post("/login")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .characterEncoding("UTF-8")
+                                .content(String.valueOf(payload))
+                                .accept(MediaType.APPLICATION_JSON))
+                                .andExpect(status().isUnauthorized());
 
-    }
+                verify(userDetailsService, times(1)).generateTokenLogin(any(JwtRequest.class));
 
-    @Test
-    void testLoginValidManager_thenStatus200() throws Exception {
-
-        JwtResponse expectedResponse = new JwtResponse("token123", new SimpleGrantedAuthority("Manager"), "manager123@ua.pt");
-
-        JSONObject payload = new JSONObject();
-        payload.put("email", "manager123@ua.pt");
-        payload.put("password", "password");
-
-        when(userDetailsService.generateTokenLogin(any(JwtRequest.class))).thenReturn(expectedResponse);
-
-        mvc.perform(post("/login")
-            .contentType(MediaType.APPLICATION_JSON)
-            .characterEncoding("UTF-8")
-            .content(String.valueOf(payload))
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("token", is(expectedResponse.getToken())))
-            .andExpect(jsonPath("['role']['authority']", is(expectedResponse.getRole().getAuthority())))
-            .andExpect(jsonPath("email", is(expectedResponse.getEmail())));
-
-        verify(userDetailsService, times(1)).generateTokenLogin(any(JwtRequest.class));
-
-    }
-
-    @Test
-    void testLoginValidAdmin_thenStatus200() throws Exception {
-
-        JwtResponse expectedResponse = new JwtResponse("token123", new SimpleGrantedAuthority("Admin"), "admin123@ua.pt");
-
-        JSONObject payload = new JSONObject();
-        payload.put("email", "admin123@ua.pt");
-        payload.put("password", "password");
-
-        when(userDetailsService.generateTokenLogin(any(JwtRequest.class))).thenReturn(expectedResponse);
-
-        mvc.perform(post("/login")
-            .contentType(MediaType.APPLICATION_JSON)
-            .characterEncoding("UTF-8")
-            .content(String.valueOf(payload))
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("token", is(expectedResponse.getToken())))
-            .andExpect(jsonPath("['role']['authority']", is(expectedResponse.getRole().getAuthority())))
-            .andExpect(jsonPath("email", is(expectedResponse.getEmail())));
-
-        verify(userDetailsService, times(1)).generateTokenLogin(any(JwtRequest.class));
-
-    }
-
-    @Test
-    void testLoginInvalidCredentials_thenStatus401() throws Exception {
-
-        JSONObject payload = new JSONObject();
-        payload.put("email", "rider123@ua.pt");
-        payload.put("password", "password");
-
-        when(userDetailsService.generateTokenLogin(any(JwtRequest.class))).thenThrow(InvalidCredentialsException.class);
-
-        mvc.perform(post("/login")
-            .contentType(MediaType.APPLICATION_JSON)
-            .characterEncoding("UTF-8")
-            .content(String.valueOf(payload))
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isUnauthorized());
-
-        verify(userDetailsService, times(1)).generateTokenLogin(any(JwtRequest.class));
-
-    }
+        }
 
 }

@@ -22,7 +22,7 @@ import com.specific.model.Store;
 @DataJpaTest
 @Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class ProductRepositoryTest {
+class ProductRepositoryTest {
 
     @Container
     public static MySQLContainer<?> container = new MySQLContainer<>("mysql:8.0").withUsername("admin")

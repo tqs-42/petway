@@ -29,9 +29,10 @@ import com.specific.service.RequestEventsService;
 import io.restassured.http.ContentType;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 
-@WebMvcTest(value = RequestEventsController.class, excludeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = WebSecurityConfig.class)})
+@WebMvcTest(value = RequestEventsController.class, excludeFilters = {
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = WebSecurityConfig.class) })
 @AutoConfigureMockMvc(addFilters = false)
-public class RequestEventControllerTest {
+class RequestEventControllerTest {
 
     @Autowired
     private MockMvc mvc;
