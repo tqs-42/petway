@@ -13,7 +13,7 @@ import com.specific.model.RequestProducts;
 import com.specific.service.CartService;
 
 @RestController
-@CrossOrigin(origins = { "http://192.168.160.234:4201", "http://localhost:4201" })
+@CrossOrigin(origins = { "http://localhost:4201", "http://0.0.0.0:6868"})
 @RequestMapping("/carts")
 public class CartController {
     private static final String EMAIL = "clientEmail ";

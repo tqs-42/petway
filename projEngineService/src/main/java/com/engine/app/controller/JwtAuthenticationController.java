@@ -20,11 +20,13 @@ import com.engine.app.model.JwtResponse;
 import com.engine.app.model.Rider;
 import com.engine.app.service.JwtUserDetailsService;
 import com.engine.app.service.RiderService;
+import com.engine.app.model.Person;
+import com.engine.app.service.PersonService;
 
 
 @RequestMapping
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200","http://localhost:19006"})
+@CrossOrigin(origins = {"http://localhost:4200","http://localhost:19006","http://localhost:6868", "http://localhost:6869",  "http://0.0.0.0:6869"})
 public class JwtAuthenticationController {
 
     @Autowired
@@ -32,6 +34,10 @@ public class JwtAuthenticationController {
 
     @Autowired
     private RiderService riderService;
+
+    @Autowired
+    private PersonService personService;
+
 
     Logger logger = LoggerFactory.getLogger(JwtAuthenticationController.class);
 
@@ -51,6 +57,17 @@ public class JwtAuthenticationController {
             return ResponseEntity.badRequest().body(null);
         }
         return ResponseEntity.ok(rider);
+    }
+
+    @PostMapping("/registerUser")
+    public ResponseEntity<Person> registerUser(@RequestBody Map<String,String> data) throws Exception {
+        Person person;
+        try {
+            person = personService.registerPerson(data.get("email"), data.get("password"), data.get("address"), data.get("fullname"));
+        } catch (ConflictException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        return ResponseEntity.ok(person);
     }
 
 }

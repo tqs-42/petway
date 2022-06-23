@@ -13,8 +13,7 @@ import com.specific.model.Store;
 import com.specific.service.ManagerService;
 
 @RestController
-@CrossOrigin(origins = {"http://192.168.160.234:4201", "http://localhost:4201"})
-
+@CrossOrigin(origins =  {"http://localhost:4201", "http://0.0.0.0:6868"})
 @RequestMapping("/managers")
 public class ManagerController {
 

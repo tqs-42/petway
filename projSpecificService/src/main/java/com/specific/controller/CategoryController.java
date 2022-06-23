@@ -11,7 +11,7 @@ import com.specific.model.Category;
 import com.specific.service.CategoryService;
 
 @RestController
-@CrossOrigin(origins = { "http://192.168.160.234:4201", "http://localhost:4201" })
+@CrossOrigin(origins = {"http://localhost:4201", "http://0.0.0.0:6868" })
 @RequestMapping("/categories")
 public class CategoryController {
     @Autowired

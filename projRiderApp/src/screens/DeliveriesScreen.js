@@ -59,7 +59,7 @@ const DeliveriesScreen = ({ navigation }) => {
 
           :
 
-          <Deliveries deliveries={deliveries} />
+          <Deliveries deliveries={deliveries}  navigation={navigation}/>
 
         }
     </View >

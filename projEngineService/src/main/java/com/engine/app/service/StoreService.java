@@ -19,11 +19,11 @@ public class StoreService {
     @Autowired
     private StoreRepository storeRepository;
 
-    public Store addStore(String name, Double latitude, Double longitude) throws ConflictException {
+    public Store addStore(String name, String address) throws ConflictException {
         if (storeRepository.findByName(name) != null) {
             throw new ConflictException("Store " + name + " already exists");
         } else {
-            Store store = new Store(name, latitude, longitude);
+            Store store = new Store(name, address);
             storeRepository.save(store);
             return store;
         }
@@ -39,9 +39,9 @@ public class StoreService {
         }
     }
 
-    public Store getStore(Long id) throws ResourceNotFoundException {
-        Optional<Store> optional = storeRepository.findById(id);
-        if (optional.isPresent()) return optional.get();
+    public Store getStore(String name) throws ResourceNotFoundException {
+        Store store = storeRepository.findByName(name);
+        if (store != null) return store;
         else throw new ResourceNotFoundException("Store doesn't exist");
     }
 
