@@ -48,7 +48,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 
 @RestController
 @RequestMapping("/deliveries")
-@CrossOrigin(origins = {"http://localhost:4200","http://localhost:19006","http://localhost:6868", "http://0.0.0.0:6869"})
+@CrossOrigin(origins = {"http://localhost:4200","http://localhost:19006","http://localhost:6868", "http://localhost:6869",  "http://0.0.0.0:6869"})
 public class DeliveryController {
 
     @Autowired
