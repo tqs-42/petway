@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.specific.repository.ProductRepositoryTest
 -------------------------------------------------------------------------------
-Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 43.631 s - in com.specific.repository.ProductRepositoryTest
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 39.28 s - in com.specific.repository.ProductRepositoryTest

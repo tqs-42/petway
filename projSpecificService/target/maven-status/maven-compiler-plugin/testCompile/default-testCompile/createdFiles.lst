@@ -1,1 +1,15 @@
+com/specific/integration/ProductTemplateIT.class
+com/specific/repository/CartRepositoryTest.class
+com/specific/controller/ProductControllerTest.class
+com/specific/service/CategoryServiceTest.class
+com/specific/controller/RequestEventControllerTest.class
+com/specific/controller/CartControllerTest.class
+com/specific/repository/CategoryRepositoryTest.class
 com/specific/repository/RequestEventRepositoryTest.class
+com/specific/controller/JwtAuthenticationControllerTest.class
+com/specific/controller/CategoryControllerTest.class
+com/specific/service/CartServiceTest.class
+com/specific/service/ProductServiceTest.class
+com/specific/repository/ProductRepositoryTest.class
+com/specific/integration/CartControllerTemplateIT.class
+com/specific/integration/CategoryTemplateIT.class
