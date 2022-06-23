@@ -10,17 +10,17 @@ import { Ionicons } from '@expo/vector-icons';
  
 const Tab = createBottomTabNavigator();
 
-function Home() {
+function Home({ navigation }) {
   return(
     <Tab.Navigator initialRouteName='Deliveries' screenOptions={{ headerShown: false }}  >
-      <Tab.Screen name="Deliveries" component={DeliveriesScreen} options={{
+      <Tab.Screen name="Deliveries" component={DeliveriesScreen} navigation={navigation} options={{
       tabBarLabel: 'Deliveries',
       tabBarIcon: ({ color, size }) => (
         <Ionicons name="alert" color={color} size={size} />
       ),
       }} 
       />
-      <Tab.Screen name="History" component={HistoryScreen} options={{
+      <Tab.Screen name="History" component={HistoryScreen} navigation={navigation} options={{
       tabBarLabel: 'History',
       tabBarIcon: ({ color, size }) => (
         <Ionicons name="archive" color={color} size={size} />
@@ -39,7 +39,7 @@ export default function App() {
       <Stack.Navigator initialRouteName="Login"  >
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
-        <Stack.Screen name="Delivery" component={DeliveryScreen} options={{ headerShown: false}}/>
+        <Stack.Screen name="Delivery" component={DeliveryScreen} options={{ headerShown: true, title: 'Delivery Info'}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );  

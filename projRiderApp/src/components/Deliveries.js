@@ -4,24 +4,18 @@
 import React from 'react';
 import { Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 
-const Deliveries = ({ items }) => {
+const Deliveries = ({navigation, deliveries}) => {
 
-  const renderItem = ({item}) => {
-    return (
-      <TouchableOpacity style={styles.row} onPress={() => navigation.navigate('Delivery', { id: item.id })}>
-        <Text>Delivery {item.id}</Text>
-        <Text>Store {item.store.name}</Text>
-      </TouchableOpacity>
-    )
-  };
+  console.log("DELIVERIES", deliveries)
 
   return (
-    <FlatList
-      data={items}
-      renderItem={renderItem}
-      keyExtractor={item=>item.id}
-    />
-  )
+    deliveries.map((item,key) => (
+      <TouchableOpacity style={styles.row}  key={key} onPress={() => navigation.navigate('Delivery', { delivery : item })}>
+      <Text>Delivery {item.id}</Text>
+      <Text>Store {item.store}</Text>
+    </TouchableOpacity>
+    )
+  ))
 }
 
 export default Deliveries;
