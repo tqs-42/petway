@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.specific.selenium.TesteLoginTest" time="3.62" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.specific.selenium.TesteLoginTest" time="9.792" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -12,7 +12,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="PT"/>
     <property name="sun.boot.library.path" value="/opt/homebrew/Cellar/openjdk/17.0.2/libexec/openjdk.jdk/Contents/Home/lib"/>
-    <property name="sun.java.command" value="/Users/sobral/Desktop/2semestre/tqs/petway/projSpecificService/target/surefire/surefirebooter17384727397423394032.jar /Users/sobral/Desktop/2semestre/tqs/petway/projSpecificService/target/surefire 2022-06-23T11-10-57_310-jvmRun1 surefire14185572688357713577tmp surefire_012134687031224129202tmp"/>
+    <property name="sun.java.command" value="/Users/sobral/Desktop/2semestre/tqs/petway/projSpecificService/target/surefire/surefirebooter9119396832197720281.jar /Users/sobral/Desktop/2semestre/tqs/petway/projSpecificService/target/surefire 2022-06-23T14-29-40_120-jvmRun1 surefire17004153668232454482tmp surefire_012829336249213472889tmp"/>
     <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="jdk.debug" value="release"/>
     <property name="test" value="TesteLoginTest"/>
@@ -29,7 +29,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="/Users/sobral/Desktop/2semestre/tqs/petway/projSpecificService/target/surefire/surefirebooter17384727397423394032.jar"/>
+    <property name="surefire.real.class.path" value="/Users/sobral/Desktop/2semestre/tqs/petway/projSpecificService/target/surefire/surefirebooter9119396832197720281.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.runtime.version" value="17.0.2+0"/>
@@ -56,5 +56,5 @@
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="test1" classname="com.specific.selenium.TesteLoginTest" time="3.345"/>
+  <testcase name="test1" classname="com.specific.selenium.TesteLoginTest" time="8.964"/>
 </testsuite>

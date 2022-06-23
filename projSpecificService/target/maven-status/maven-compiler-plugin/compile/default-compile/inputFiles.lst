@@ -45,6 +45,7 @@
 /Users/sobral/Desktop/2semestre/tqs/petway/projSpecificService/src/main/java/com/specific/controller/UserController.java
 /Users/sobral/Desktop/2semestre/tqs/petway/projSpecificService/src/main/java/com/specific/model/JwtRequest.java
 /Users/sobral/Desktop/2semestre/tqs/petway/projSpecificService/src/main/java/com/specific/model/Request.java
+/Users/sobral/Desktop/2semestre/tqs/petway/projSpecificService/src/main/java/com/specific/dto/CategoryDTO.java
 /Users/sobral/Desktop/2semestre/tqs/petway/projSpecificService/src/main/java/com/specific/controller/ProductController.java
 /Users/sobral/Desktop/2semestre/tqs/petway/projSpecificService/src/main/java/com/specific/model/Cart.java
 /Users/sobral/Desktop/2semestre/tqs/petway/projSpecificService/src/main/java/com/specific/service/StoreService.java
