@@ -92,14 +92,14 @@ services:
         context: ./projSpecificWeb
         dockerfile: ./Dockerfile
       ports: 
-        - '4201:4201'
+        - '4201:80'
 
     engine-frontend:
         build:
           context: ./projEngineWeb
           dockerfile: ./Dockerfile
         ports: 
-          - '4200:4200'
+          - '4200:80'
     
 volumes:
    datafiles:

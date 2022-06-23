@@ -14,4 +14,6 @@ FROM nginx:alpine
 
 COPY --from=build /projEngineWeb/dist/proj-engine-web /usr/share/nginx/html
 
-EXPOSE 4200
+EXPOSE 80
+
+CMD [ "nginx", "-g", "daemon off;"]

@@ -12,6 +12,8 @@ RUN npm install && npm run build
 
 FROM nginx:alpine
 
-COPY --from=build /projSpecificWeb/dist/proj-engine-web /usr/share/nginx/html
+COPY --from=build /projSpecificWeb/dist/proj-specific-web /usr/share/nginx/html
 
-EXPOSE 4200
+EXPOSE 80
+
+CMD [ "nginx", "-g", "daemon off;"]

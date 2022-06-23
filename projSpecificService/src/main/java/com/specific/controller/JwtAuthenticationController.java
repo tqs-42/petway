@@ -24,12 +24,11 @@ import com.specific.model.Store;
 import com.specific.service.ClientService;
 import com.specific.service.ManagerService;
 import com.specific.service.StoreService;
-import com.specific.service.UserService;
 
 
 @RequestMapping
 @RestController
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin("http://localhost:4201")
 public class JwtAuthenticationController {
 
     @Autowired

@@ -8,14 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.specific.model.Product;
 import com.specific.model.RequestEvents;
-import com.specific.model.RequestProducts;
-import com.specific.service.CartService;
 import com.specific.service.RequestEventsService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4201")
 @RequestMapping("/requestEvents")
 public class RequestEventsController {
 
