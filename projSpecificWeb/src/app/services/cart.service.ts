@@ -12,8 +12,7 @@ const httpOptions = {
 export class CartService {
 
   totalElements: number = 0
-  //private url: string = 'http://localhost:6868';
-  private url: string = 'http://192.168.160.234:6868';
+  private url: string = 'http://localhost:6868';
 
   constructor(private http: HttpClient) { }
 

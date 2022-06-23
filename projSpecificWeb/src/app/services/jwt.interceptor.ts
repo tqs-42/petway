@@ -9,8 +9,7 @@ import { UserService } from './user.service';
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
 
-    //private url: string = 'http://localhost:6868';
-  private url: string = 'http://192.168.160.234:6868';
+  private url: string = 'http://localhost:6868';
   constructor(private authenticationService : AuthenticationService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
