@@ -3,7 +3,7 @@ name: CD Specific
 on:
   push:
     branches:
-      - main
+      - dev
 jobs:
   deploy:
     runs-on: [self-hosted, linux]
