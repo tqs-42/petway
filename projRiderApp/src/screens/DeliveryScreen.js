@@ -54,9 +54,9 @@ const DeliveryScreen = ({ navigation, route }) => {
         let array = []
         array.push(data)
         array.map((info) => {
-          result.push(<Text style={styles.title}>Delivery No.: {delivery.id}</Text>)
-          result.push(<Text style={styles.info}>Store: {delivery.store.name}</Text>)
-          result.push(<Text style={styles.info}>Store address: {delivery.store.latitude}</Text>)
+          result.push(<Text style={styles.title}>Delivery No.: {info.delivery.id}</Text>)
+          result.push(<Text style={styles.info}>Store: {info.delivery.store.name}</Text>)
+          result.push(<Text style={styles.info}>Store address: {info.delivery.store.address}</Text>)
           result.push(<Text style={styles.info}>Status: {info.event.status}</Text>)
           result.push(<Text style={styles.info}>Date: {info.event.timestamp}</Text>)
 
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   info: {
-    fontSize: 20,
+    fontSize: 15,
     alignItems: 'center',
     justifyContent: 'center',
   },

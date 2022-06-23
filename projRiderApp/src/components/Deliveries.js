@@ -12,7 +12,8 @@ const Deliveries = ({navigation, deliveries}) => {
     deliveries.map((item,key) => (
       <TouchableOpacity style={styles.row}  key={key} onPress={() => navigation.navigate('Delivery', { delivery : item })}>
       <Text>Delivery {item.id}</Text>
-      <Text>Store {item.store}</Text>
+      <Text>{item.store_name}</Text>
+      <Text>{item.store_address}</Text>
     </TouchableOpacity>
     )
   ))
