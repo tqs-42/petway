@@ -55,7 +55,7 @@ export class AuthenticationService {
   }
 
   getStoreFromManager(managerEmail: String) : Observable<any> {
-    return this.http.get<Store>(environment.baseAPIPath + "/managers/user/" + managerEmail +"/store", httpOptions);
+    return this.http.get<Store>(this.url + "/managers/user/" + managerEmail +"/store", httpOptions);
   }
 
   getUserFullName(email: String) : Observable<any> {
